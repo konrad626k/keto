@@ -1,11 +1,11 @@
 {
-  "name": "Dieta Keto 4 Tygodnie",
-  "short_name": "Keto",
-  "description": "4-tygodniowy plan keto z przepisami i listą zakupów",
+  "name": "Dieta Budżetowa",
+  "short_name": "Budżet",
+  "description": "4-tygodniowa dieta budżetowa z przepisami i listą zakupów",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#f0f7f2",
-  "theme_color": "#1a6b3c",
+  "background_color": "#fdf8f0",
+  "theme_color": "#b45309",
   "orientation": "portrait-primary",
   "lang": "pl",
   "icons": [
