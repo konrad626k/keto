@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#1a6b3c">
+<title>Dieta Keto 🥑</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f0f7f2;--surface:#ffffff;--border:#d4e8dc;
+  --green:#1a6b3c;--green2:#2d9e5f;--green3:#e8f5ee;
+  --fat:#f97316;--prot:#3b82f6;--carb:#ef4444;
+  --text:#0f2d1a;--muted:#5a7a65;
+  --safe-b:env(safe-area-inset-bottom,0px);--safe-t:env(safe-area-inset-top,0px);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;font-family:'Raleway',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.app{display:flex;flex-direction:column;height:100vh;height:100dvh}
+
+/* TOP BAR */
+.top-bar{background:var(--green);padding:calc(var(--safe-t)+10px) 16px 10px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;box-shadow:0 2px 12px rgba(26,107,60,.35)}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{font-size:26px}
+.logo-text h1{font-family:'Lora',serif;font-size:18px;font-weight:600;color:white;line-height:1.1}
+.logo-text span{font-size:9px;color:rgba(255,255,255,.75);font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.kcal-chip{background:rgba(255,255,255,.18);color:white;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700;border:1px solid rgba(255,255,255,.3)}
+
+/* TABS */
+.tabs{display:flex;background:var(--surface);border-bottom:2px solid var(--border);flex-shrink:0}
+.tab{flex:1;padding:10px 6px;font-size:10px;font-weight:700;text-align:center;cursor:pointer;color:var(--muted);border:none;background:none;font-family:'Raleway',sans-serif;letter-spacing:.3px;transition:all .2s;border-bottom:2px solid transparent;margin-bottom:-2px}
+.tab.active{color:var(--green);border-bottom-color:var(--green)}
+.tab .ti{display:block;font-size:18px;margin-bottom:1px}
+
+/* SCROLL */
+.scroll-area{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.page{display:none;padding:14px;animation:pi .2s ease}
+.page.active{display:block}
+@keyframes pi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* WEEK SELECTOR */
+.week-sel{display:flex;gap:7px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;scrollbar-width:none}
+.week-sel::-webkit-scrollbar{display:none}
+.wsb{flex-shrink:0;padding:7px 16px;border-radius:20px;border:1.5px solid var(--border);background:var(--surface);color:var(--muted);font-size:11px;font-weight:700;cursor:pointer;font-family:'Raleway',sans-serif;transition:all .15s}
+.wsb.active{background:var(--green);color:white;border-color:var(--green)}
+.wsb:active{transform:scale(.95)}
+
+/* DAY CARDS */
+.day-section{margin-bottom:10px}
+.day-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--green);border-radius:12px 12px 0 0;cursor:pointer}
+.day-hdr h3{font-family:'Lora',serif;font-size:16px;font-weight:600;color:white}
+.day-hdr-right{display:flex;align-items:center;gap:8px}
+.macro-pills{display:flex;gap:4px}
+.mpill{font-size:9px;font-weight:700;padding:2px 6px;border-radius:6px;background:rgba(255,255,255,.2);color:white}
+.dtoggle{color:white;font-size:13px;transition:transform .2s}
+.dtoggle.open{transform:rotate(180deg)}
+.day-body{background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 12px 12px;overflow:hidden}
+.day-body.hidden{display:none}
+
+/* MACRO BAR inside day */
+.macro-bar-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:10px 14px;background:var(--green3);border-bottom:1px solid var(--border)}
+.mbar-item{text-align:center}
+.mbar-val{font-size:13px;font-weight:800;display:block}
+.mbar-val.fat{color:var(--fat)}.mbar-val.prot{color:var(--prot)}.mbar-val.carb{color:var(--carb)}.mbar-val.kcal{color:var(--green)}
+.mbar-lbl{font-size:8px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}
+
+/* MEAL ROWS */
+.meal-row{display:flex;gap:11px;padding:11px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;align-items:flex-start}
+.meal-row:last-child{border-bottom:none}
+.meal-row:active{background:var(--green3)}
+.meal-ic{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.ic1{background:#fff8e1}.ic2{background:#e8f5e9}.ic3{background:#fce4ec}.ic4{background:#e3f2fd}.ic5{background:#f3e5f5}
+.meal-info{flex:1;min-width:0}
+.meal-type{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:2px}
+.meal-name{font-family:'Lora',serif;font-size:15px;font-weight:600;color:var(--text);line-height:1.2;margin-bottom:3px}
+.meal-macros{display:flex;gap:6px;flex-wrap:wrap}
+.mmac{font-size:9px;font-weight:700;padding:1px 5px;border-radius:5px}
+.mmac.f{background:#fff3e0;color:var(--fat)}.mmac.p{background:#e3f2fd;color:var(--prot)}.mmac.c{background:#fce4ec;color:var(--carb)}
+.marr{color:var(--muted);font-size:12px;padding-top:5px}
+
+/* RECIPE MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,45,26,.65);z-index:200;display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .25s}
+.modal-overlay.show{opacity:1;pointer-events:all}
+.modal{background:var(--bg);border-radius:22px 22px 0 0;width:100%;max-height:90vh;overflow-y:auto;padding:0 0 calc(var(--safe-b)+20px);transform:translateY(100%);transition:transform .3s cubic-bezier(.32,0,.67,0)}
+.modal-overlay.show .modal{transform:translateY(0)}
+.modal-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:10px auto 0}
+.modal-hdr{padding:14px 16px 12px;border-bottom:1px solid var(--border)}
+.modal-type{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:3px}
+.modal-title{font-family:'Lora',serif;font-size:22px;font-weight:600;line-height:1.2;margin-bottom:8px}
+.modal-macros{display:flex;gap:8px;flex-wrap:wrap}
+.modmac{font-size:11px;font-weight:700;padding:3px 10px;border-radius:8px}
+.modmac.f{background:#fff3e0;color:var(--fat)}.modmac.p{background:#e3f2fd;color:var(--prot)}.modmac.c{background:#fce4ec;color:var(--carb)}.modmac.k{background:var(--green3);color:var(--green)}
+.modal-body{padding:14px 16px}
+.sec-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--green);margin-bottom:8px;margin-top:14px}
+.sec-title:first-child{margin-top:0}
+.ing-list{display:flex;flex-direction:column;gap:5px}
+.ing{display:flex;gap:10px;font-size:13px;align-items:baseline}
+.ing-q{font-weight:700;color:var(--green);min-width:70px;font-size:11px}
+.steps-list{display:flex;flex-direction:column;gap:9px}
+.step{display:flex;gap:9px;font-size:13px;line-height:1.6;color:var(--text)}
+.step-n{width:22px;height:22px;border-radius:50%;background:var(--green);color:white;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.tip-box{background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:10px 12px;font-size:12px;color:#14532d;margin-top:10px;line-height:1.6}
+.tip-box strong{display:block;margin-bottom:2px}
+.keto-badge{display:inline-flex;align-items:center;gap:4px;background:var(--green3);color:var(--green);font-size:9px;font-weight:700;padding:2px 7px;border-radius:6px;margin-top:3px;letter-spacing:.5px}
+.close-btn{width:calc(100% - 32px);margin:14px 16px 0;padding:13px;border-radius:14px;border:none;background:var(--green);color:white;font-family:'Raleway',sans-serif;font-size:14px;font-weight:700;cursor:pointer}
+.close-btn:active{transform:scale(.98)}
+
+/* SHOPPING */
+.shop-week-nav{display:flex;gap:7px;margin-bottom:12px}
+.swn{flex:1;padding:9px;border-radius:11px;border:1.5px solid var(--border);background:var(--surface);color:var(--muted);font-size:11px;font-weight:700;cursor:pointer;font-family:'Raleway',sans-serif;text-align:center;transition:all .15s}
+.swn.active{background:var(--green);color:white;border-color:var(--green)}
+.swn:active{transform:scale(.95)}
+.shop-label{font-family:'Lora',serif;font-size:20px;font-weight:600;margin-bottom:3px}
+.shop-sub{font-size:11px;color:var(--muted);margin-bottom:12px}
+.prog-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:12px;display:flex;align-items:center;gap:12px}
+.prog-txt{flex:1}
+.prog-txt strong{font-size:14px;font-weight:700}
+.prog-txt span{display:block;font-size:10px;color:var(--muted);margin-top:1px}
+.prog-bar{height:5px;background:var(--border);border-radius:99px;overflow:hidden;margin-top:5px}
+.prog-fill{height:100%;background:var(--green2);border-radius:99px;transition:width .4s}
+.shop-cat{background:var(--surface);border:1px solid var(--border);border-radius:13px;overflow:hidden;margin-bottom:9px}
+.scat-hdr{padding:10px 14px;font-size:11px;font-weight:700;letter-spacing:.5px;display:flex;align-items:center;gap:7px;border-bottom:1px solid var(--border)}
+.hm{background:#ffeaea;color:#c0392b}.hd{background:#fffde7;color:#b7791f}.hv{background:#e8f5e9;color:#1a6b3c}.ho{background:#e3f2fd;color:#1565c0}.hc{background:#fce4ec;color:#ad1457}.hf{background:#fff3e0;color:#c2410c}
+.sitem{display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid rgba(0,0,0,.04);cursor:pointer;transition:background .15s}
+.sitem:last-child{border-bottom:none}
+.sitem:active{background:var(--green3)}
+.sitem.done{opacity:.38}
+.sitem.done .iname{text-decoration:line-through}
+.chk{width:21px;height:21px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;transition:all .2s}
+.sitem.done .chk{background:var(--green2);border-color:var(--green2);color:white}
+.iname{flex:1;font-size:13px;font-weight:500}
+.imeta{text-align:right;flex-shrink:0}
+.iqty{font-size:10px;color:var(--muted)}
+.iprice{font-size:11px;font-weight:700;color:var(--green)}
+.total-card{background:linear-gradient(135deg,var(--green),var(--green2));border-radius:14px;padding:15px 16px;margin-top:10px;display:flex;align-items:center;justify-content:space-between;color:white}
+.total-left strong{display:block;font-family:'Lora',serif;font-size:24px;font-weight:600}
+.total-left span{font-size:10px;opacity:.8}
+.total-right{font-size:10px;text-align:right;opacity:.85;line-height:1.9}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="top-bar">
+  <div class="logo">
+    <div class="logo-icon">🥑</div>
+    <div class="logo-text">
+      <h1>Dieta Keto</h1>
+      <span>4 tygodnie · odchudzanie</span>
+    </div>
+  </div>
+  <div class="kcal-chip">~1600 kcal · &lt;20g węgli</div>
+</div>
+<div class="tabs">
+  <button class="tab active" onclick="goTab('jadlospis',this)"><span class="ti">📅</span>Jadłospis</button>
+  <button class="tab" onclick="goTab('zakupy',this)"><span class="ti">🛒</span>Zakupy</button>
+  <button class="tab" onclick="goTab('info',this)"><span class="ti">📊</span>Keto info</button>
+</div>
+<div class="scroll-area">
+
+<!-- JADŁOSPIS -->
+<div class="page active" id="page-jadlospis">
+  <div class="week-sel" id="week-sel"></div>
+  <div id="days-container"></div>
+</div>
+
+<!-- ZAKUPY -->
+<div class="page" id="page-zakupy">
+  <div class="shop-week-nav" id="shop-week-nav"></div>
+  <div class="shop-label" id="shop-label">Tydzień 1</div>
+  <div class="shop-sub">Zakupy na cały tydzień · 1 osoba · keto</div>
+  <div class="prog-card" id="shop-prog"></div>
+  <div id="shop-list"></div>
+</div>
+
+<!-- INFO -->
+<div class="page" id="page-info">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px">
+    <div style="font-family:'Lora',serif;font-size:20px;font-weight:600;margin-bottom:10px">🥑 Zasady diety keto</div>
+    <div style="font-size:13px;line-height:1.8;color:var(--text)">
+      <b>Makroskładniki dziennie:</b><br>
+      🟠 Tłuszcze: <b>75–80%</b> kalorii (~130g)<br>
+      🔵 Białko: <b>15–20%</b> kalorii (~100g)<br>
+      🔴 Węglowodany: <b>max 20g</b> netto/dzień<br><br>
+      <b>Produkty TAK ✅</b><br>
+      Mięso, ryby, jajka, ser, masło, śmietana, oleje, awokado, orzechy, warzywa liściaste, brokuły, kalafior, ogórek, papryka.<br><br>
+      <b>Produkty NIE ❌</b><br>
+      Chleb, makaron, ryż, ziemniaki, cukier, owoce (poza jagodami), alkohol, soki, mleko, fasola, groch.<br><br>
+      <b>Pierwsze 2 tygodnie</b> — możliwe objawy „keto grypy": zmęczenie, bóle głowy. To normalne — organizm przestawia się na spalanie tłuszczu!
+    </div>
+  </div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px">
+    <div style="font-family:'Lora',serif;font-size:18px;font-weight:600;margin-bottom:10px">💊 Suplementacja w keto</div>
+    <div style="font-size:13px;line-height:1.8;color:var(--text)">
+      <b>Magnez</b> — zapobiega skurczom i zmęczeniu<br>
+      <b>Sód/Potas</b> — pij bulion, jedz ogórki kiszone<br>
+      <b>Elektrolity</b> — szczególnie ważne na początku<br>
+      <b>Witamina D3</b> — zalecana przez cały rok<br><br>
+      <b>💧 Nawodnienie:</b> pij min. 2–2,5L wody dziennie. Na keto nerki wydalają więcej wody!
+    </div>
+  </div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px">
+    <div style="font-family:'Lora',serif;font-size:18px;font-weight:600;margin-bottom:10px">⚡ Ketoza — jak sprawdzić?</div>
+    <div style="font-size:13px;line-height:1.8;color:var(--text)">
+      Ketoza zwykle zaczyna się po <b>2–4 dniach</b> ścisłego trzymania się &lt;20g węglowodanów.<br><br>
+      <b>Oznaki ketozy:</b><br>
+      • Zmniejszony apetyt<br>
+      • Metaliczny/owocowy zapach z ust<br>
+      • Więcej energii po 1–2 tygodniach<br>
+      • Paskudki do sprawdzenia: paski ketonowe z apteki (~15–30 zł)
+    </div>
+  </div>
+</div>
+
+</div><!-- scroll-area -->
+</div><!-- app -->
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-hdr">
+      <div class="modal-type" id="m-type"></div>
+      <div class="modal-title" id="m-title"></div>
+      <div class="modal-macros" id="m-macros"></div>
+    </div>
+    <div class="modal-body" id="m-body"></div>
+    <button class="close-btn" onclick="closeModal()">Zamknij</button>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════
+// KETO MEAL DATA — 4 tygodnie × 7 dni × 5 posiłków
+// każdy posiłek: { name, type, emoji, kcal, fat, prot, carb, ingredients[], steps[], tip }
+// ════════════════════════════════════════
+
+const MT = ['☀️ Śniadanie','🥗 Lunch','🍽️ Obiad','🌿 Przekąska','🌙 Kolacja'];
+const MI = ['ic1','ic2','ic3','ic4','ic5'];
+const DAYS = ['Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota','Niedziela'];
+
+const W = [
+// ═══ TYDZIEŃ 1 ═══
+[
+  // Pon
+  [
+    {name:'Jajecznica z boczkiem i awokado',type:'Śniadanie',emoji:'🍳',kcal:480,fat:42,prot:22,carb:4,
+     ing:[{q:'3 szt.',n:'jajka'},{q:'60g',n:'boczek wędzony'},{q:'½ szt.',n:'awokado'},{q:'1 łyżka',n:'masło'},{q:'sól, pieprz',n:''}],
+     steps:['Boczek podsmaż na suchej patelni do chrupkości, odłóż.','Na tym samym tłuszczu roztop masło.','Wbij jajka, smaż mieszając na jajecznicę.','Awokado pokrój w plastry.','Podaj razem — prosto z patelni.'],
+     tip:'Boczek daje tłuszcz i smak — nie wylewaj tłuszczu z patelni, usmaż na nim jajka!'},
+    {name:'Sałatka z tuńczykiem i oliwkami',type:'Lunch',emoji:'🥗',kcal:310,fat:22,prot:24,carb:4,
+     ing:[{q:'1 puszka',n:'tuńczyk w oliwie'},{q:'garść',n:'roszponka lub sałata'},{q:'8 szt.',n:'oliwki'},{q:'½ szt.',n:'ogórek'},{q:'1 łyżka',n:'oliwa z oliwek'},{q:'sok z cytryny',n:''}],
+     steps:['Tuńczyka odsącz z nadmiaru oliwy.','Sałatę i ogórek przygotuj.','Wymieszaj wszystko w misce.','Skrop oliwą i cytryną, dopraw.'],
+     tip:'Lunche keto to baza — sałata + tłuste białko + oliwa = gotowe w 5 minut!'},
+    {name:'Pierś z kurczaka z masłem czosnkowym i brokułami',type:'Obiad',emoji:'🍗',kcal:450,fat:30,prot:38,carb:6,
+     ing:[{q:'180g',n:'pierś z kurczaka'},{q:'200g',n:'brokuły'},{q:'2 łyżki',n:'masło'},{q:'2 ząbki',n:'czosnek'},{q:'1 łyżka',n:'oliwa'},{q:'sól, pieprz, tymianek',n:''}],
+     steps:['Kurczaka rozbij, natryj solą, pieprzem i tymiankiem.','Smaż na oliwie 5-6 min z każdej strony.','Brokuły ugotuj al dente (5 min) lub usmaż na patelni.','Na maśle zeszklij czosnek, polej kurczaka.'],
+     tip:'Masło czosnkowe robi całe danie — nie żałuj go!'},
+    {name:'Garść orzechów macadamia',type:'Przekąska',emoji:'🌰',kcal:200,fat:21,prot:2,carb:2,
+     ing:[{q:'30g',n:'orzechy macadamia lub włoskie'}],
+     steps:['Odważ 30g.','Zjedz powoli — orzechy są bardzo kaloryczne!'],
+     tip:'Orzechy = idealny keto snack. Mierz wagą — łatwo przesadzić!'},
+    {name:'Łosoś pieczony w śmietanie z koperkiem',type:'Kolacja',emoji:'🐟',kcal:420,fat:30,prot:34,carb:2,
+     ing:[{q:'180g',n:'filet z łososia'},{q:'3 łyżki',n:'śmietana 30%'},{q:'koperek',n:'świeży lub suszony'},{q:'1 łyżka',n:'masło'},{q:'sok z cytryny',n:''},{q:'sól, pieprz',n:''}],
+     steps:['Łososia ułóż w naczyniu do pieczenia.','Posmaruj śmietaną, posyp koperkiem.','Skrop sokiem z cytryny.','Piecz 200°C przez 15-18 min.'],
+     tip:'Łosoś to królowa keto — dużo tłuszczu omega-3 i białka!'},
+  ],
+  // Wt
+  [
+    {name:'Omlet z serem i szpinakiem',type:'Śniadanie',emoji:'🍳',kcal:460,fat:38,prot:26,carb:3,
+     ing:[{q:'3 szt.',n:'jajka'},{q:'40g',n:'ser żółty starty'},{q:'garść',n:'szpinak baby'},{q:'1 łyżka',n:'masło'},{q:'sól, pieprz',n:''}],
+     steps:['Jajka roztrzep z solą i pieprzem.','Rozgrzej masło na patelni.','Wlej jajka, smaż na średnim ogniu.','Gdy zetnie się od spodu — połóż szpinak i ser.','Złóż omlet na pół, dosmażaj 1 min.'],
+     tip:'Nie mieszaj omletu — daj mu się ściąć spokojnie!'},
+    {name:'Jajka na twardo z majonezem i ogórkiem',type:'Lunch',emoji:'🥚',kcal:280,fat:23,prot:14,carb:2,
+     ing:[{q:'3 szt.',n:'jajka'},{q:'2 łyżki',n:'majonez (pełnotłusty)'},{q:'1 szt.',n:'ogórek'},{q:'sól, pieprz',n:''}],
+     steps:['Ugotuj jajka na twardo (9 min).','Obierz, pokrój w ćwiartki.','Podaj z majonezem i ogórkiem.'],
+     tip:'Majonez keto = pełnotłusty! Nie kupuj „light".'},
+    {name:'Kotlety mielone z karkówki w sosie śmietanowym',type:'Obiad',emoji:'🍖',kcal:520,fat:42,prot:30,carb:3,
+     ing:[{q:'200g',n:'mięso mielone wieprzowe'},{q:'1 szt.',n:'jajko'},{q:'3 łyżki',n:'śmietana 30%'},{q:'1 ząbek',n:'czosnek'},{q:'sól, pieprz, majeranek',n:''},{q:'1 łyżka',n:'masło'}],
+     steps:['Mięso wymieszaj z jajkiem, czosnkiem i przyprawami.','Uformuj 2-3 kotlety.','Smaż na maśle 5 min z każdej strony.','Dolej śmietanę, duś 3 min.'],
+     tip:'Bez bułki tartej! Jajko wystarcza jako spoiwo.'},
+    {name:'Seler naciowy z mascarpone',type:'Przekąska',emoji:'🌿',kcal:150,fat:13,prot:2,carb:3,
+     ing:[{q:'3 łodygi',n:'seler naciowy'},{q:'2 łyżki',n:'mascarpone lub twarożek tłusty'}],
+     steps:['Seler umyj, pokrój.','Zanurzaj w mascarpone.'],
+     tip:'Seler + tłusty dip = keto snack w 2 minuty!'},
+    {name:'Stek wołowy z masłem ziołowym',type:'Kolacja',emoji:'🥩',kcal:480,fat:36,prot:38,carb:1,
+     ing:[{q:'180g',n:'stek wołowy (rostbef lub antrykot)'},{q:'2 łyżki',n:'masło'},{q:'1 ząbek',n:'czosnek'},{q:'gałązka',n:'rozmarynu'},{q:'sól, pieprz',n:''}],
+     steps:['Stek wyjmij z lodówki 30 min wcześniej.','Rozgrzej patelnię do maksimum.','Smaż 2-3 min z każdej strony (medium rare).','Na koniec dodaj masło, czosnek i rozmaryn — polewaj stek.','Odpocznij 3 min przed krojeniem.'],
+     tip:'Gorąca patelnia = chrupiąca skórka. Nie ruszaj steka przez pierwsze 2 min!'},
+  ],
+  // Śr
+  [
+    {name:'Serek wiejski z orzechami i oliwą',type:'Śniadanie',emoji:'🧀',kcal:400,fat:32,prot:20,carb:4,
+     ing:[{q:'150g',n:'serek wiejski tłusty'},{q:'2 łyżki',n:'oliwa z oliwek'},{q:'30g',n:'orzechy włoskie'},{q:'szczypta',n:'soli i pieprzu'}],
+     steps:['Serek nałóż do miseczki.','Polej oliwą, posyp orzechami.','Dopraw solą i pieprzem.'],
+     tip:'Serek wiejski + oliwa to niedocenione keto śniadanie — szybkie i sycące!'},
+    {name:'Zupa krem z brokułów ze śmietaną',type:'Lunch',emoji:'🥣',kcal:290,fat:22,prot:9,carb:7,
+     ing:[{q:'300g',n:'brokuły'},{q:'500ml',n:'bulion drobiowy'},{q:'100ml',n:'śmietana 30%'},{q:'1 ząbek',n:'czosnek'},{q:'1 łyżka',n:'masło'},{q:'sól, pieprz, gałka muszkatołowa',n:''}],
+     steps:['Brokuły ugotuj w bulionie 10 min.','Dodaj czosnek i masło.','Zmiksuj na krem.','Wlej śmietanę, podgrzej.','Dopraw solą, pieprzem i gałką.'],
+     tip:'Gotuj większą porcję — zupa keto stoi w lodówce 3 dni!'},
+    {name:'Udka z kurczaka pieczone w ziołach',type:'Obiad',emoji:'🍗',kcal:490,fat:36,prot:36,carb:1,
+     ing:[{q:'2 szt.',n:'udka z kurczaka'},{q:'2 łyżki',n:'oliwa'},{q:'2 ząbki',n:'czosnek'},{q:'tymianek, rozmaryn, oregano',n:''},{q:'sól, pieprz',n:''}],
+     steps:['Udka natrzyj oliwą, czosnkiem i ziołami.','Odstaw na 30 min (opcjonalnie — dłużej = więcej smaku).','Piecz 200°C przez 40 min.','Skóra powinna być złota i chrupiąca.'],
+     tip:'Skóra kurczaka to czysty tłuszcz keto — jedz ją!'},
+    {name:'Plastry sera żółtego z szynką',type:'Przekąska',emoji:'🧀',kcal:180,fat:14,prot:12,carb:1,
+     ing:[{q:'2 plastry',n:'ser żółty'},{q:'2 plastry',n:'szynka wieprzowa (bez cukru)'}],
+     steps:['Zawiń szynkę w ser — gotowe!'],
+     tip:'Sprawdzaj skład szynki — bez cukru i skrobi!'},
+    {name:'Krewetki na maśle czosnkowym z cukinią',type:'Kolacja',emoji:'🦐',kcal:380,fat:26,prot:30,carb:4,
+     ing:[{q:'150g',n:'krewetki obrane'},{q:'1 szt.',n:'cukinia'},{q:'2 łyżki',n:'masło'},{q:'3 ząbki',n:'czosnek'},{q:'1 łyżka',n:'oliwa'},{q:'natka pietruszki',n:''}],
+     steps:['Cukinię pokrój w plastry, smaż na oliwie 4 min.','Na osobnej patelni roztop masło z czosnkiem.','Dodaj krewetki, smaż 2-3 min.','Połącz z cukinią, posyp natką.'],
+     tip:'Krewetki gotują się błyskawicznie — nie przesmaż, będą gumowe!'},
+  ],
+  // Czw
+  [
+    {name:'Jajka w koszulce na szpinaku ze śmietaną',type:'Śniadanie',emoji:'🍳',kcal:430,fat:36,prot:20,carb:4,
+     ing:[{q:'2 szt.',n:'jajka'},{q:'150g',n:'szpinak baby'},{q:'2 łyżki',n:'śmietana 30%'},{q:'1 łyżka',n:'masło'},{q:'1 łyżka',n:'ocet'},{q:'sól, pieprz',n:''}],
+     steps:['Szpinak podsmaż na maśle 2 min, dodaj śmietanę.','Wodę z octem zagotuj na lekkim wrzeniu.','Jajko wbij do kubka, wpuść powoli do wody.','Gotuj 3 min. Wyjmij łyżką cedzakową.','Podaj jajko na szpinaku.'],
+     tip:'Ocet w wodzie pomaga białku się skoagulować — klucz do jajka w koszulce!'},
+    {name:'Awokado z łososiem wędzonym',type:'Lunch',emoji:'🥑',kcal:380,fat:30,prot:20,carb:3,
+     ing:[{q:'1 szt.',n:'awokado'},{q:'80g',n:'łosoś wędzony'},{q:'1 łyżka',n:'oliwa'},{q:'sok z cytryny',n:''},{q:'koperek',n:''}],
+     steps:['Awokado przekrój, usuń pestkę.','W zagłębienie ułóż łososia.','Skrop oliwą i cytryną, posyp koperkiem.'],
+     tip:'Jedz bezpośrednio z połówki awokado — zero zmywania!'},
+    {name:'Żeberka wieprzowe duszone z kapustą',type:'Obiad',emoji:'🥩',kcal:560,fat:44,prot:32,carb:5,
+     ing:[{q:'250g',n:'żeberka wieprzowe'},{q:'200g',n:'kapusta włoska lub biała'},{q:'1 szt.',n:'cebula'},{q:'2 ząbki',n:'czosnek'},{q:'1 łyżka',n:'smalec lub masło'},{q:'kminek, sól, pieprz',n:''}],
+     steps:['Żeberka obsmaż na tłuszczu ze wszystkich stron.','Dodaj cebulę i czosnek.','Dodaj kapustę pokrojoną w paski.','Dopraw kminkiem, solą, pieprzem.','Duś pod przykryciem 1h na małym ogniu.'],
+     tip:'Żeberka wymagają czasu — za to smakują fenomenalnie!'},
+    {name:'Oliwki z fetą',type:'Przekąska',emoji:'🫒',kcal:160,fat:14,prot:5,carb:2,
+     ing:[{q:'20 szt.',n:'oliwki'},{q:'30g',n:'ser feta'}],
+     steps:['Ułóż oliwki i fetę w miseczce.','Można skropić oliwą.'],
+     tip:'Oliwki = elektrolity i tłuszcz — idealne na keto!'},
+    {name:'Zupa rybna z łososiem i śmietaną',type:'Kolacja',emoji:'🐟',kcal:390,fat:28,prot:28,carb:5,
+     ing:[{q:'150g',n:'filet z łososia'},{q:'500ml',n:'bulion rybny lub drobiowy'},{q:'100ml',n:'śmietana 30%'},{q:'½ szt.',n:'pora'},{q:'1 łyżka',n:'masło'},{q:'koperek, sól, pieprz',n:''}],
+     steps:['Por podsmaż na maśle 3 min.','Wlej bulion, zagotuj.','Dodaj łososia pokrojonego w kawałki.','Gotuj 8 min.','Wlej śmietanę, dopraw, posyp koperkiem.'],
+     tip:'Zupa rybna szybka i sycąca — łosoś gotuje się tylko 8 min!'},
+  ],
+  // Pt
+  [
+    {name:'Pancakes keto z mąki migdałowej',type:'Śniadanie',emoji:'🥞',kcal:440,fat:36,prot:18,carb:5,
+     ing:[{q:'60g',n:'mąka migdałowa'},{q:'2 szt.',n:'jajka'},{q:'2 łyżki',n:'ser śmietankowy (cream cheese)'},{q:'½ łyżeczki',n:'proszek do pieczenia'},{q:'1 łyżka',n:'masło'},{q:'szczypta',n:'soli'}],
+     steps:['Wymieszaj mąkę migdałową, jajka, cream cheese i proszek.','Rozgrzej masło na patelni.','Smaż małe placki po 2 min z każdej strony.','Podaj z masłem lub kwaśną śmietaną.'],
+     tip:'Mąka migdałowa to podstawa keto pieczenia — kupuj w większych opakowaniach!'},
+    {name:'Sałatka Cezar bez grzanek',type:'Lunch',emoji:'🥗',kcal:320,fat:26,prot:16,carb:3,
+     ing:[{q:'150g',n:'sałata rzymska'},{q:'40g',n:'parmezan'},{q:'60g',n:'boczek lub kurczak'},{q:'2 łyżki',n:'sos Cezar (gotowy)'},{q:'1 łyżka',n:'oliwa'}],
+     steps:['Boczek usmaż chrupko.','Sałatę porwij.','Wymieszaj z sosem i oliwą.','Posyp boczkiem i parmezanem.'],
+     tip:'Sos Cezar sprawdź skład — niektóre mają cukier!'},
+    {name:'Polędwiczki wieprzowe z pieczarkami w śmietanie',type:'Obiad',emoji:'🍖',kcal:480,fat:34,prot:36,carb:4,
+     ing:[{q:'180g',n:'polędwiczka wieprzowa'},{q:'200g',n:'pieczarki'},{q:'100ml',n:'śmietana 30%'},{q:'1 łyżka',n:'masło'},{q:'1 ząbek',n:'czosnek'},{q:'tymianek, sól, pieprz',n:''}],
+     steps:['Polędwiczkę pokrój w plastry, obsmaż na maśle.','Pieczarki pokrój, dodaj do mięsa.','Dodaj czosnek i tymianek.','Wlej śmietanę, duś 5 min.'],
+     tip:'Śmietana 30% = keto. 18% też ok. Nigdy light!'},
+    {name:'Chipsy z parmezanu',type:'Przekąska',emoji:'🧀',kcal:130,fat:9,prot:10,carb:1,
+     ing:[{q:'30g',n:'parmezan starty'}],
+     steps:['Rozgrzej piekarnik 200°C.','Na papierze do pieczenia układaj kopczyki parmezanu.','Piecz 5-7 min aż się roztopią i zrumienią.','Ostudź — stwardnieją w chipsy.'],
+     tip:'Najlepszy keto snack! Rób od razu dużą partię.'},
+    {name:'Grillowana makrela z sałatką ogórkową',type:'Kolacja',emoji:'🐟',kcal:430,fat:32,prot:32,carb:3,
+     ing:[{q:'1 szt.',n:'makrela świeża lub mrożona'},{q:'1 szt.',n:'ogórek'},{q:'3 łyżki',n:'śmietana 30%'},{q:'koperek',n:''},{q:'1 łyżka',n:'oliwa'},{q:'sól, pieprz, cytryna',n:''}],
+     steps:['Makrele natrzyj oliwą, solą i pieprzem.','Grilluj lub piecz 200°C przez 20 min.','Ogórek zetrzyj na tarce lub pokrój w plastry.','Wymieszaj ze śmietaną i koperkiem.'],
+     tip:'Makrela to tania ryba bogata w omega-3 — keto skarb!'},
+  ],
+  // Sb
+  [
+    {name:'Jajka po benedyktyńsku keto (bez angielskiej muffiny)',type:'Śniadanie',emoji:'🍳',kcal:500,fat:44,prot:22,carb:2,
+     ing:[{q:'2 szt.',n:'jajka'},{q:'60g',n:'łosoś wędzony'},{q:'2 łyżki',n:'masło'},{q:'2 żółtka',n:''},{q:'1 łyżka',n:'sok z cytryny'},{q:'sól, cayenne',n:''}],
+     steps:['Sos hollandaise: żółtka ubij w kąpieli wodnej, powoli dodaj roztopione masło.','Dopraw cytryną i cayenne.','Jajka posadź na wodzie z octem.','Na talerzu ułóż łososia, na nim jajko, polej sosem.'],
+     tip:'Bez angielskiej muffiny = czyste keto i jeszcze smaczniejsze!'},
+    {name:'Zupa cebulowa z serem (bez grzanki)',type:'Lunch',emoji:'🥣',kcal:280,fat:20,prot:12,carb:8,
+     ing:[{q:'3 szt.',n:'cebula'},{q:'600ml',n:'bulion wołowy'},{q:'2 łyżki',n:'masło'},{q:'50g',n:'ser gruyère lub żółty'},{q:'tymianek, sól, pieprz',n:''}],
+     steps:['Cebulę pokrój w krążki, smaż na maśle 30 min (aż skarmelizuje).','Wlej bulion, gotuj 15 min z tymiankiem.','Przelej do żaroodpornej miski.','Posyp serem, zapiecz pod grillem.'],
+     tip:'Karmelizacja cebuli to klucz — nie spiesz się!'},
+    {name:'Pieczeń wołowa z warzywami keto',type:'Obiad',emoji:'🥩',kcal:520,fat:38,prot:38,carb:5,
+     ing:[{q:'200g',n:'pieczeń wołowa'},{q:'1 szt.',n:'cukinia'},{q:'1 szt.',n:'papryka czerwona'},{q:'2 łyżki',n:'oliwa'},{q:'2 ząbki',n:'czosnek'},{q:'rozmaryn, sól, pieprz',n:''}],
+     steps:['Wołowinę natrzyj solą, pieprzem i czosnkiem.','Obsmaż ze wszystkich stron.','Warzywa pokrój w większe kawałki, ułóż wokół.','Skrop oliwą.','Piecz 180°C przez 45-60 min.'],
+     tip:'Mięso wyjmij 20 min przed pieczeniem — będzie bardziej soczyste!'},
+    {name:'Ogórek z hummusem keto (z tahini)',type:'Przekąska',emoji:'🥒',kcal:120,fat:10,prot:3,carb:4,
+     ing:[{q:'½ szt.',n:'ogórek'},{q:'2 łyżki',n:'hummus (sprawdź węgle!) lub pasta tahini'}],
+     steps:['Ogórek pokrój w słupki.','Maczaj w hummusie.'],
+     tip:'Hummus ma ok. 4g węgli na 2 łyżki — OK w keto w małych ilościach!'},
+    {name:'Tatar wołowy z żółtkiem i kaparami',type:'Kolacja',emoji:'🥩',kcal:380,fat:26,prot:32,carb:2,
+     ing:[{q:'150g',n:'wołowina (polędwica lub ligawa)'},{q:'1 żółtko',n:''},{q:'1 łyżka',n:'kaparów'},{q:'1 łyżeczka',n:'musztarda'},{q:'½ cebuli',n:'drobno posiekanej'},{q:'oliwa, sól, pieprz',n:''}],
+     steps:['Mięso posiekaj nożem (nie maszynką).','Wymieszaj z żółtkiem, kaparami, musztardą i cebulą.','Dopraw oliwą, solą i pieprzem.','Podaj od razu — surowe mięso nie czeka!'],
+     tip:'Tatar to czysty keto — zero węglowodanów, same tłuszcze i białko!'},
+  ],
+  // Nd
+  [
+    {name:'Pełne śniadanie angielskie keto',type:'Śniadanie',emoji:'🍳',kcal:560,fat:46,prot:30,carb:3,
+     ing:[{q:'3 szt.',n:'jajka'},{q:'80g',n:'boczek'},{q:'80g',n:'kiełbaski wieprzowe'},{q:'50g',n:'pieczarki'},{q:'1 szt.',n:'pomidor (½ szt.)'},{q:'2 łyżki',n:'masło'}],
+     steps:['Boczek i kiełbaski usmaż na suchej patelni.','Na maśle podsmaż pieczarki i pomidora.','Na osobnej patelni usmaż jajka sadzone.','Podaj wszystko razem na dużym talerzu.'],
+     tip:'Niedziela = pełne keto śniadanie! Zasiądź z kawą.'},
+    {name:'Zupa krem z kalafiora z boczkiem',type:'Lunch',emoji:'🥣',kcal:320,fat:24,prot:14,carb:8,
+     ing:[{q:'½ główki',n:'kalafior'},{q:'500ml',n:'bulion drobiowy'},{q:'100ml',n:'śmietana 30%'},{q:'60g',n:'boczek'},{q:'1 łyżka',n:'masło'},{q:'sól, pieprz, gałka',n:''}],
+     steps:['Kalafior ugotuj w bulionie do miękkości (15 min).','Zmiksuj z masłem na krem.','Dodaj śmietanę, dopraw.','Boczek usmaż chrupko — posyp na zupę.'],
+     tip:'Krem z kalafiora to keto odpowiednik ziemniaczanej!'},
+    {name:'Kaczka pieczona z sosem pomarańczowym (keto)',type:'Obiad',emoji:'🦆',kcal:580,fat:46,prot:36,carb:4,
+     ing:[{q:'2 udka',n:'z kaczki'},{q:'1 szt.',n:'pomarańcza (tylko skórka i trochę soku)'},{q:'2 łyżki',n:'masło'},{q:'rozmaryn, tymianek',n:''},{q:'sól, pieprz',n:''},{q:'200ml',n:'bulion drobiowy'}],
+     steps:['Udka kaczki natrzyj solą, pieprzem i ziołami.','Piecz 180°C przez 1h 15 min — skóra powinna być złota.','Sos: tłuszcz z pieczenia + bulion + sok i skórka pomarańczy, zredukuj.','Skórka pomarańczy daje aromat bez dużo cukru.'],
+     tip:'Kaczka jest tłusta — idealna keto niedziela!'},
+    {name:'Orzechy brazylijskie',type:'Przekąska',emoji:'🌰',kcal:140,fat:14,prot:3,carb:1,
+     ing:[{q:'3 szt.',n:'orzechy brazylijskie'}],
+     steps:['Zjedz 3 orzechy — nie więcej!'],
+     tip:'Orzechy brazylijskie = selenowe superfood. 3 szt. to dzienna dawka selenu!'},
+    {name:'Tarta keto ze szpinakiem i fetą (bez spodu pszennego)',type:'Kolacja',emoji:'🥧',kcal:420,fat:34,prot:22,carb:4,
+     ing:[{q:'4 szt.',n:'jajka'},{q:'150ml',n:'śmietana 30%'},{q:'150g',n:'szpinak'},{q:'80g',n:'feta'},{q:'1 łyżka',n:'masło'},{q:'sól, pieprz, gałka',n:''}],
+     steps:['Spód keto: jeśli chcesz — wyłóż formę papierem i pominąć.','Szpinak podsmaż na maśle.','Wymieszaj jajka ze śmietaną, solą, pieprzem, gałką.','Dodaj szpinak i pokruszoną fetę.','Piecz 180°C przez 25 min.'],
+     tip:'Keto quiche bez spodu = frittata w formie! Prosta i pyszna.'},
+  ],
+],
+
+// ═══ TYDZIEŃ 2 ═══
+[
+  // Pon
+  [
+    {name:'Jajka sadzone na smalcu z kiełbasą',type:'Śniadanie',emoji:'🍳',kcal:490,fat:42,prot:24,carb:2,
+     ing:[{q:'3 szt.',n:'jajka'},{q:'70g',n:'kiełbasa wieprzowa'},{q:'1 łyżka',n:'smalec'},{q:'sól, pieprz',n:''}],
+     steps:['Kiełbasę pokrój w plastry, usmaż na smalcu.','Na tym samym tłuszczu smaż jajka sadzone.','Dopraw solą i pieprzem.'],
+     tip:'Smalec to tradycyjny keto tłuszcz — nie bój się go!'},
+    {name:'Kapuśniak keto',type:'Lunch',emoji:'🥣',kcal:260,fat:18,prot:12,carb:7,
+     ing:[{q:'300g',n:'kapusta kiszona'},{q:'100g',n:'boczek wędzony'},{q:'600ml',n:'bulion'},{q:'1 szt.',n:'cebula'},{q:'kminek, liść laurowy, sól',n:''}],
+     steps:['Boczek pokrój, obsmaż z cebulą.','Dodaj kapustę, bulion i przyprawy.','Gotuj 30 min.'],
+     tip:'Kapusta kiszona to probiotyk — super dla jelit na keto!'},
+    {name:'Łosoś w sosie cytrynowo-kaparowym',type:'Obiad',emoji:'🐟',kcal:460,fat:34,prot:34,carb:2,
+     ing:[{q:'180g',n:'filet z łososia'},{q:'2 łyżki',n:'masło'},{q:'1 łyżka',n:'kapary'},{q:'1 ząbek',n:'czosnek'},{q:'sok z cytryny',n:''},{q:'natka pietruszki',n:''}],
+     steps:['Łososia usmaż na maśle 4 min z każdej strony.','Na tej samej patelni podgrzej kapary i czosnek.','Skrop cytryną, posyp natką.','Polej sos na łososia.'],
+     tip:'Sos kaparowy robi się sam — nie myj patelni po rybce!'},
+    {name:'Serek brie z orzechami',type:'Przekąska',emoji:'🧀',kcal:170,fat:14,prot:8,carb:1,
+     ing:[{q:'40g',n:'ser brie lub camembert'},{q:'15g',n:'orzechy pekany lub włoskie'}],
+     steps:['Pokrój ser, wyłóż na talerzyk z orzechami.'],
+     tip:'Ser pleśniowy = keto delicja! Pełen tłuszczu i smaku.'},
+    {name:'Zapiekanka z bakłażana z mięsem mielonym',type:'Kolacja',emoji:'🍆',kcal:450,fat:34,prot:28,carb:8,
+     ing:[{q:'1 szt.',n:'bakłażan'},{q:'150g',n:'mięso mielone wołowe'},{q:'100ml',n:'śmietana 30%'},{q:'50g',n:'ser żółty'},{q:'1 ząbek',n:'czosnek'},{q:'1 łyżka',n:'oliwa'},{q:'sól, oregano',n:''}],
+     steps:['Bakłażan pokrój w plastry, posól, odstaw 10 min, osusz.','Obsmaż plastry na oliwie.','Mięso usmaż z czosnkiem i oregano.','Układaj warstwy: bakłażan, mięso, śmietana.','Posyp serem, piecz 200°C przez 20 min.'],
+     tip:'Solenie bakłażana usuwa goryczkę i nadmiar wody!'},
+  ],
+  // Wt
+  [
+    {name:'Koktajl keto z awokado i szpinakiem',type:'Śniadanie',emoji:'🥤',kcal:420,fat:34,prot:12,carb:6,
+     ing:[{q:'½ szt.',n:'awokado'},{q:'garść',n:'szpinak baby'},{q:'150ml',n:'śmietana 30% lub mleko kokosowe'},{q:'1 łyżka',n:'masło orzechowe'},{q:'szczypta',n:'soli'}],
+     steps:['Wszystko wrzuć do blendera.','Blenduj do gładkości.','Przelej do szklanki, pij od razu.'],
+     tip:'Keto smoothie — bez owoców, za to kremowe i sycące!'},
+    {name:'Jajka faszerowane z majonezem i papryką',type:'Lunch',emoji:'🥚',kcal:300,fat:26,prot:14,carb:2,
+     ing:[{q:'4 szt.',n:'jajka'},{q:'2 łyżki',n:'majonez'},{q:'½ łyżeczki',n:'papryka wędzona'},{q:'sól, szczypiorek',n:''}],
+     steps:['Ugotuj jajka na twardo, przekrój na pół.','Wyjmij żółtka, wymieszaj z majonezem i papryką.','Nadziewaj białka mieszanką.','Posyp szczypiorkiem.'],
+     tip:'Jajka faszerowane to keto klasyk na każdą okazję!'},
+    {name:'Kotlet schabowy z kapustą zasmażaną',type:'Obiad',emoji:'🥩',kcal:520,fat:38,prot:34,carb:4,
+     ing:[{q:'180g',n:'schab bez kości'},{q:'1 szt.',n:'jajko'},{q:'2 łyżki',n:'mąka migdałowa lub wiórki kokosowe (zamiast bułki)'},{q:'200g',n:'kapusta biała'},{q:'1 łyżka',n:'smalec lub masło'},{q:'sól, pieprz',n:''}],
+     steps:['Schab rozbij, dopraw.','Obtocz w jajku i mące migdałowej.','Smaż na smalcu po 4 min z każdej strony.','Kapustę poszatkuj, zaduś na maśle z kminkiem.'],
+     tip:'Mąka migdałowa zamiast bułki tartej = idealny keto kotlet!'},
+    {name:'Pistacje niesolone',type:'Przekąska',emoji:'🌰',kcal:160,fat:13,prot:6,carb:5,
+     ing:[{q:'30g',n:'pistacje niesolone'}],
+     steps:['Odważ 30g.'],
+     tip:'Pistacje mają więcej węgli niż inne orzechy — nie przesadzaj!'},
+    {name:'Boczek z jajkami i sałatą',type:'Kolacja',emoji:'🥓',kcal:400,fat:34,prot:22,carb:2,
+     ing:[{q:'80g',n:'boczek'},{q:'2 szt.',n:'jajka'},{q:'garść',n:'sałata'},{q:'1 łyżka',n:'majonez'},{q:'sól, pieprz',n:''}],
+     steps:['Boczek usmaż chrupko.','Jajka usmaż sadzone lub na twardo.','Sałatę ułóż na talerzu z majonezem.','Ułóż boczek i jajka.'],
+     tip:'Prosta kolacja w 10 min — keto w najczystszej postaci!'},
+  ],
+  // Śr
+  [
+    {name:'Budyń chia z mlekiem kokosowym',type:'Śniadanie',emoji:'🥛',kcal:380,fat:30,prot:8,carb:6,
+     ing:[{q:'4 łyżki',n:'nasiona chia'},{q:'200ml',n:'mleko kokosowe'},{q:'szczypta',n:'soli'},{q:'1 łyżka',n:'wiórki kokosowe prażone'}],
+     steps:['Wymieszaj chia z mlekiem i solą.','Wstaw na noc do lodówki lub 20 min.','Posyp wiórkami kokosowymi.'],
+     tip:'Chia pęcznieje i daje uczucie sytości — idealne keto śniadanie!'},
+    {name:'Bulion kostny z masłem',type:'Lunch',emoji:'🫖',kcal:180,fat:16,prot:8,carb:0,
+     ing:[{q:'300ml',n:'bulion kostny (wołowy lub drobiowy)'},{q:'1 łyżka',n:'masło'},{q:'sól',n:''}],
+     steps:['Bulion podgrzej.','Wrzuć masło, wymieszaj.','Pij jak herbatę.'],
+     tip:'Bulion kostny z masłem = keto "bullet coffee" w wersji obiadowej! Mega sycące.'},
+    {name:'Wieprzowina duszona z grzybami',type:'Obiad',emoji:'🍄',kcal:490,fat:36,prot:32,carb:5,
+     ing:[{q:'180g',n:'karkówka lub łopatka wieprzowa'},{q:'200g',n:'pieczarki'},{q:'100ml',n:'śmietana 30%'},{q:'1 szt.',n:'cebula'},{q:'1 łyżka',n:'masło'},{q:'tymianek, czosnek, sól',n:''}],
+     steps:['Mięso pokrój w kostkę, obsmaż.','Cebulę i pieczarki dodaj, smaż 5 min.','Dodaj czosnek i tymianek.','Wlej śmietanę, duś 20 min pod przykryciem.'],
+     tip:'Karkówka jest tłustsza od schabu — lepsza na keto!'},
+    {name:'Ogórki kiszone z serem',type:'Przekąska',emoji:'🫙',kcal:80,fat:5,prot:5,carb:3,
+     ing:[{q:'2 szt.',n:'ogórek kiszony'},{q:'30g',n:'ser żółty'}],
+     steps:['Pokrój i zjedz — ogórki kiszone dają elektrolity!'],
+     tip:'Ogórki kiszone to keto superfood — sód, probiotyki i prawie zero węgli!'},
+    {name:'Makrela wędzona z sałatką z awokado',type:'Kolacja',emoji:'🐟',kcal:440,fat:34,prot:26,carb:4,
+     ing:[{q:'1 szt.',n:'makrela wędzona'},{q:'1 szt.',n:'awokado'},{q:'½ szt.',n:'ogórek'},{q:'1 łyżka',n:'oliwa'},{q:'sok z cytryny',n:''}],
+     steps:['Makrelę obierz ze skóry, rozdrobnij.','Awokado pokrój w kostkę.','Wymieszaj z ogórkiem, oliwą i cytryną.'],
+     tip:'Makrela wędzona = gotowe danie bez gotowania!'},
+  ],
+  // Czw
+  [
+    {name:'Twarożek śmietankowy z łososiem i kaparami',type:'Śniadanie',emoji:'🧀',kcal:420,fat:34,prot:22,carb:3,
+     ing:[{q:'100g',n:'cream cheese (twarożek pełnotłusty)'},{q:'60g',n:'łosoś wędzony'},{q:'1 łyżka',n:'kapary'},{q:'koperek',n:''},{q:'sok z cytryny',n:''}],
+     steps:['Twarożek wyłóż na talerzyk.','Na wierzchu ułóż łososia i kapary.','Skrop cytryną, posyp koperkiem.'],
+     tip:'Cream cheese jest pełen tłuszczu — szukaj bez cukru!'},
+    {name:'Sałatka z jajkiem, boczkiem i rukolą',type:'Lunch',emoji:'🥗',kcal:360,fat:30,prot:18,carb:2,
+     ing:[{q:'2 szt.',n:'jajka na twardo'},{q:'60g',n:'boczek chrupki'},{q:'garść',n:'rukola'},{q:'1 łyżka',n:'oliwa'},{q:'1 łyżeczka',n:'musztarda'},{q:'ocet winny, sól',n:''}],
+     steps:['Boczek usmaż chrupko.','Jajka ugotuj, pokrój w ćwiartki.','Wymieszaj rukolę z vinaigrette (oliwa, musztarda, ocet).','Ułóż jajka i boczek na wierzchu.'],
+     tip:'Musztarda + oliwa + ocet = keto vinaigrette w 30 sekund!'},
+    {name:'Kurczak w sosie masła orzechowego (keto satay)',type:'Obiad',emoji:'🍗',kcal:500,fat:36,prot:36,carb:6,
+     ing:[{q:'180g',n:'pierś z kurczaka'},{q:'2 łyżki',n:'masło orzechowe (100% orzechy)'},{q:'1 łyżka',n:'sos sojowy'},{q:'1 łyżka',n:'oliwa'},{q:'½ łyżeczki',n:'imbir mielony'},{q:'czosnek, chili',n:''}],
+     steps:['Kurczaka pokrój w paski.','Sos: masło orzechowe + sos sojowy + imbir + czosnek.','Kurczaka usmaż na oliwie.','Polej sosem, podsmaż razem 2 min.'],
+     tip:'Masło orzechowe 100% = keto. Z cukrem — sprawdź skład!'},
+    {name:'Kostka gorzkiej czekolady 85%+',type:'Przekąska',emoji:'🍫',kcal:100,fat:8,prot:2,carb:4,
+     ing:[{q:'20g',n:'czekolada gorzka 85%+'}],
+     steps:['Jedz powoli — delektuj się!'],
+     tip:'85%+ czekolada jest OK w keto! 20g to ok. 4g węgli.'},
+    {name:'Rostbef z chrzanem i sałatą',type:'Kolacja',emoji:'🥩',kcal:390,fat:26,prot:34,carb:2,
+     ing:[{q:'150g',n:'rostbef (gotowy lub pieczony)'},{q:'1 łyżka',n:'chrzan'},{q:'garść',n:'sałata masłowa'},{q:'1 łyżka',n:'majonez'}],
+     steps:['Rostbef pokrój w plastry.','Sałatę ułóż na talerzu.','Ułóż mięso, dodaj chrzan i majonez.'],
+     tip:'Rostbef gotowy ze sklepu = szybka kolacja keto!'},
+  ],
+  // Pt
+  [
+    {name:'Frittata z warzywami',type:'Śniadanie',emoji:'🍳',kcal:440,fat:34,prot:26,carb:5,
+     ing:[{q:'4 szt.',n:'jajka'},{q:'½ szt.',n:'papryka czerwona'},{q:'½ szt.',n:'cukinia'},{q:'40g',n:'ser feta'},{q:'1 łyżka',n:'oliwa'},{q:'sól, oregano',n:''}],
+     steps:['Rozgrzej piekarnik 200°C.','Warzywa pokrój, podsmaż 5 min na oliwie.','Jajka roztrzep, wlej na warzywa.','Posyp fetą.','Piecz w piekarniku 10 min.'],
+     tip:'Frittata = omlet po włosku. Rób w patelni żeliwnej lub żaroodpornej!'},
+    {name:'Zupa szpinakowa z jajkiem',type:'Lunch',emoji:'🥣',kcal:270,fat:20,prot:14,carb:5,
+     ing:[{q:'200g',n:'szpinak'},{q:'500ml',n:'bulion'},{q:'100ml',n:'śmietana'},{q:'2 szt.',n:'jajka na twardo'},{q:'1 ząbek',n:'czosnek'},{q:'masło, sól, gałka',n:''}],
+     steps:['Czosnek zeszklij na maśle.','Dodaj szpinak, zalej bulionem.','Gotuj 5 min, zmiksuj.','Dodaj śmietanę.','Podaj z jajkiem.'],
+     tip:'Zupa szpinakowa z jajkiem to pełny keto lunch w 15 min!'},
+    {name:'Halibut lub dorsz pieczony z masłem',type:'Obiad',emoji:'🐟',kcal:420,fat:28,prot:38,carb:1,
+     ing:[{q:'180g',n:'halibut lub dorsz'},{q:'3 łyżki',n:'masło'},{q:'2 ząbki',n:'czosnek'},{q:'cytryna, koperek',n:''},{q:'sól, pieprz',n:''}],
+     steps:['Rybę ułóż w naczyniu.','Masło rozpuść z czosnkiem, polej rybę.','Skrop cytryną.','Piecz 200°C przez 15 min.'],
+     tip:'Biała ryba jest niskotłuszczowa — dodaj masła żeby była keto!'},
+    {name:'Prosciutto z rukolą',type:'Przekąska',emoji:'🥓',kcal:120,fat:8,prot:10,carb:1,
+     ing:[{q:'4 plastry',n:'prosciutto'},{q:'garść',n:'rukola'}],
+     steps:['Owiń rukolę w prosciutto.'],
+     tip:'Elegancki snack w 1 minutę!'},
+    {name:'Żurek keto (bez ziemniaków)',type:'Kolacja',emoji:'🥣',kcal:350,fat:24,prot:20,carb:5,
+     ing:[{q:'400ml',n:'zakwas żurkowy'},{q:'300ml',n:'bulion'},{q:'100ml',n:'śmietana 30%'},{q:'2 szt.',n:'jajka na twardo'},{q:'80g',n:'kiełbasa'},{q:'czosnek, majeranek',n:''}],
+     steps:['Zakwas wymieszaj z bulionem, zagotuj.','Dodaj czosnek i majeranek.','Wlej śmietanę.','Podaj z jajkiem i kiełbasą — bez ziemniaków!'],
+     tip:'Żurek bez ziemniaków = keto comfort food!'},
+  ],
+  // Sb
+  [
+    {name:'Naleśniki keto z cream cheese i jagodami',type:'Śniadanie',emoji:'🥞',kcal:420,fat:34,prot:18,carb:7,
+     ing:[{q:'60g',n:'mąka migdałowa'},{q:'2 szt.',n:'jajka'},{q:'60g',n:'cream cheese'},{q:'1 łyżka',n:'masło'},{q:'30g',n:'jagody lub maliny'},{q:'szczypta',n:'soli'}],
+     steps:['Wymieszaj mąkę, jajka i cream cheese na ciasto.','Smaż cienkie naleśniki na maśle.','Posmaruj cream cheese, dodaj jagody.'],
+     tip:'Jagody i maliny są OK w keto — mała porcja!'},
+    {name:'Pasta z pieczonej papryki z fetą',type:'Lunch',emoji:'🫑',kcal:260,fat:20,prot:10,carb:7,
+     ing:[{q:'1 szt.',n:'papryka czerwona'},{q:'60g',n:'feta'},{q:'1 łyżka',n:'oliwa'},{q:'1 ząbek',n:'czosnek'},{q:'sól, oregano',n:''}],
+     steps:['Paprykę piecz 200°C przez 20 min, obierz ze skórki.','Zmiksuj z fetą, czosnkiem i oliwą.','Podaj z surówymi warzywami.'],
+     tip:'Pasta z pieczonej papryki zamiast hummusu = mniej węgli!'},
+    {name:'Rolada wołowa z jajkiem i korniszonem',type:'Obiad',emoji:'🥩',kcal:490,fat:36,prot:36,carb:3,
+     ing:[{q:'180g',n:'zrazówka wołowa (cienkie plastry)'},{q:'2 szt.',n:'jajka na twardo'},{q:'3 szt.',n:'korniszony'},{q:'2 łyżki',n:'musztarda'},{q:'1 łyżka',n:'masło'},{q:'200ml',n:'bulion'}],
+     steps:['Mięso rozbij, posmaruj musztardą.','Ułóż jajko i korniszony, zwiń i spinaj wykałaczką.','Obsmaż ze wszystkich stron.','Duś w bulionie pod przykryciem 45 min.'],
+     tip:'Rolady wymagają czasu ale smakują jak z babcinego garnka!'},
+    {name:'Ser żółty z ogórkiem i oliwą',type:'Przekąska',emoji:'🧀',kcal:150,fat:12,prot:8,carb:1,
+     ing:[{q:'40g',n:'ser żółty'},{q:'½ szt.',n:'ogórek'},{q:'1 łyżeczka',n:'oliwa'}],
+     steps:['Pokrój i skrop oliwą.'],
+     tip:'Prosta przekąska — ale skrop oliwą, żeby zwiększyć keto tłuszcz!'},
+    {name:'Zupa grzybowa ze śmietaną',type:'Kolacja',emoji:'🍄',kcal:310,fat:22,prot:10,carb:6,
+     ing:[{q:'200g',n:'pieczarki'},{q:'20g',n:'grzyby suszone'},{q:'600ml',n:'bulion'},{q:'100ml',n:'śmietana 30%'},{q:'1 szt.',n:'cebula'},{q:'masło, majeranek',n:''}],
+     steps:['Grzyby suszone namocz 20 min.','Cebulę i pieczarki podsmaż na maśle.','Dodaj namoczone grzyby z wodą i bulion.','Gotuj 20 min.','Wlej śmietanę, dodaj majeranek.'],
+     tip:'Woda po moczeniu grzybów to aromatyczny bulion — dodaj ją!'},
+  ],
+  // Nd
+  [
+    {name:'Jajka po królewsku z kawiorem',type:'Śniadanie',emoji:'🥚',kcal:460,fat:38,prot:22,carb:2,
+     ing:[{q:'4 szt.',n:'jajka'},{q:'2 łyżki',n:'śmietana kwaśna'},{q:'1 łyżeczka',n:'kawior lub ikra (opcjonalnie)'},{q:'koperek',n:''},{q:'masło, sól',n:''}],
+     steps:['Jajka wbij do garnka, mieszaj na małym ogniu.','Dodaj masło i śmietanę — rób scrambled eggs.','Przed końcem dodaj kawior i koperek.'],
+     tip:'Jajka scrambled (mieszane) wymagają cierpliwości — małe temp!'},
+    {name:'Carpaccio z wołowiny z parmezanem',type:'Lunch',emoji:'🥩',kcal:320,fat:22,prot:26,carb:2,
+     ing:[{q:'120g',n:'polędwica wołowa (mrożona)'},{q:'30g',n:'parmezan'},{q:'1 łyżka',n:'oliwa'},{q:'rukola',n:''},{q:'sok z cytryny, sól',n:''}],
+     steps:['Mięso zamroź na 30 min — łatwiej kroić.','Pokrój bardzo cienko.','Rozłóż na talerzu, skrop oliwą i cytryną.','Posyp parmezanem i rukolą.'],
+     tip:'Carpaccio to elegancki lunch keto!'},
+    {name:'Jagnięcina z ziołami (niedzielny obiad)',type:'Obiad',emoji:'🍖',kcal:560,fat:42,prot:40,carb:2,
+     ing:[{q:'200g',n:'kotlety jagnięce'},{q:'2 łyżki',n:'oliwa'},{q:'rozmaryn, tymianek, czosnek',n:''},{q:'sól, pieprz',n:''},{q:'1 łyżka',n:'masło'}],
+     steps:['Kotlety natrzyj ziołami i czosnkiem.','Odstaw 1h do marynowania.','Smaż na bardzo gorącej patelni 3 min z każdej strony.','Na końcu dodaj masło i polej mięso.'],
+     tip:'Jagnięcina = keto luksus na niedzielę!'},
+    {name:'Czarna kawa z masłem (Bulletproof Coffee)',type:'Przekąska',emoji:'☕',kcal:130,fat:14,prot:0,carb:0,
+     ing:[{q:'200ml',n:'mocna kawa lub espresso'},{q:'1 łyżka',n:'masło pastewne lub ghee'},{q:'1 łyżka',n:'olej kokosowy (opcjonalnie)'}],
+     steps:['Kawę zaparzyć.','Wrzuć masło i kokosowy.','Zblenduj przez 20 sek — powstanie kremowa pianka.'],
+     tip:'Bulletproof coffee = keto paliwo! Nie mieszaj łyżeczką — blender obowiązkowy!'},
+    {name:'Kotlety jagnięce z miętowym sosem jogurtowym',type:'Kolacja',emoji:'🍖',kcal:380,fat:28,prot:28,carb:3,
+     ing:[{q:'resztkowe kotlety',n:'z obiadu'},{q:'3 łyżki',n:'jogurt grecki pełnotłusty'},{q:'mięta świeża',n:''},{q:'czosnek, sól',n:''}],
+     steps:['Sos: jogurt + posiekana mięta + czosnek.','Podaj z kotletami z obiadu.'],
+     tip:'Jogurt grecki pełnotłusty (10% tł.) jest OK w keto!'},
+  ],
+],
+
+// ═══ TYDZIEŃ 3 ═══
+[
+  [
+    {name:'Jajka sadzone z fetą i pomidorkami',type:'Śniadanie',emoji:'🍳',kcal:460,fat:38,prot:22,carb:4,
+     ing:[{q:'3 szt.',n:'jajka'},{q:'40g',n:'feta'},{q:'5 szt.',n:'pomidorki cherry'},{q:'1 łyżka',n:'masło'},{q:'oregano, sól',n:''}],
+     steps:['Pomidorki podsmaż minutę na maśle.','Wbij jajka.','Posyp fetą i oregano.'],
+     tip:'Feta + jajka = śródziemnomorskie keto śniadanie!'},
+    {name:'Sałatka nicejska keto',type:'Lunch',emoji:'🥗',kcal:380,fat:28,prot:24,carb:5,
+     ing:[{q:'1 puszka',n:'tuńczyk'},{q:'2 szt.',n:'jajka na twardo'},{q:'garść',n:'fasolka szparagowa (ugotowana)'},{q:'5 szt.',n:'oliwki'},{q:'2 szt.',n:'anchois (opcjonalnie)'},{q:'1 łyżka',n:'oliwa + ocet winny'}],
+     steps:['Sałatę i fasolkę ułóż.','Dodaj tuńczyka, jajka, oliwki.','Polej dressingiem z oliwy i octu.'],
+     tip:'Fasolka szparagowa jest keto! Nie mylić z fasolą — dobre warzywo!'},
+    {name:'Keto chili con carne',type:'Obiad',emoji:'🍲',kcal:480,fat:32,prot:34,carb:8,
+     ing:[{q:'180g',n:'wołowina mielona'},{q:'½ szt.',n:'papryka'},{q:'1 szt.',n:'cebula'},{q:'½ puszki',n:'pomidory krojone'},{q:'1 łyżka',n:'oliwa'},{q:'chili, kumin, czosnek',n:''},{q:'śmietana do podania',n:''}],
+     steps:['Cebulę i paprykę podsmaż.','Dodaj mięso, smaż rozdrabniając.','Dodaj pomidory i przyprawy.','Duś 20 min.','Podaj ze śmietaną.'],
+     tip:'Bez fasoli! Keto chili opiera się na mięsie i papryce.'},
+    {name:'Pestki dyni prażone',type:'Przekąska',emoji:'🌱',kcal:110,fat:9,prot:5,carb:2,
+     ing:[{q:'20g',n:'pestki dyni'},{q:'szczypta',n:'soli'}],
+     steps:['Posól i przeż 3 min na suchej patelni.'],
+     tip:'Pestki dyni = magnez i cynk — suplement keto za grosze!'},
+    {name:'Pieczone uda kurczaka z cytryną i czosnkiem',type:'Kolacja',emoji:'🍗',kcal:450,fat:34,prot:32,carb:2,
+     ing:[{q:'2 szt.',n:'uda kurczaka'},{q:'1 szt.',n:'cytryna'},{q:'4 ząbki',n:'czosnek'},{q:'2 łyżki',n:'oliwa'},{q:'rozmaryn, sól, pieprz',n:''}],
+     steps:['Udka natrzyj oliwą, czosnkiem, solą.','Cytrynę pokrój, ułóż wokół.','Piecz 200°C przez 45 min.'],
+     tip:'Skórka z kurczaka = keto złoto, chrup ją!'},
+  ],
+  [
+    {name:'Shake proteinowy keto z masłem orzechowym',type:'Śniadanie',emoji:'🥤',kcal:400,fat:30,prot:22,carb:5,
+     ing:[{q:'200ml',n:'mleko migdałowe niesłodzone'},{q:'2 łyżki',n:'masło orzechowe naturalne'},{q:'1 łyżka',n:'nasiona chia'},{q:'szczypta',n:'cynamonu'}],
+     steps:['Wszystko zblenduj.','Pij od razu.'],
+     tip:'Mleko migdałowe niesłodzone = tylko 1-2g węgli!'},
+    {name:'Wrap keto z sałatą zamiast tortilli',type:'Lunch',emoji:'🌯',kcal:320,fat:24,prot:20,carb:3,
+     ing:[{q:'3 duże liście',n:'sałaty lodowej lub masłowej'},{q:'80g',n:'kurczak pieczony'},{q:'2 łyżki',n:'majonez'},{q:'½ szt.',n:'awokado'},{q:'sól, pieprz',n:''}],
+     steps:['Na listku sałaty ułóż kurczaka.','Dodaj awokado i majonez.','Zawiń jak wrap.'],
+     tip:'Sałata zamiast tortilli = zero węgli i świetny keto wrap!'},
+    {name:'Pstrąg pieczony z migdałami',type:'Obiad',emoji:'🐟',kcal:460,fat:32,prot:36,carb:3,
+     ing:[{q:'1 szt.',n:'pstrąg (ok. 300g)'},{q:'30g',n:'migdały płatkowe'},{q:'2 łyżki',n:'masło'},{q:'cytryna, koperek',n:''},{q:'sól, pieprz',n:''}],
+     steps:['Pstrąga oczyść, dopraw solą.','Migdały podsmaż na maśle.','Rybę usmaż lub upiecz.','Na wierzchu polej masłem z migdałami.'],
+     tip:'Migdały na rybie = chrupkość i zdrowy tłuszcz!'},
+    {name:'Salami z serem',type:'Przekąska',emoji:'🍖',kcal:140,fat:12,prot:8,carb:1,
+     ing:[{q:'3 plastry',n:'salami'},{q:'30g',n:'ser żółty lub brie'}],
+     steps:['Ułóż na talerzyk. Gotowe!'],
+     tip:'Salami sprawdź skład — niektóre mają cukier lub skrobię!'},
+    {name:'Jajka w sosie musztardowym z szpinakiem',type:'Kolacja',emoji:'🍳',kcal:390,fat:30,prot:22,carb:4,
+     ing:[{q:'3 szt.',n:'jajka na twardo'},{q:'150g',n:'szpinak'},{q:'2 łyżki',n:'śmietana'},{q:'1 łyżeczka',n:'musztarda'},{q:'masło, sól',n:''}],
+     steps:['Szpinak podsmaż na maśle.','Dodaj śmietanę i musztardę, podgrzej.','Jajka pokrój na pół, ułóż na szpinaku.'],
+     tip:'Sos musztardowy to keto klasyk — szybki i pyszny!'},
+  ],
+  [
+    {name:'Omlet z pieczarkami i tymiankiem',type:'Śniadanie',emoji:'🍳',kcal:450,fat:36,prot:24,carb:4,
+     ing:[{q:'3 szt.',n:'jajka'},{q:'100g',n:'pieczarki'},{q:'1 łyżka',n:'masło'},{q:'tymianek, sól, pieprz',n:''}],
+     steps:['Pieczarki pokrój, podsmaż na maśle 4 min.','Jajka roztrzep, wlej na pieczarki.','Smaż na małym ogniu, złóż na pół.'],
+     tip:'Pieczarki to keto warzywo — mało węgli, dużo smaku!'},
+    {name:'Krem z zielonego groszku z fetą',type:'Lunch',emoji:'🥣',kcal:240,fat:16,prot:10,carb:8,
+     ing:[{q:'150g',n:'groszek mrożony (mały wyjątek — obserwuj węgle!)'},{q:'400ml',n:'bulion'},{q:'50g',n:'feta'},{q:'mięta, oliwa',n:''}],
+     steps:['Groszek ugotuj w bulionie 5 min.','Zmiksuj z fetą i miętą.','Skrop oliwą.'],
+     tip:'Groszek ma więcej węgli — jedz małą porcję!'},
+    {name:'Boczek pieczony z jajkami i szparagami',type:'Obiad',emoji:'🥓',kcal:500,fat:40,prot:28,carb:4,
+     ing:[{q:'100g',n:'boczek w plasterkach'},{q:'2 szt.',n:'jajka'},{q:'150g',n:'szparagi'},{q:'1 łyżka',n:'oliwa'},{q:'sól, pieprz',n:''}],
+     steps:['Boczek ułóż na blaszce.','Szparagi skrop oliwą.','Piecz 200°C przez 15 min.','Na ostatnie 5 min dołóż jajka.'],
+     tip:'Pieczony boczek jest chrupszy niż smażony — spróbuj!'},
+    {name:'Lniane krakersy keto',type:'Przekąska',emoji:'🌱',kcal:120,fat:9,prot:4,carb:2,
+     ing:[{q:'20g',n:'nasiona lnu mielonego'},{q:'10g',n:'nasiona sezamu'},{q:'szczypta',n:'soli i czosnku'}],
+     steps:['Wymieszaj z odrobiną wody do pasty.','Rozsmaruj cienko na papierze.','Piecz 160°C przez 20 min.'],
+     tip:'Domowe krakersy lniane = keto snack na cały tydzień!'},
+    {name:'Gulasz wołowy bez ziemniaków z cukinią',type:'Kolacja',emoji:'🥩',kcal:450,fat:30,prot:34,carb:7,
+     ing:[{q:'180g',n:'wołowina na gulasz'},{q:'1 szt.',n:'cukinia'},{q:'1 szt.',n:'cebula'},{q:'½ puszki',n:'pomidory'},{q:'1 łyżka',n:'oliwa'},{q:'papryka, kminek, czosnek',n:''}],
+     steps:['Wołowinę pokrój, obsmaż.','Dodaj cebulę, czosnek.','Wlej pomidory, duś 1h.','Na ostatnie 10 min dodaj cukinię.'],
+     tip:'Cukinia zamiast ziemniaków = keto gulasz!'},
+  ],
+  [
+    {name:'Granola keto z orzechami',type:'Śniadanie',emoji:'🥣',kcal:420,fat:36,prot:12,carb:6,
+     ing:[{q:'60g',n:'orzechy mieszane (migdały, orzechy włoskie)'},{q:'2 łyżki',n:'wiórki kokosowe'},{q:'1 łyżka',n:'masło'},{q:'szczypta',n:'cynamonu i soli'},{q:'100ml',n:'mleko kokosowe lub śmietana'}],
+     steps:['Orzechy grubo posiekaj.','Wymieszaj z wiórkami, masłem i cynamonem.','Piecz 150°C przez 15 min.','Podaj z mlekiem kokosowym.'],
+     tip:'Domowa granola keto zamiast sklepowej pełnej cukru!'},
+    {name:'Ogórek z pastą anchois i masłem',type:'Lunch',emoji:'🥒',kcal:200,fat:18,prot:6,carb:2,
+     ing:[{q:'1 szt.',n:'ogórek'},{q:'3 szt.',n:'filety anchois'},{q:'1 łyżka',n:'masło'},{q:'koperek',n:''}],
+     steps:['Anchois rozgnieć z masłem.','Ogórek pokrój w plastry.','Posmaruj pastą i posyp koperkiem.'],
+     tip:'Anchois = sól + tłuszcz + umami — keto przepyszność!'},
+    {name:'Schabowe keto z surówką z kapusty pekińskiej',type:'Obiad',emoji:'🥩',kcal:490,fat:36,prot:34,carb:5,
+     ing:[{q:'180g',n:'schab bez kości'},{q:'1 szt.',n:'jajko'},{q:'2 łyżki',n:'mąka migdałowa'},{q:'200g',n:'kapusta pekińska'},{q:'2 łyżki',n:'majonez'},{q:'smalec do smażenia',n:''}],
+     steps:['Schab rozbij, obtocz w jajku i mące migdałowej.','Smaż na smalcu 4 min/stronę.','Kapustę poszatkuj, wymieszaj z majonezem i solą.'],
+     tip:'Surówka z majonezem = keto, surówka z cukrem = nie!'},
+    {name:'Herbatniki migdałowe keto',type:'Przekąska',emoji:'🍪',kcal:140,fat:12,prot:4,carb:3,
+     ing:[{q:'40g',n:'mąka migdałowa'},{q:'1 szt.',n:'jajko'},{q:'1 łyżka',n:'masło'},{q:'szczypta',n:'soli'}],
+     steps:['Wymieszaj składniki na ciasto.','Uformuj 4 ciasteczka.','Piecz 170°C przez 12 min.'],
+     tip:'4 ciasteczka keto = cały tydzień przekąski!'},
+    {name:'Krem brokułowy z serem pleśniowym',type:'Kolacja',emoji:'🥣',kcal:340,fat:26,prot:14,carb:7,
+     ing:[{q:'300g',n:'brokuły'},{q:'500ml',n:'bulion'},{q:'40g',n:'ser niebieski (gorgonzola)'},{q:'2 łyżki',n:'śmietana'},{q:'masło, sól, pieprz',n:''}],
+     steps:['Brokuły ugotuj w bulionie.','Zmiksuj z masłem.','Wlej śmietanę, dodaj kawałki gorgonzoli.','Podgrzej nie gotując.'],
+     tip:'Gorgonzola w zupie = keto fine dining w 15 minut!'},
+  ],
+  [
+    {name:'Muffiny jajeczne z boczkiem',type:'Śniadanie',emoji:'🧁',kcal:440,fat:36,prot:24,carb:2,
+     ing:[{q:'4 szt.',n:'jajka'},{q:'60g',n:'boczek'},{q:'30g',n:'ser żółty'},{q:'1 łyżka',n:'masło do formy'},{q:'sól, pieprz',n:''}],
+     steps:['Rozgrzej piekarnik 180°C.','Formę do muffinów natłuść.','Boczek podsmaż, wrzuć do foremek.','Wlej roztrzepane jajka.','Posyp serem.','Piecz 15 min.'],
+     tip:'Muffiny jajeczne to keto meal prep — rób 6 na 2 dni!'},
+    {name:'Sałatka z awokado, jajkiem i boczkiem',type:'Lunch',emoji:'🥗',kcal:400,fat:34,prot:18,carb:3,
+     ing:[{q:'1 szt.',n:'awokado'},{q:'2 szt.',n:'jajka na twardo'},{q:'60g',n:'boczek chrupki'},{q:'garść',n:'sałata'},{q:'1 łyżka',n:'oliwa + ocet winny'}],
+     steps:['Boczek usmaż chrupko.','Wszystko wymieszaj z dressingiem.'],
+     tip:'Ta sałatka to keto trifecta: zdrowy tłuszcz, białko, smak!'},
+    {name:'Wątroba z cebulą (bogata w żelazo)',type:'Obiad',emoji:'🍖',kcal:400,fat:22,prot:40,carb:7,
+     ing:[{q:'180g',n:'wątroba wołowa lub drobiowa'},{q:'2 szt.',n:'cebula'},{q:'2 łyżki',n:'masło'},{q:'tymianek, sól, pieprz',n:''}],
+     steps:['Cebulę pokrój w krążki, smaż na maśle 15 min.','Wątrobę pokrój, obsmaż po 2 min z każdej strony.','Połącz z cebulą.'],
+     tip:'Wątroba ma trochę więcej węgli ale jest bogata w żelazo i witaminy B!'},
+    {name:'Kawa z olejem kokosowym',type:'Przekąska',emoji:'☕',kcal:90,fat:10,prot:0,carb:0,
+     ing:[{q:'200ml',n:'kawa'},{q:'1 łyżeczka',n:'olej kokosowy'}],
+     steps:['Dodaj olej do kawy, zamieszaj lub zblenduj.'],
+     tip:'MCT z oleju kokosowego = błyskawiczne keto paliwo!'},
+    {name:'Kotlety mielone z indyka z cukinią',type:'Kolacja',emoji:'🍖',kcal:420,fat:28,prot:34,carb:4,
+     ing:[{q:'180g',n:'mięso mielone z indyka'},{q:'1 szt.',n:'jajko'},{q:'1 szt.',n:'cukinia'},{q:'2 łyżki',n:'mąka migdałowa'},{q:'oliwa, sól',n:''}],
+     steps:['Mielone wymieszaj z jajkiem, mąką i przyprawami.','Uformuj kotlety.','Smaż na oliwie po 4 min.','Cukinię pokrój w plastry, usmaż osobno.'],
+     tip:'Indyk jest chudszy — dodaj więcej oliwy przy smażeniu!'},
+  ],
+  [
+    {name:'Jajecznica truflowa (z olejem truflowym)',type:'Śniadanie',emoji:'🍳',kcal:440,fat:38,prot:20,carb:2,
+     ing:[{q:'3 szt.',n:'jajka'},{q:'1 łyżka',n:'masło'},{q:'kilka kropel',n:'olej truflowy'},{q:'sól, pieprz',n:''}],
+     steps:['Jajka roztrzep, smaż na małym ogniu z masłem.','Mieszaj powoli — soft scrambled.','Kapnij olejem truflowym przed podaniem.'],
+     tip:'Olej truflowy to keto luksus za niewielkie pieniądze!'},
+    {name:'Tapenade z oliwek z krakersami siemieniowymi',type:'Lunch',emoji:'🫒',kcal:250,fat:22,prot:4,carb:4,
+     ing:[{q:'80g',n:'oliwki czarne'},{q:'1 łyżka',n:'kapary'},{q:'1 ząbek',n:'czosnek'},{q:'2 łyżki',n:'oliwa'},{q:'domowe krakersy siemieniane',n:''}],
+     steps:['Oliwki, kapary i czosnek zmiksuj z oliwą.','Podaj z krakersami.'],
+     tip:'Tapenade stoi w lodówce 2 tygodnie — zrób większą porcję!'},
+    {name:'Żeberka BBQ keto z surówką coleslaw',type:'Obiad',emoji:'🥩',kcal:560,fat:44,prot:34,carb:5,
+     ing:[{q:'250g',n:'żeberka wieprzowe'},{q:'2 łyżki',n:'sos BBQ bez cukru (lub własny: papryka, ocet, oliwa)'},{q:'200g',n:'kapusta biała'},{q:'2 łyżki',n:'majonez'},{q:'sól, pieprz',n:''}],
+     steps:['Żeberka posmaruj sosem BBQ.','Piecz 180°C przez 1h 15 min.','Kapustę poszatkuj, wymieszaj z majonezem.'],
+     tip:'Sos BBQ sprawdź skład — kupuj bez cukru lub rób własny!'},
+    {name:'Plastry ogórka z łososiem wędzonym',type:'Przekąska',emoji:'🥒',kcal:100,fat:5,prot:10,carb:2,
+     ing:[{q:'½ szt.',n:'ogórek'},{q:'50g',n:'łosoś wędzony'}],
+     steps:['Ogórek pokrój w plastry.','Ułóż łososia na plastrach.'],
+     tip:'Elegancki snack w 1 minutę!'},
+    {name:'Zupa tajska coconut curry z krewetkami',type:'Kolacja',emoji:'🍜',kcal:420,fat:30,prot:26,carb:7,
+     ing:[{q:'150g',n:'krewetki'},{q:'200ml',n:'mleko kokosowe'},{q:'300ml',n:'bulion'},{q:'1 łyżka',n:'pasta curry czerwona'},{q:'1 ząbek',n:'czosnek'},{q:'imbir, sok z limonki',n:''}],
+     steps:['Pasta curry podsmaż chwilę.','Wlej mleko i bulion, zagotuj.','Dodaj krewetki, gotuj 3 min.','Skrop limonką.'],
+     tip:'Pasta curry czerwona — sprawdź węgle, różne marki różnie!'},
+  ],
+  [
+    {name:'Shakshuka keto z fetą',type:'Śniadanie',emoji:'🍳',kcal:440,fat:32,prot:22,carb:8,
+     ing:[{q:'3 szt.',n:'jajka'},{q:'½ puszki',n:'pomidory krojone'},{q:'½ szt.',n:'papryka'},{q:'40g',n:'feta'},{q:'1 łyżka',n:'oliwa'},{q:'kumin, papryka, czosnek',n:''}],
+     steps:['Paprykę i czosnek podsmaż na oliwie.','Dodaj pomidory i przyprawy, gotuj 10 min.','Wbij jajka, przykryj, gotuj 5 min.','Posyp fetą.'],
+     tip:'Pomidory w keto — małe ilości OK, nie przesadzaj!'},
+    {name:'Tatar z łososia',type:'Lunch',emoji:'🐟',kcal:320,fat:22,prot:26,carb:2,
+     ing:[{q:'120g',n:'łosoś świeży (lub gravlax)'},{q:'1 łyżka',n:'oliwa'},{q:'1 łyżeczka',n:'kapary'},{q:'koperek, cytryna',n:''},{q:'ogórek do podania',n:''}],
+     steps:['Łososia posiekaj drobno.','Wymieszaj z oliwą, kaparami, cytryną.','Podaj z ogórkiem.'],
+     tip:'Tatar z łososia = omega-3 w czystej postaci!'},
+    {name:'Kaczka confit (konfitowana)',type:'Obiad',emoji:'🦆',kcal:600,fat:48,prot:36,carb:1,
+     ing:[{q:'2 udka',n:'z kaczki'},{q:'sól gruboziarnista',n:'do peklowania'},{q:'tymianek, czosnek, liść laurowy',n:''},{q:'tłuszcz kaczki lub smalec',n:'do konfitowania'}],
+     steps:['Udka natrzyj solą, ziołami. Odstaw na noc.','Opłucz, osusz.','Zanurz w stopionym tłuszczu kaczym w garnku.','Gotuj w piekarniku 150°C przez 2-3h.','Oprumień skórkę na patelni.'],
+     tip:'Confit to keto klasa sama w sobie — tłuszcz nasycony w czystej postaci!'},
+    {name:'Borówki ze śmietaną',type:'Przekąska',emoji:'🫐',kcal:120,fat:9,prot:1,carb:7,
+     ing:[{q:'50g',n:'borówki'},{q:'3 łyżki',n:'śmietana 30%'}],
+     steps:['Borówki zalej śmietaną.'],
+     tip:'Borówki mają najniższy indeks glikemiczny z owoców — OK w keto!'},
+    {name:'Zupa żurkowa z jajkiem i boczkiem',type:'Kolacja',emoji:'🥣',kcal:340,fat:24,prot:18,carb:4,
+     ing:[{q:'400ml',n:'zakwas żurkowy'},{q:'300ml',n:'bulion'},{q:'80g',n:'boczek wędzony'},{q:'2 szt.',n:'jajka na twardo'},{q:'śmietana, czosnek, majeranek',n:''}],
+     steps:['Boczek obsmaż.','Wlej zakwas i bulion, zagotuj.','Dodaj śmietanę i przyprawy.','Podaj z jajkiem.'],
+     tip:'Keto żurek = polska dusza w keto wydaniu!'},
+  ],
+],
+
+// ═══ TYDZIEŃ 4 ═══
+[
+  [
+    {name:'Jajka sadzone z boczkiem i grillowanym serem haloumi',type:'Śniadanie',emoji:'🍳',kcal:510,fat:42,prot:28,carb:3,
+     ing:[{q:'2 szt.',n:'jajka'},{q:'60g',n:'boczek'},{q:'60g',n:'ser haloumi'},{q:'1 łyżka',n:'masło'}],
+     steps:['Haloumi pokrój w plastry, grilluj na suchej patelni 2 min/str.','Boczek usmaż.','Jajka usmaż na maśle.'],
+     tip:'Haloumi nie topi się — można go smażyć i grillować!'},
+    {name:'Keto bowl z tuńczykiem i awokado',type:'Lunch',emoji:'🥣',kcal:360,fat:26,prot:26,carb:4,
+     ing:[{q:'1 puszka',n:'tuńczyk w oliwie'},{q:'½ szt.',n:'awokado'},{q:'garść',n:'roszponka'},{q:'5 szt.',n:'pomidorki cherry'},{q:'1 łyżka',n:'oliwa + cytryna'}],
+     steps:['Ułóż roszponkę w miseczce.','Dodaj tuńczyka i awokado.','Polej dressingiem.'],
+     tip:'Bowl gotowy w 5 minut — keto fast food!'},
+    {name:'Pieczeń wieprzowa w ziołach',type:'Obiad',emoji:'🥩',kcal:500,fat:36,prot:38,carb:2,
+     ing:[{q:'200g',n:'karkówka lub łopatka'},{q:'2 łyżki',n:'oliwa'},{q:'rozmaryn, tymianek, czosnek',n:''},{q:'sól, pieprz',n:''}],
+     steps:['Mięso natrzyj ziołami i oliwą.','Obsmaż ze wszystkich stron.','Piecz 180°C przez 1h.'],
+     tip:'Karkówka z tłuszczem = najlepsza keto pieczeń!'},
+    {name:'Kiełki słonecznika z oliwą',type:'Przekąska',emoji:'🌻',kcal:100,fat:9,prot:3,carb:2,
+     ing:[{q:'garść',n:'kiełki lub nasiona słonecznika'},{q:'1 łyżeczka',n:'oliwa'},{q:'szczypta',n:'soli'}],
+     steps:['Skrop oliwą, posól.'],
+     tip:'Nasiona słonecznika = witamina E i keto tłuszcz!'},
+    {name:'Krewetki w sosie kokosowo-curry',type:'Kolacja',emoji:'🦐',kcal:400,fat:28,prot:28,carb:6,
+     ing:[{q:'150g',n:'krewetki'},{q:'150ml',n:'mleko kokosowe'},{q:'1 łyżka',n:'pasta curry'},{q:'1 ząbek',n:'czosnek'},{q:'1 cm',n:'imbir'},{q:'1 łyżka',n:'oliwa'},{q:'kolendra',n:''}],
+     steps:['Czosnek i imbir podsmaż.','Dodaj pastę curry, smaż 1 min.','Wlej mleko kokosowe, zagotuj.','Dodaj krewetki, gotuj 3 min.','Posyp kolendrą.'],
+     tip:'Sos kokosowo-curry robi się sam w 10 minut!'},
+  ],
+  [
+    {name:'Omlet z brie i orzechami włoskimi',type:'Śniadanie',emoji:'🍳',kcal:480,fat:40,prot:22,carb:3,
+     ing:[{q:'3 szt.',n:'jajka'},{q:'40g',n:'ser brie'},{q:'15g',n:'orzechy włoskie'},{q:'1 łyżka',n:'masło'},{q:'sól, pieprz',n:''}],
+     steps:['Jajka roztrzep.','Smaż omlet na maśle.','Na środek połóż brie i orzechy.','Złóż na pół, dosmażaj 1 min.'],
+     tip:'Brie topnieje w omlecie — nieziemski smak!'},
+    {name:'Roladki z szynki z serem i ogórkiem',type:'Lunch',emoji:'🌯',kcal:280,fat:20,prot:18,carb:2,
+     ing:[{q:'4 plastry',n:'szynka wieprzowa'},{q:'60g',n:'cream cheese'},{q:'½ szt.',n:'ogórek'},{q:'koperek',n:''}],
+     steps:['Szynkę posmaruj cream cheese.','Ułóż ogórek w słupkach.','Zwiń roladki.'],
+     tip:'Roladki keto = lunch bez gotowania!'},
+    {name:'Wolno gotowane żeberka z kapustą kiszoną',type:'Obiad',emoji:'🥩',kcal:540,fat:42,prot:34,carb:5,
+     ing:[{q:'250g',n:'żeberka'},{q:'300g',n:'kapusta kiszona'},{q:'1 szt.',n:'cebula'},{q:'1 łyżka',n:'smalec'},{q:'kminek, czosnek, liść laurowy',n:''}],
+     steps:['Żeberka obsmaż ze wszystkich stron.','Cebulę zeszklij.','Dodaj kapustę i przyprawy.','Duś pod przykryciem 1,5h.'],
+     tip:'Połączenie żeberka + kapusta kiszona = keto bomb smaku!'},
+    {name:'Kulki mocy keto z masłem orzechowym',type:'Przekąska',emoji:'⚡',kcal:150,fat:13,prot:5,carb:3,
+     ing:[{q:'2 łyżki',n:'masło orzechowe'},{q:'1 łyżka',n:'wiórki kokosowe'},{q:'szczypta',n:'soli'}],
+     steps:['Wymieszaj masło z wiórkami.','Uformuj 2 kulki.','Włóż na 10 min do lodówki.'],
+     tip:'Kulki keto stoja w lodówce tydzień — zrób większą partię!'},
+    {name:'Węgorz wędzony z chrzanem i rukolą',type:'Kolacja',emoji:'🐟',kcal:380,fat:28,prot:26,carb:2,
+     ing:[{q:'100g',n:'węgorz wędzony'},{q:'1 łyżka',n:'chrzan'},{q:'garść',n:'rukola'},{q:'1 łyżka',n:'oliwa'},{q:'cytryna',n:''}],
+     steps:['Węgorza pokrój.','Rukolę skrop oliwą i cytryną.','Ułóż z węgorzem i chrzanem.'],
+     tip:'Węgorz wędzony = keto delicja pełna tłuszczu!'},
+  ],
+  [
+    {name:'Jajka z łososiem i kaparami (na patelni)',type:'Śniadanie',emoji:'🍳',kcal:460,fat:36,prot:26,carb:2,
+     ing:[{q:'3 szt.',n:'jajka'},{q:'60g',n:'łosoś wędzony'},{q:'1 łyżka',n:'kapary'},{q:'1 łyżka',n:'masło'},{q:'koperek',n:''}],
+     steps:['Na maśle usmaż jajka.','Obok podgrzej łososia 1 min.','Posyp kaparami i koperkiem.'],
+     tip:'Kapary to keto gold — sód, smak i prawie zero węgli!'},
+    {name:'Grzybowa zupa krem z truflą',type:'Lunch',emoji:'🍄',kcal:260,fat:20,prot:8,carb:6,
+     ing:[{q:'250g',n:'pieczarki'},{q:'10g',n:'grzyby suszone'},{q:'500ml',n:'bulion'},{q:'100ml',n:'śmietana'},{q:'kilka kropel',n:'olej truflowy'},{q:'masło, sól',n:''}],
+     steps:['Grzyby podsmaż na maśle.','Wlej bulion, gotuj 15 min.','Zmiksuj ze śmietaną.','Kapnij oleju truflowego.'],
+     tip:'Olej truflowy na końcu — podgrzanie niszczy aromat!'},
+    {name:'Pieczeń wołowa z warzywami (finałowa)',type:'Obiad',emoji:'🥩',kcal:520,fat:36,prot:42,carb:4,
+     ing:[{q:'200g',n:'rostbef lub polędwica'},{q:'150g',n:'szparagi'},{q:'1 szt.',n:'cukinia'},{q:'3 łyżki',n:'masło'},{q:'czosnek, rozmaryn',n:''},{q:'sól, pieprz',n:''}],
+     steps:['Wołowinę obsmaż ze wszystkich stron.','Piecz 200°C przez 25 min (medium).','Warzywa skrop oliwą, piecz razem ostatnie 15 min.','Masło z czosnkiem podlej na mięso.'],
+     tip:'Termometr do mięsa: 55°C = medium rare, 65°C = medium.'},
+    {name:'Ser haloumi smażony',type:'Przekąska',emoji:'🧀',kcal:160,fat:12,prot:10,carb:2,
+     ing:[{q:'60g',n:'ser haloumi'},{q:'1 łyżeczka',n:'oliwa'}],
+     steps:['Haloumi pokrój, smaż na suchej patelni 2 min/str.'],
+     tip:'Chrupki na zewnątrz, miękki w środku — nie wytrzymasz z jednym kawałkiem!'},
+    {name:'Bouillabaisse keto (zupa rybna prowansalska)',type:'Kolacja',emoji:'🐟',kcal:420,fat:26,prot:34,carb:7,
+     ing:[{q:'150g',n:'mix ryb i owoców morza'},{q:'½ puszki',n:'pomidory'},{q:'500ml',n:'bulion rybny'},{q:'1 szt.',n:'fenkuł (koper włoski)'},{q:'szafran',n:''},{q:'oliwa, czosnek',n:''}],
+     steps:['Fenkuł i czosnek podsmaż na oliwie.','Wlej bulion i pomidory.','Dodaj szafran.','Gotuj 15 min.','Dodaj ryby i owoce morza, gotuj 8 min.'],
+     tip:'Bouillabaisse z szafranem — prowansalski luksus na ostatni tydzień!'},
+  ],
+  [
+    {name:'Sernik keto w kubku (mikrofalówka)',type:'Śniadanie',emoji:'🧁',kcal:420,fat:36,prot:18,carb:4,
+     ing:[{q:'100g',n:'cream cheese'},{q:'1 szt.',n:'jajko'},{q:'1 łyżka',n:'erytrytol lub stewia'},{q:'kilka kropel',n:'ekstrakt waniliowy'}],
+     steps:['Wymieszaj wszystko na gładką masę.','Wlej do kubka.','Mikrofalówka: 1,5-2 min na 600W.','Ostudź 2 min.'],
+     tip:'Sernik keto w kubku = 5 minut i masz deser!'},
+    {name:'Crostini keto na ogórku z pastą z tuńczyka',type:'Lunch',emoji:'🥒',kcal:300,fat:22,prot:22,carb:3,
+     ing:[{q:'1 szt.',n:'ogórek'},{q:'1 puszka',n:'tuńczyk'},{q:'2 łyżki',n:'majonez'},{q:'1 łyżeczka',n:'musztarda'},{q:'koperek, cytryna',n:''}],
+     steps:['Tuńczyka wymieszaj z majonezem, musztardą, cytryną.','Ogórek pokrój w grube plastry.','Ułóż pastę na plastrach ogórka.'],
+     tip:'Ogórek jako "crostini" = keto crunch bez węgli!'},
+    {name:'Bœuf bourguignon keto (bez zasmażki)',type:'Obiad',emoji:'🥩',kcal:520,fat:36,prot:38,carb:6,
+     ing:[{q:'200g',n:'wołowina (karkówka)'},{q:'100ml',n:'czerwone wino wytrawne'},{q:'100g',n:'pieczarki'},{q:'50g',n:'boczek'},{q:'200ml',n:'bulion'},{q:'cebulka, tymianek',n:''}],
+     steps:['Wołowinę i boczek obsmaż.','Dodaj cebulkę i pieczarki.','Wlej wino i bulion.','Duś pod przykryciem 2h.'],
+     tip:'Wino wyparowuje i zostaje aromat — nie bój się użyć w keto!'},
+    {name:'Masło orzechowe z łyżki',type:'Przekąska',emoji:'🥜',kcal:100,fat:9,prot:4,carb:2,
+     ing:[{q:'1 łyżka',n:'masło orzechowe 100%'}],
+     steps:['Zjedz łyżkę masła — tak po prostu!'],
+     tip:'1 łyżka masła orzechowego = szybkie keto paliwo między posiłkami!'},
+    {name:'Carbonara keto (bez makaronu — z cukinią)',type:'Kolacja',emoji:'🍝',kcal:460,fat:36,prot:28,carb:5,
+     ing:[{q:'1 szt.',n:'cukinia (spiralizowana)'},{q:'80g',n:'boczek lub guanciale'},{q:'2 żółtka',n:''},{q:'30g',n:'parmezan'},{q:'sól, pieprz',n:''}],
+     steps:['Boczek obsmaż na suchej patelni.','Cukinię spiralizuj (lub zetrzyj na tarce).','Żółtka wymieszaj z parmezanem.','Cukinię podsmaż 2 min.','Zdejmij z ognia, dodaj żółtka i boczek.','Wymieszaj — ciepło "ugotuje" sos.'],
+     tip:'Zucchini carbonara to keto mistrzostwo — smakuje jak prawdziwa!'},
+  ],
+  [
+    {name:'Jajka scrambled z truflą i parmezanem',type:'Śniadanie',emoji:'🍳',kcal:460,fat:38,prot:22,carb:2,
+     ing:[{q:'3 szt.',n:'jajka'},{q:'1 łyżka',n:'masło'},{q:'20g',n:'parmezan'},{q:'kilka kropel',n:'olej truflowy'},{q:'sól',n:''}],
+     steps:['Jajka roztrzep.','Smaż na bardzo małym ogniu z masłem, mieszając.','Zdejmij zanim będą w pełni ścięte.','Posyp parmezanem, kapnij truflowego.'],
+     tip:'Scrambled eggs wymagają niskiej temperatury — nigdy na dużym ogniu!'},
+    {name:'Sałatka z grillowanym haloumi i oliwkami',type:'Lunch',emoji:'🥗',kcal:360,fat:28,prot:18,carb:5,
+     ing:[{q:'80g',n:'ser haloumi'},{q:'garść',n:'rukola i sałata'},{q:'10 szt.',n:'oliwki'},{q:'5 szt.',n:'pomidorki cherry'},{q:'1 łyżka',n:'oliwa + ocet balsamiczny'}],
+     steps:['Haloumi grilluj po 2 min z każdej strony.','Ułóż sałatę, oliwki, pomidorki.','Dodaj haloumi, polej dressingiem.'],
+     tip:'Haloumi na sałatce = keto fine dining w domu!'},
+    {name:'Obiad finałowy: Surf & Turf keto',type:'Obiad',emoji:'🦞',kcal:580,fat:42,prot:46,carb:2,
+     ing:[{q:'150g',n:'stek wołowy'},{q:'150g',n:'krewetki lub homar'},{q:'3 łyżki',n:'masło'},{q:'czosnek, rozmaryn',n:''},{q:'cytryna, sól, pieprz',n:''}],
+     steps:['Stek smaż na gorącej patelni 2-3 min/str.','Krewetki smaż na maśle z czosnkiem 3 min.','Podaj razem — stek + owoce morza + masło czosnkowe.'],
+     tip:'Surf & Turf = najlepszy finałowy obiad keto! Zasługujesz na to po 4 tygodniach!'},
+    {name:'Deska serów keto',type:'Przekąska',emoji:'🧀',kcal:160,fat:13,prot:9,carb:1,
+     ing:[{q:'20g',n:'brie'},{q:'20g',n:'parmezan'},{q:'20g',n:'ser pleśniowy'},{q:'oliwki',n:'kilka sztuk'}],
+     steps:['Ułóż na desce — celebruj 4 tygodnie keto!'],
+     tip:'Po 4 tygodniach keto zasługujesz na desetkę z serów!'},
+    {name:'Mousse czekoladowe keto',type:'Kolacja',emoji:'🍫',kcal:320,fat:28,prot:6,carb:5,
+     ing:[{q:'100g',n:'czekolada 85%'},{q:'150ml',n:'śmietana 30%'},{q:'1 łyżka',n:'erytrytol'},{q:'szczypta',n:'soli'}],
+     steps:['Czekoladę rozpuść w kąpieli wodnej.','Śmietanę ubij z erytrytol.','Ostudź czekoladę, wymieszaj ze śmietaną.','Wstaw na 1h do lodówki.'],
+     tip:'Mousse keto = słodkie zakończenie 4-tygodniowej przygody!'},
+  ],
+  [
+    {name:'Placuszki keto z ricotty',type:'Śniadanie',emoji:'🥞',kcal:420,fat:32,prot:20,carb:5,
+     ing:[{q:'150g',n:'ricotta'},{q:'2 szt.',n:'jajka'},{q:'2 łyżki',n:'mąka migdałowa'},{q:'½ łyżeczki',n:'proszek do pieczenia'},{q:'masło do smażenia',n:''}],
+     steps:['Wymieszaj ricottę z jajkami, mąką i proszkiem.','Smaż małe placuszki na maśle po 2 min.','Podaj ze śmietaną.'],
+     tip:'Ricotta daje lekkie, puszyste placuszki bez bułczanych węgli!'},
+    {name:'Salade Niçoise de luxe',type:'Lunch',emoji:'🥗',kcal:380,fat:28,prot:26,carb:5,
+     ing:[{q:'150g',n:'tuńczyk świeży lub z puszki'},{q:'3 szt.',n:'jajka na twardo'},{q:'garść',n:'fasolka szparagowa'},{q:'10 szt.',n:'oliwki'},{q:'5 szt.',n:'anchois'},{q:'2 łyżki',n:'oliwa + musztarda + ocet'}],
+     steps:['Wszystko przygotuj i ułóż na talerzu.','Polej dressingiem musztardowym.'],
+     tip:'Klasyk keto przywieziony z Nicei!'},
+    {name:'Keto risotto (z kalafiora)',type:'Obiad',emoji:'🥬',kcal:460,fat:36,prot:22,carb:8,
+     ing:[{q:'½ główki',n:'kalafior'},{q:'60g',n:'parmezan'},{q:'2 łyżki',n:'masło'},{q:'100ml',n:'białe wino wytrawne'},{q:'1 szt.',n:'cebula'},{q:'300ml',n:'bulion'},{q:'sól, pieprz',n:''}],
+     steps:['Kalafior zetrzyj na tarce lub posiekaj drobno.','Cebulę zeszklij na maśle.','Dodaj kalafior, wlej wino.','Stopniowo dodawaj bulion jak do risotto.','Na końcu dodaj parmezan i masło.'],
+     tip:'Kalafisor zamiast ryżu = risotto z 8g węgli zamiast 50g!'},
+    {name:'Gorzka czekolada 90% z orzechem',type:'Przekąska',emoji:'🍫',kcal:90,fat:8,prot:2,carb:3,
+     ing:[{q:'15g',n:'czekolada 90%'},{q:'5 szt.',n:'migdały'}],
+     steps:['Delektuj się powoli.'],
+     tip:'Finałowa przekąska keto — 4 tygodnie za Tobą, brawo!'},
+    {name:'Zupa miso keto',type:'Kolacja',emoji:'🍜',kcal:200,fat:12,prot:14,carb:5,
+     ing:[{q:'2 łyżki',n:'pasta miso'},{q:'600ml',n:'bulion dashi lub drobiowy'},{q:'100g',n:'tofu jedwabiste'},{q:'dymka, wodorosty nori',n:''}],
+     steps:['Bulion podgrzej (nie gotuj!).','Miso rozmieszaj w odrobinie bulionu.','Dodaj do garnka.','Wrzuć tofu i wodorosty.','Posyp dymką.'],
+     tip:'Miso nie gotuj — traci probiotyki!'},
+  ],
+  [
+    {name:'Pełne śniadanie keto — wielki finał',type:'Śniadanie',emoji:'🍳',kcal:560,fat:46,prot:30,carb:3,
+     ing:[{q:'3 szt.',n:'jajka'},{q:'80g',n:'boczek'},{q:'60g',n:'kiełbaski'},{q:'60g',n:'ser haloumi'},{q:'50g',n:'pieczarki'},{q:'2 łyżki',n:'masło'}],
+     steps:['Boczek i kiełbaski usmaż.','Haloumi grilluj.','Pieczarki smaż na maśle.','Jajka usmaż sadzone.','Podaj wszystko razem — wielki finał!'],
+     tip:'Po 4 tygodniach keto — świętuj tym śniadaniem!'},
+    {name:'Bulion kostny z masłem i ziołami',type:'Lunch',emoji:'🫖',kcal:160,fat:14,prot:8,carb:0,
+     ing:[{q:'300ml',n:'bulion kostny'},{q:'1 łyżka',n:'masło'},{q:'rozmaryn lub tymianek',n:''}],
+     steps:['Bulion podgrzej z ziołami.','Dodaj masło.','Pij powoli jak herbatę.'],
+     tip:'Lekki lunch przed ostatnim wielkim obiadem!'},
+    {name:'Niedzielna pieczeń keto z warzywami — FINAŁ',type:'Obiad',emoji:'🥩',kcal:560,fat:40,prot:44,carb:5,
+     ing:[{q:'250g',n:'pieczeń wołowa lub jagnięcina'},{q:'150g',n:'szparagi'},{q:'1 szt.',n:'cukinia'},{q:'3 łyżki',n:'masło ziołowe'},{q:'czosnek, rozmaryn',n:''},{q:'czerwone wino',n:'do sosu'}],
+     steps:['Mięso natrzyj ziołami, obsmaż.','Piecz 180°C przez 1h.','Warzywa piecz z mięsem ostatnie 20 min.','Sos: sok z pieczenia + wino, zredukuj.'],
+     tip:'To Twój finałowy obiad po 4 tygodniach keto — zasługujesz na najlepsze!'},
+    {name:'Deser keto — mousse z avocado i czekolady',type:'Przekąska',emoji:'🍫',kcal:240,fat:20,prot:4,carb:6,
+     ing:[{q:'1 szt.',n:'awokado'},{q:'2 łyżki',n:'kakao'},{q:'1 łyżka',n:'erytrytol'},{q:'50ml',n:'mleko kokosowe'}],
+     steps:['Wszystko zblenduj na gładki mus.','Wstaw na 30 min do lodówki.'],
+     tip:'Mousse z awokado i czekolady = sekrety keto kuchni!'},
+    {name:'Celebracyjny tatar wołowy z kawiorem',type:'Kolacja',emoji:'🥩',kcal:380,fat:26,prot:32,carb:2,
+     ing:[{q:'150g',n:'polędwica wołowa'},{q:'1 żółtko',n:''},{q:'1 łyżka',n:'kapary'},{q:'1 łyżeczka',n:'musztarda'},{q:'kawior lub ikra (opcja)',n:''},{q:'oliwa, sól, pieprz',n:''}],
+     steps:['Mięso posiekaj nożem.','Wymieszaj z żółtkiem, kaparami, musztardą.','Udekoruj kawiorem.','Podaj z oliwą i pychą!'],
+     tip:'Finałowa kolacja 4 tygodni keto — brawo za wytrwałość!'},
+  ],
+],
+];
+
+// ════════ SHOPPING LISTS ════════
+const SHOP = [
+  // Tydzień 1
+  {cats:[
+    {name:'🥩 Mięso i ryby',cls:'hm',items:[
+      {n:'Boczek wędzony',q:'400g',p:'12,99 zł'},{n:'Filet z łososia',q:'400g',p:'28,00 zł'},
+      {n:'Pierś z kurczaka',q:'350g',p:'9,00 zł'},{n:'Stek wołowy (rostbef/antrykot)',q:'350g',p:'29,99 zł'},
+      {n:'Mięso mielone wieprzowe',q:'200g',p:'5,99 zł'},{n:'Polędwiczka wieprzowa',q:'180g',p:'9,99 zł'},
+      {n:'Makrela świeża lub mrożona',q:'2 szt.',p:'8,99 zł'},{n:'Krewetki obrane (mrożone)',q:'200g',p:'14,99 zł'},
+      {n:'Kiełbasa wieprzowa bez cukru',q:'150g',p:'5,99 zł'},{n:'Prosciutto',q:'80g',p:'7,99 zł'},
+      {n:'Łosoś wędzony',q:'100g',p:'10,99 zł'},{n:'Makrela wędzona',q:'1 szt.',p:'5,99 zł'},
+    ]},
+    {name:'🥛 Nabiał i jaja',cls:'hd',items:[
+      {n:'Jajka (klasa L)',q:'18 szt.',p:'14,99 zł'},{n:'Masło (82% tłuszczu)',q:'400g',p:'10,98 zł'},
+      {n:'Śmietana 30%',q:'1L',p:'9,99 zł'},{n:'Ser żółty (starty i plastry)',q:'200g',p:'7,99 zł'},
+      {n:'Parmezan',q:'100g',p:'8,49 zł'},{n:'Ser feta',q:'200g',p:'7,99 zł'},
+      {n:'Mascarpone',q:'250g',p:'8,99 zł'},{n:'Majonez pełnotłusty',q:'200g',p:'4,99 zł'},
+      {n:'Ser brie lub camembert',q:'125g',p:'6,99 zł'},
+    ]},
+    {name:'🥦 Warzywa keto',cls:'hv',items:[
+      {n:'Brokuły',q:'2 szt.',p:'7,98 zł'},{n:'Szpinak baby',q:'200g',p:'6,99 zł'},
+      {n:'Cukinia',q:'2 szt.',p:'5,98 zł'},{n:'Ogórek',q:'3 szt.',p:'5,97 zł'},
+      {n:'Sałata/roszponka',q:'2 opak.',p:'5,98 zł'},{n:'Rukola',q:'1 opak.',p:'3,99 zł'},
+      {n:'Pieczarki',q:'300g',p:'4,99 zł'},{n:'Papryka czerwona',q:'1 szt.',p:'2,99 zł'},
+      {n:'Pomidorki cherry',q:'200g',p:'5,99 zł'},{n:'Kalafior',q:'½ szt.',p:'2,99 zł'},
+      {n:'Seler naciowy',q:'1 pęczek',p:'3,49 zł'},
+    ]},
+    {name:'🫙 Tłuszcze i oleje',cls:'hf',items:[
+      {n:'Oliwa extra virgin',q:'500ml',p:'14,99 zł'},{n:'Smalec',q:'200g',p:'3,99 zł'},
+      {n:'Olej kokosowy',q:'200g',p:'9,99 zł'},{n:'Ghee (opcjonalnie)',q:'150g',p:'14,99 zł'},
+    ]},
+    {name:'🫙 Przetwory i inne',cls:'ho',items:[
+      {n:'Kapary (słoik)',q:'100g',p:'5,99 zł'},{n:'Oliwki (słoik)',q:'200g',p:'6,99 zł'},
+      {n:'Tuńczyk w oliwie',q:'2 puszki',p:'7,98 zł'},{n:'Anchois',q:'1 słoik',p:'5,99 zł'},
+      {n:'Musztarda',q:'1 słoik',p:'3,49 zł'},{n:'Bulion drobiowy (kostki lub karton)',q:'1L',p:'5,99 zł'},
+      {n:'Bulion wołowy',q:'500ml',p:'4,99 zł'},{n:'Sos Cezar',q:'1 but.',p:'4,99 zł'},
+      {n:'Mąka migdałowa',q:'500g',p:'19,99 zł'},{n:'Koper włoski (koperek suszony)',q:'',p:'2,49 zł'},
+    ]},
+    {name:'🥜 Orzechy i nasiona',cls:'hc',items:[
+      {n:'Orzechy macadamia',q:'100g',p:'9,99 zł'},{n:'Orzechy włoskie',q:'100g',p:'6,99 zł'},
+      {n:'Orzechy brazylijskie',q:'50g',p:'4,99 zł'},{n:'Migdały',q:'100g',p:'6,99 zł'},
+    ]},
+  ]},
+  // Tydzień 2
+  {cats:[
+    {name:'🥩 Mięso i ryby',cls:'hm',items:[
+      {n:'Boczek wędzony',q:'400g',p:'12,99 zł'},{n:'Kiełbasa wieprzowa',q:'250g',p:'8,99 zł'},
+      {n:'Filet z łososia',q:'300g',p:'21,00 zł'},{n:'Mięso mielone wołowe',q:'300g',p:'14,99 zł'},
+      {n:'Schab bez kości',q:'180g',p:'7,99 zł'},{n:'Karkówka wieprzowa',q:'350g',p:'10,99 zł'},
+      {n:'Rostbef gotowy',q:'150g',p:'11,99 zł'},{n:'Polędwica wołowa (na carpaccio)',q:'150g',p:'19,99 zł'},
+      {n:'Kotlety jagnięce',q:'300g',p:'34,99 zł'},{n:'Makrela wędzona',q:'1 szt.',p:'5,99 zł'},
+      {n:'Łosoś wędzony',q:'100g',p:'10,99 zł'},
+    ]},
+    {name:'🥛 Nabiał i jaja',cls:'hd',items:[
+      {n:'Jajka (klasa L)',q:'18 szt.',p:'14,99 zł'},{n:'Masło',q:'400g',p:'10,98 zł'},
+      {n:'Śmietana 30%',q:'750ml',p:'7,49 zł'},{n:'Cream cheese (twarożek tłusty)',q:'400g',p:'11,98 zł'},
+      {n:'Ser żółty',q:'150g',p:'5,99 zł'},{n:'Jogurt grecki 10% tłuszczu',q:'400g',p:'8,98 zł'},
+      {n:'Ser pleśniowy/gorgonzola',q:'100g',p:'8,99 zł'},{n:'Ricotta',q:'250g',p:'8,99 zł'},
+    ]},
+    {name:'🥦 Warzywa keto',cls:'hv',items:[
+      {n:'Szpinak baby',q:'200g',p:'6,99 zł'},{n:'Kapusta kiszona',q:'500g',p:'4,99 zł'},
+      {n:'Kalafior',q:'1 szt.',p:'5,99 zł'},{n:'Bakłażan',q:'1 szt.',p:'3,49 zł'},
+      {n:'Cukinia',q:'2 szt.',p:'5,98 zł'},{n:'Papryka czerwona',q:'2 szt.',p:'5,98 zł'},
+      {n:'Ogórek kiszony',q:'6 szt.',p:'3,99 zł'},{n:'Sałata/rukola',q:'2 opak.',p:'5,98 zł'},
+      {n:'Pieczarki',q:'400g',p:'5,99 zł'},{n:'Por',q:'1 szt.',p:'2,49 zł'},
+    ]},
+    {name:'🫙 Tłuszcze i przetwory',cls:'hf',items:[
+      {n:'Oliwa extra virgin',q:'500ml',p:'14,99 zł'},{n:'Smalec',q:'200g',p:'3,99 zł'},
+      {n:'Nasiona chia',q:'200g',p:'8,99 zł'},{n:'Mleko kokosowe',q:'2 puszki',p:'9,98 zł'},
+      {n:'Bulion kostny (karton)',q:'1L',p:'7,99 zł'},{n:'Tuńczyk w oliwie',q:'2 puszki',p:'7,98 zł'},
+      {n:'Kapary',q:'100g',p:'5,99 zł'},{n:'Chrzan',q:'1 słoik',p:'3,99 zł'},
+      {n:'Zakwas żurkowy',q:'500ml',p:'4,99 zł'},
+    ]},
+    {name:'🥜 Orzechy i słodkości keto',cls:'hc',items:[
+      {n:'Orzechy pekany lub włoskie',q:'100g',p:'7,99 zł'},{n:'Pistacje niesolone',q:'100g',p:'8,99 zł'},
+      {n:'Czekolada gorzka 85%+',q:'100g',p:'6,99 zł'},{n:'Wiórki kokosowe',q:'100g',p:'4,99 zł'},
+      {n:'Olej truflowy (opcjonalnie)',q:'małe op.',p:'14,99 zł'},
+    ]},
+  ]},
+  // Tydzień 3
+  {cats:[
+    {name:'🥩 Mięso i ryby',cls:'hm',items:[
+      {n:'Udka z kurczaka',q:'4 szt.',p:'11,99 zł'},{n:'Wołowina mielona',q:'350g',p:'17,49 zł'},
+      {n:'Boczek wędzony',q:'350g',p:'10,99 zł'},{n:'Pstrąg (cały lub filet)',q:'300g',p:'18,99 zł'},
+      {n:'Wątroba wołowa lub drobiowa',q:'180g',p:'5,99 zł'},{n:'Krewetki',q:'200g',p:'14,99 zł'},
+      {n:'Żeberka wieprzowe',q:'300g',p:'10,99 zł'},{n:'Łosoś wędzony',q:'100g',p:'10,99 zł'},
+      {n:'Mięso mielone z indyka',q:'200g',p:'7,99 zł'},{n:'Łosoś świeży',q:'150g',p:'13,99 zł'},
+      {n:'Udka kaczki (konfitowane)',q:'2 szt.',p:'19,99 zł'},
+    ]},
+    {name:'🥛 Nabiał i jaja',cls:'hd',items:[
+      {n:'Jajka (klasa L)',q:'18 szt.',p:'14,99 zł'},{n:'Masło',q:'400g',p:'10,98 zł'},
+      {n:'Śmietana 30%',q:'750ml',p:'7,49 zł'},{n:'Ser feta',q:'200g',p:'7,99 zł'},
+      {n:'Parmezan',q:'80g',p:'6,99 zł'},{n:'Ser żółty',q:'150g',p:'5,99 zł'},
+      {n:'Mleko migdałowe niesłodzone',q:'1L',p:'7,99 zł'},{n:'Masło orzechowe 100%',q:'słoik 350g',p:'14,99 zł'},
+    ]},
+    {name:'🥦 Warzywa keto',cls:'hv',items:[
+      {n:'Szparagi',q:'200g',p:'6,99 zł'},{n:'Brokuły',q:'2 szt.',p:'7,98 zł'},
+      {n:'Szpinak baby',q:'200g',p:'6,99 zł'},{n:'Fasolka szparagowa',q:'200g',p:'4,99 zł'},
+      {n:'Cukinia',q:'3 szt.',p:'8,97 zł'},{n:'Pieczarki',q:'400g',p:'5,99 zł'},
+      {n:'Kapusta pekińska',q:'½ szt.',p:'2,99 zł'},{n:'Papryka',q:'2 szt.',p:'5,98 zł'},
+      {n:'Sałata (do wrapów)',q:'1 główka',p:'3,49 zł'},
+    ]},
+    {name:'🫙 Przetwory i tłuszcze',cls:'hf',items:[
+      {n:'Oliwa extra virgin',q:'500ml',p:'14,99 zł'},{n:'Pasta curry czerwona',q:'słoik',p:'5,99 zł'},
+      {n:'Mleko kokosowe',q:'2 puszki',p:'9,98 zł'},{n:'Anchois',q:'1 słoik',p:'5,99 zł'},
+      {n:'Nasiona chia',q:'100g',p:'4,99 zł'},{n:'Nasiona lnu mielonego',q:'200g',p:'4,99 zł'},
+      {n:'Nasiona sezamu',q:'50g',p:'2,99 zł'},{n:'Pestki dyni',q:'100g',p:'5,99 zł'},
+      {n:'Bulion drobiowy i wołowy',q:'1,5L',p:'9,99 zł'},
+    ]},
+    {name:'🥜 Orzechy i przekąski',cls:'hc',items:[
+      {n:'Orzechy migdały (płatkowe i całe)',q:'150g',p:'9,99 zł'},{n:'Salami (sprawdź skład)',q:'80g',p:'5,99 zł'},
+      {n:'Czekolada gorzka 85%',q:'100g',p:'6,99 zł'},{n:'Borówki (mrożone lub świeże)',q:'100g',p:'5,99 zł'},
+      {n:'Mąka migdałowa',q:'300g',p:'13,99 zł'},
+    ]},
+  ]},
+  // Tydzień 4
+  {cats:[
+    {name:'🥩 Mięso i ryby',cls:'hm',items:[
+      {n:'Stek wołowy (polędwica/antrykot)',q:'400g',p:'39,99 zł'},{n:'Pieczeń wieprzowa (karkówka)',q:'400g',p:'12,99 zł'},
+      {n:'Żeberka wieprzowe',q:'300g',p:'10,99 zł'},{n:'Wołowina na gulasze/bourguignon',q:'400g',p:'22,00 zł'},
+      {n:'Boczek wędzony',q:'300g',p:'9,99 zł'},{n:'Krewetki',q:'300g',p:'20,99 zł'},
+      {n:'Łosoś wędzony',q:'100g',p:'10,99 zł'},{n:'Węgorz wędzony',q:'100g',p:'14,99 zł'},
+      {n:'Halibut lub dorsz',q:'180g',p:'12,99 zł'},{n:'Mix ryb i owoców morza',q:'200g',p:'16,99 zł'},
+      {n:'Kiełbaski wieprzowe',q:'200g',p:'7,99 zł'},{n:'Szynka wieprzowa bez cukru',q:'150g',p:'6,99 zł'},
+    ]},
+    {name:'🥛 Nabiał i jaja',cls:'hd',items:[
+      {n:'Jajka (klasa L)',q:'18 szt.',p:'14,99 zł'},{n:'Masło',q:'400g',p:'10,98 zł'},
+      {n:'Śmietana 30%',q:'750ml',p:'7,49 zł'},{n:'Cream cheese',q:'300g',p:'8,99 zł'},
+      {n:'Ser haloumi',q:'225g',p:'11,99 zł'},{n:'Parmezan',q:'100g',p:'8,49 zł'},
+      {n:'Ser brie',q:'125g',p:'6,99 zł'},{n:'Ser pleśniowy',q:'80g',p:'7,99 zł'},
+      {n:'Ricotta',q:'250g',p:'8,99 zł'},{n:'Kawior lub ikra (opcja)',q:'',p:'opcja'},
+    ]},
+    {name:'🥦 Warzywa keto',cls:'hv',items:[
+      {n:'Szparagi',q:'300g',p:'9,99 zł'},{n:'Cukinia (do carbonary i risotto)',q:'3 szt.',p:'8,97 zł'},
+      {n:'Kalafior (do risotto)',q:'½ szt.',p:'2,99 zł'},{n:'Pieczarki',q:'300g',p:'4,99 zł'},
+      {n:'Szpinak baby',q:'150g',p:'5,99 zł'},{n:'Pomidorki cherry',q:'200g',p:'5,99 zł'},
+      {n:'Kapusta kiszona',q:'300g',p:'2,99 zł'},{n:'Sałata i rukola',q:'2 opak.',p:'5,98 zł'},
+      {n:'Ogórek',q:'2 szt.',p:'3,98 zł'},{n:'Fenkuł (koper włoski)',q:'1 szt.',p:'3,99 zł'},
+    ]},
+    {name:'🫙 Tłuszcze i przetwory',cls:'hf',items:[
+      {n:'Oliwa extra virgin',q:'500ml',p:'14,99 zł'},{n:'Olej truflowy',q:'małe op.',p:'14,99 zł'},
+      {n:'Mleko kokosowe',q:'1 puszka',p:'4,99 zł'},{n:'Pasta miso',q:'150g',p:'9,99 zł'},
+      {n:'Wino czerwone wytrawne',q:'750ml',p:'19,99 zł'},{n:'Wino białe wytrawne',q:'750ml',p:'17,99 zł'},
+      {n:'Bulion kostny i rybny',q:'1,5L',p:'11,99 zł'},{n:'Kapary',q:'100g',p:'5,99 zł'},
+      {n:'Kakao ciemne 100%',q:'100g',p:'5,99 zł'},{n:'Erytrytol lub stewia',q:'200g',p:'7,99 zł'},
+    ]},
+    {name:'🥜 Finałowe smaki',cls:'hc',items:[
+      {n:'Czekolada gorzka 85-90%',q:'150g',p:'9,99 zł'},{n:'Masło orzechowe 100%',q:'350g',p:'14,99 zł'},
+      {n:'Wiórki kokosowe',q:'50g',p:'2,99 zł'},{n:'Mąka migdałowa',q:'250g',p:'11,99 zł'},
+      {n:'Tofu jedwabiste',q:'300g',p:'5,99 zł'},{n:'Wodorosty nori',q:'1 op.',p:'4,99 zł'},
+    ]},
+  ]},
+];
+
+// ════════════════════════════ STATE & LOGIC ════════════════════════════
+let curWeek = 0, shopWeek = 0;
+let checked = {};
+try { checked = JSON.parse(localStorage.getItem('keto-chk') || '{}'); } catch(e) {}
+const saveChk = () => { try { localStorage.setItem('keto-chk', JSON.stringify(checked)); } catch(e) {} };
+
+// ═══ RENDER JADŁOSPIS ═══
+function renderJadlospis() {
+  document.getElementById('week-sel').innerHTML = [0,1,2,3].map(i =>
+    `<button class="wsb${i===curWeek?' active':''}" onclick="setW(${i})">Tydzień ${i+1}</button>`
+  ).join('');
+
+  const container = document.getElementById('days-container');
+  container.innerHTML = DAYS.map((dname, di) => {
+    const meals = W[curWeek][di];
+    const totK = meals.reduce((a,m) => a+m.kcal, 0);
+    const totF = meals.reduce((a,m) => a+m.fat, 0);
+    const totP = meals.reduce((a,m) => a+m.prot, 0);
+    const totC = meals.reduce((a,m) => a+m.carb, 0);
+
+    const mealRows = meals.map((m, mi) => `
+      <div class="meal-row" onclick="openModal(${curWeek},${di},${mi})">
+        <div class="meal-ic ${MI[mi]}">${['☀️','🥗','🍽️','🌿','🌙'][mi]}</div>
+        <div class="meal-info">
+          <div class="meal-type">${MT[mi]}</div>
+          <div class="meal-name">${m.name}</div>
+          <div class="meal-macros">
+            <span class="mmac f">T: ${m.fat}g</span>
+            <span class="mmac p">B: ${m.prot}g</span>
+            <span class="mmac c">W: ${m.carb}g</span>
+          </div>
+        </div>
+        <div class="marr">›</div>
+      </div>`).join('');
+
+    return `
+      <div class="day-section">
+        <div class="day-hdr" onclick="toggleDay('d${di}')">
+          <h3>${dname}</h3>
+          <div class="day-hdr-right">
+            <div class="macro-pills">
+              <span class="mpill">${totK} kcal</span>
+              <span class="mpill">${totC}g W</span>
+            </div>
+            <span class="dtoggle open" id="dtog-d${di}">▼</span>
+          </div>
+        </div>
+        <div class="day-body" id="d${di}">
+          <div class="macro-bar-row">
+            <div class="mbar-item"><span class="mbar-val kcal">${totK}</span><div class="mbar-lbl">kcal</div></div>
+            <div class="mbar-item"><span class="mbar-val fat">${totF}g</span><div class="mbar-lbl">tłuszcz</div></div>
+            <div class="mbar-item"><span class="mbar-val prot">${totP}g</span><div class="mbar-lbl">białko</div></div>
+            <div class="mbar-item"><span class="mbar-val carb">${totC}g</span><div class="mbar-lbl">węgle</div></div>
+          </div>
+          ${mealRows}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function setW(w) { curWeek = w; renderJadlospis(); }
+function toggleDay(id) {
+  document.getElementById(id).classList.toggle('hidden');
+  document.getElementById('dtog-' + id).classList.toggle('open');
+}
+
+// ═══ MODAL ═══
+function openModal(w, d, mi) {
+  const m = W[w][d][mi];
+  document.getElementById('m-type').textContent = MT[mi];
+  document.getElementById('m-title').textContent = m.name;
+  document.getElementById('m-macros').innerHTML = `
+    <span class="modmac k">${m.kcal} kcal</span>
+    <span class="modmac f">Tłuszcz: ${m.fat}g</span>
+    <span class="modmac p">Białko: ${m.prot}g</span>
+    <span class="modmac c">Węgle: ${m.carb}g</span>`;
+
+  const ings = m.ing.map(i =>
+    `<div class="ing"><span class="ing-q">${i.q}</span><span>${i.n}</span></div>`
+  ).join('');
+  const steps = m.steps.map((s,i) =>
+    `<div class="step"><div class="step-n">${i+1}</div><div>${s}</div></div>`
+  ).join('');
+
+  document.getElementById('m-body').innerHTML = `
+    <div class="sec-title">Składniki (1 osoba)</div>
+    <div class="ing-list">${ings}</div>
+    <div class="sec-title">Przygotowanie</div>
+    <div class="steps-list">${steps}</div>
+    ${m.tip ? `<div class="tip-box"><strong>💡 Keto wskazówka:</strong>${m.tip}</div>` : ''}`;
+
+  document.getElementById('modal-overlay').classList.add('show');
+  document.querySelector('.scroll-area').style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (!e || e.target === document.getElementById('modal-overlay') || e.currentTarget.tagName === 'BUTTON') {
+    document.getElementById('modal-overlay').classList.remove('show');
+    document.querySelector('.scroll-area').style.overflow = '';
+  }
+}
+
+// ═══ SHOPPING ═══
+function renderShop() {
+  document.getElementById('shop-week-nav').innerHTML = [0,1,2,3].map(i =>
+    `<button class="swn${i===shopWeek?' active':''}" onclick="setShopW(${i})">Tydz. ${i+1}</button>`
+  ).join('');
+  document.getElementById('shop-label').textContent = `Tydzień ${shopWeek+1}`;
+
+  const data = SHOP[shopWeek];
+  const key = `w${shopWeek}`;
+  if (!checked[key]) checked[key] = {};
+
+  let tot = 0, done = 0, sumAll = 0, sumLeft = 0;
+  data.cats.forEach(c => c.items.forEach(it => {
+    tot++;
+    const p = parseFloat((it.p||'0').replace(',','.').replace(' zł',''));
+    if (!isNaN(p) && p > 0) sumAll += p;
+    if (checked[key][c.name+it.n]) done++;
+    else if (!isNaN(p) && p > 0) sumLeft += p;
+  }));
+
+  const pct = tot > 0 ? Math.round(done/tot*100) : 0;
+  document.getElementById('shop-prog').innerHTML = `
+    <div class="prog-txt">
+      <strong>${done} / ${tot} produktów</strong>
+      <span>${pct}% gotowe</span>
+      <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+    </div>`;
+
+  document.getElementById('shop-list').innerHTML = data.cats.map(c => {
+    const items = c.items.map(it => {
+      const k = c.name + it.n;
+      const d = checked[key][k] ? 'done' : '';
+      return `<div class="sitem ${d}" onclick="togShop('${key}','${k.replace(/'/g,"\\'")}')">
+        <div class="chk">${d?'✓':''}</div>
+        <div class="iname">${it.n}</div>
+        <div class="imeta"><div class="iqty">${it.q}</div><div class="iprice">${it.p}</div></div>
+      </div>`;
+    }).join('');
+    return `<div class="shop-cat"><div class="scat-hdr ${c.cls}">${c.name}</div>${items}</div>`;
+  }).join('') + `
+    <div class="total-card">
+      <div class="total-left">
+        <strong>${sumAll.toFixed(2).replace('.',',')} zł</strong>
+        <span>Łączny koszt tygodnia</span>
+      </div>
+      <div class="total-right">
+        Pozostało:<br>
+        <strong style="font-size:13px;color:white">${sumLeft.toFixed(2).replace('.',',')} zł</strong>
+      </div>
+    </div>`;
+}
+
+function setShopW(w) { shopWeek = w; renderShop(); }
+function togShop(key, k) {
+  if (!checked[key]) checked[key] = {};
+  checked[key][k] = !checked[key][k];
+  saveChk();
+  renderShop();
+}
+
+// ═══ TABS ═══
+function goTab(name, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  el.classList.add('active');
+  if (name === 'zakupy') renderShop();
+  document.querySelector('.scroll-area').scrollTo(0, 0);
+}
+
+// ═══ SW ═══
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+
+// ═══ INIT ═══
+renderJadlospis();
+</script>
+</body>
+</html>
