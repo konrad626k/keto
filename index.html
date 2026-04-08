@@ -5,26 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#0a0f0a">
-<title>Dieta Keto 🥑</title>
+<meta name="theme-color" content="#0a0f1a">
+<title>Dieta przy Insulinooporności 🩺</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f5f7f5;
-  --bg2:#eef1ee;
+  --bg:#f5f7ff;
+  --bg2:#eef0ff;
   --surf:#ffffff;
-  --surf2:#f0f4f0;
-  --bord:#d4e0d4;
-  --bord2:#c5d5c5;
-  --grn:#2a9a50;
-  --grn2:#3dba6a;
-  --grn-dim:rgba(42,154,80,.10);
+  --surf2:#f0f2ff;
+  --bord:#d4d8f0;
+  --bord2:#c5caec;
+  --blu:#2a5fd4;
+  --blu2:#3d72f5;
+  --blu-dim:rgba(42,95,212,.10);
   --gold:#a07c20;
   --red:#c93333;
-  --blue:#2d6fa8;
-  --txt:#1a2e1a;
-  --txt2:#3a5c3a;
-  --muted:#7a9a7a;
+  --grn:#1a8c50;
+  --txt:#1a1e3a;
+  --txt2:#3a4070;
+  --muted:#7a84b0;
   --fat:#c45a08;
   --prot:#1a5fb0;
   --carb:#c0392b;
@@ -34,17 +34,17 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow:hidden;font-family:'Outfit',sans-serif;background:var(--bg);color:var(--txt);-webkit-font-smoothing:antialiased}
 .app{display:flex;flex-direction:column;height:100vh;height:100dvh}
-.hdr{background: linear-gradient(135deg, #f0f7f0, #e8f2e8););border-bottom:1px solid var(--bord);padding:calc(var(--safe-t)+10px) 16px 10px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;position:relative;overflow:hidden}
-.hdr::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--grn),transparent)}
+.hdr{background:linear-gradient(135deg,#eef2ff,#e6edff);border-bottom:1px solid var(--bord);padding:calc(var(--safe-t)+10px) 16px 10px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--blu),transparent)}
 .hdr-left{display:flex;align-items:center;gap:11px}
-.hdr-icon{width:42px;height:42px;background:linear-gradient(135deg,var(--grn),#2a9a50);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 16px rgba(61,186,106,.3)}
+.hdr-icon{width:42px;height:42px;background:linear-gradient(135deg,var(--blu),#2a5fd4);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 16px rgba(42,95,212,.3)}
 .hdr-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--txt)}
 .hdr-sub{font-size:9px;color:var(--txt2);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-top:1px}
-.hdr-chip{background:var(--grn-dim);border:1px solid rgba(61,186,106,.3);color:var(--grn);padding:6px 12px;border-radius:20px;font-size:10px;font-weight:700}
+.hdr-chip{background:var(--blu-dim);border:1px solid rgba(61,114,245,.3);color:var(--blu);padding:6px 12px;border-radius:20px;font-size:10px;font-weight:700}
 .tabs{display:flex;background:var(--bg2);border-bottom:1px solid var(--bord);flex-shrink:0}
 .tab{flex:1;padding:10px 4px;font-size:10px;font-weight:700;text-align:center;cursor:pointer;color:var(--muted);border:none;background:none;font-family:'Outfit',sans-serif;transition:all .2s;border-bottom:2px solid transparent;margin-bottom:-1px}
 .tab .ti{display:block;font-size:17px;margin-bottom:2px}
-.tab.active{color:var(--grn);border-bottom-color:var(--grn)}
+.tab.active{color:var(--blu);border-bottom-color:var(--blu)}
 .scroll-area{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 .page{display:none;padding:14px;animation:fu .2s ease}
 .page.active{display:block}
@@ -52,35 +52,35 @@ html,body{height:100%;overflow:hidden;font-family:'Outfit',sans-serif;background
 .week-sel{display:flex;gap:7px;overflow-x:auto;padding-bottom:6px;margin-bottom:16px;scrollbar-width:none}
 .week-sel::-webkit-scrollbar{display:none}
 .wsb{flex-shrink:0;padding:7px 16px;border-radius:20px;border:1px solid var(--bord2);background:var(--surf);color:var(--txt2);font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .15s}
-.wsb.active{background:var(--grn);color:#0a0f0a;border-color:var(--grn);font-weight:800}
+.wsb.active{background:var(--blu);color:#fff;border-color:var(--blu);font-weight:800}
 .wsb:active{transform:scale(.94)}
 .day-card{margin-bottom:11px;border-radius:16px;overflow:hidden;border:1px solid var(--bord)}
 .day-hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 15px;cursor:pointer;background:linear-gradient(135deg,var(--surf2),var(--surf))}
 .day-hdr:active{background:var(--surf2)}
 .day-hdr-l{display:flex;align-items:center;gap:9px}
-.day-dot{width:8px;height:8px;border-radius:50%;background:var(--grn);box-shadow:0 0 8px rgba(61,186,106,.5);flex-shrink:0}
+.day-dot{width:8px;height:8px;border-radius:50%;background:var(--blu);box-shadow:0 0 8px rgba(42,95,212,.5);flex-shrink:0}
 .day-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--txt)}
 .day-hdr-r{display:flex;align-items:center;gap:8px}
-.kcal-pill{font-size:10px;font-weight:700;padding:3px 8px;border-radius:8px;background:var(--grn-dim);color:var(--grn)}
+.kcal-pill{font-size:10px;font-weight:700;padding:3px 8px;border-radius:8px;background:var(--blu-dim);color:var(--blu)}
 .chev{color:var(--muted);font-size:13px;transition:transform .2s}
 .chev.open{transform:rotate(180deg)}
 .day-body{background:var(--surf)}
 .day-body.hidden{display:none}
-.macro-bar-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:10px 15px;background: rgba(49,233,80,.04);;;border-bottom:1px solid var(--bord)}
+.macro-bar-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:10px 15px;background:rgba(42,95,212,.04);border-bottom:1px solid var(--bord)}
 .mbar-item{text-align:center}
 .mbar-val{font-size:13px;font-weight:800;display:block}
-.mv-k{color:var(--grn)}.mv-b{color:var(--prot)}.mv-w{color:var(--carb)}.mv-t{color:var(--fat)}
+.mv-k{color:var(--blu)}.mv-b{color:var(--prot)}.mv-w{color:var(--carb)}.mv-t{color:var(--fat)}
 .mbar-lbl{font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;font-weight:600}
 .meal-row{display:flex;align-items:center;gap:12px;padding:12px 15px;border-bottom:1px solid var(--bord);cursor:pointer;transition:background .15s}
 .meal-row:last-child{border-bottom:none}
-.meal-row:active{background:rgba(61,186,106,.04)}
+.meal-row:active{background:rgba(42,95,212,.04)}
 .meal-ic{width:39px;height:39px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.m1{background:rgba(212,168,71,.1)}.m2{background:rgba(61,186,106,.1)}.m3{background:rgba(229,85,85,.1)}.m4{background:rgba(91,155,213,.1)}
+.m1{background:rgba(212,168,71,.1)}.m2{background:rgba(61,186,106,.1)}.m3{background:rgba(229,85,85,.1)}.m4{background:rgba(91,155,213,.1)}.m5{background:rgba(149,91,213,.1)}
 .meal-info{flex:1;min-width:0}
 .meal-type{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:2px}
 .meal-name{font-size:14px;font-weight:600;color:var(--txt);line-height:1.3;margin-bottom:3px}
 .meal-tags{display:flex;gap:5px;flex-wrap:wrap}
-.mtag{font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;background:var(--grn-dim);color:var(--grn)}
+.mtag{font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;background:var(--blu-dim);color:var(--blu)}
 .marr{color:var(--muted);font-size:11px;flex-shrink:0}
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:300;display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .25s;backdrop-filter:blur(4px)}
 .overlay.show{opacity:1;pointer-events:all}
@@ -92,29 +92,29 @@ html,body{height:100%;overflow:hidden;font-family:'Outfit',sans-serif;background
 .modal-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--txt);line-height:1.2;margin-bottom:9px}
 .modal-macros{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:6px}
 .mchip{font-size:11px;font-weight:600;padding:3px 9px;border-radius:8px}
-.mchip.k{background:rgba(61,186,106,.15);color:var(--grn)}
+.mchip.k{background:rgba(42,95,212,.15);color:var(--blu)}
 .mchip.b{background:rgba(59,130,246,.12);color:var(--prot)}
 .mchip.w{background:rgba(239,68,68,.12);color:var(--carb)}
 .mchip.t{background:rgba(249,115,22,.12);color:var(--fat)}
-.modal-cost{font-size:11px;font-weight:700;color:var(--grn);margin-top:2px}
+.modal-cost{font-size:11px;font-weight:700;color:var(--blu);margin-top:2px}
 .modal-body{padding:16px 18px}
-.sec-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--grn);margin:16px 0 9px;display:flex;align-items:center;gap:6px}
+.sec-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--blu);margin:16px 0 9px;display:flex;align-items:center;gap:6px}
 .sec-title:first-child{margin-top:0}
-.sec-title::before{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--grn-dim),transparent)}
-.sec-title::after{content:'';flex:3;height:1px;background:linear-gradient(90deg,var(--grn-dim),transparent)}
+.sec-title::before{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--blu-dim),transparent)}
+.sec-title::after{content:'';flex:3;height:1px;background:linear-gradient(90deg,var(--blu-dim),transparent)}
 .ing-list{display:flex;flex-direction:column;gap:6px}
 .ing{display:flex;gap:10px;font-size:13px;align-items:baseline}
-.ing-q{font-weight:700;color:var(--grn);min-width:72px;font-size:11px;flex-shrink:0}
+.ing-q{font-weight:700;color:var(--blu);min-width:72px;font-size:11px;flex-shrink:0}
 .steps-list{display:flex;flex-direction:column;gap:9px}
 .step{display:flex;gap:9px;font-size:13px;line-height:1.65;color:var(--txt2)}
-.step-n{width:24px;height:24px;border-radius:50%;background:var(--grn-dim);border:1px solid rgba(61,186,106,.3);color:var(--grn);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-.tip-box{background:rgba(61,186,106,.06);border:1px solid rgba(61,186,106,.2);border-radius:12px;padding:11px 13px;margin-top:13px;font-size:12px;color:var(--txt2);line-height:1.65}
-.tip-box strong{color:var(--grn);display:block;margin-bottom:2px}
-.close-btn{width:calc(100% - 36px);margin:15px 18px 0;padding:14px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--grn),#2a9a50);color:#0a0f0a;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(61,186,106,.25)}
+.step-n{width:24px;height:24px;border-radius:50%;background:var(--blu-dim);border:1px solid rgba(42,95,212,.3);color:var(--blu);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.tip-box{background:rgba(42,95,212,.06);border:1px solid rgba(42,95,212,.2);border-radius:12px;padding:11px 13px;margin-top:13px;font-size:12px;color:var(--txt2);line-height:1.65}
+.tip-box strong{color:var(--blu);display:block;margin-bottom:2px}
+.close-btn{width:calc(100% - 36px);margin:15px 18px 0;padding:14px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--blu),#2a5fd4);color:#fff;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(42,95,212,.25)}
 .close-btn:active{transform:scale(.98)}
 .shop-wnav{display:flex;gap:7px;margin-bottom:14px}
 .swn{flex:1;padding:9px 4px;border-radius:11px;border:1px solid var(--bord2);background:var(--surf);color:var(--muted);font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;text-align:center;transition:all .15s}
-.swn.active{background:var(--grn);color:#0a0f0a;border-color:var(--grn);font-weight:800}
+.swn.active{background:var(--blu);color:#fff;border-color:var(--blu);font-weight:800}
 .swn:active{transform:scale(.94)}
 .shop-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--txt);margin-bottom:3px}
 .shop-sub{font-size:11px;color:var(--muted);margin-bottom:13px}
@@ -122,31 +122,31 @@ html,body{height:100%;overflow:hidden;font-family:'Outfit',sans-serif;background
 .prog-txt strong{font-size:14px;font-weight:700;color:var(--txt)}
 .prog-txt span{display:block;font-size:10px;color:var(--muted);margin-top:1px}
 .prog-bar{height:4px;background:var(--bord2);border-radius:99px;overflow:hidden;margin-top:8px}
-.prog-fill{height:100%;background:linear-gradient(90deg,var(--grn),var(--grn2));border-radius:99px;transition:width .4s}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--blu),var(--blu2));border-radius:99px;transition:width .4s}
 .shop-cat{background:var(--surf);border:1px solid var(--bord);border-radius:13px;overflow:hidden;margin-bottom:9px}
 .scat-hdr{padding:10px 15px;font-size:11px;font-weight:700;letter-spacing:.5px}
-.ch-m{background:rgba(229,85,85,.1);color:#e05555}
+.ch-z{background:rgba(42,95,212,.1);color:var(--blu)}
 .ch-d{background:rgba(212,168,71,.1);color:var(--gold)}
-.ch-v{background:rgba(61,186,106,.1);color:var(--grn)}
-.ch-f{background:rgba(249,115,22,.1);color:var(--fat)}
-.ch-o{background:rgba(91,155,213,.1);color:var(--blue)}
-.sitem{display:flex;align-items:center;gap:10px;padding:11px 15px;border-bottom:1px solid rgba(255,255,255,.03);cursor:pointer;transition:background .15s}
+.ch-v{background:rgba(26,140,80,.1);color:var(--grn)}
+.ch-k{background:rgba(149,91,213,.1);color:#7a3fb0}
+.ch-o{background:rgba(91,155,213,.1);color:#2d6fa8}
+.sitem{display:flex;align-items:center;gap:10px;padding:11px 15px;border-bottom:1px solid rgba(0,0,0,.04);cursor:pointer;transition:background .15s}
 .sitem:last-child{border-bottom:none}
-.sitem:active{background:rgba(61,186,106,.04)}
+.sitem:active{background:rgba(42,95,212,.04)}
 .sitem.done{opacity:.35}
 .sitem.done .iname{text-decoration:line-through}
 .si-chk{width:22px;height:22px;border-radius:7px;border:1.5px solid var(--bord2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;transition:all .2s}
-.sitem.done .si-chk{background:var(--grn);border-color:var(--grn);color:#0a0f0a}
+.sitem.done .si-chk{background:var(--blu);border-color:var(--blu);color:#fff}
 .iname{flex:1;font-size:13px;font-weight:500;color:var(--txt2)}
 .imeta{text-align:right;flex-shrink:0}
 .iqty{font-size:10px;color:var(--muted)}
-.iprice{font-size:11px;font-weight:700;color:var(--grn)}
-.total-card{background:linear-gradient(135deg,#0f1f0f,#0a150a);border:1px solid rgba(61,186,106,.3);border-radius:16px;padding:15px 17px;margin-top:11px;display:flex;align-items:center;justify-content:space-between}
-.total-left strong{display:block;font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--grn)}
-.total-left span{font-size:10px;color:var(--txt2);margin-top:1px;display:block}
+.iprice{font-size:11px;font-weight:700;color:var(--blu)}
+.total-card{background:linear-gradient(135deg,#0f1030,#0a0d28);border:1px solid rgba(42,95,212,.3);border-radius:16px;padding:15px 17px;margin-top:11px;display:flex;align-items:center;justify-content:space-between}
+.total-left strong{display:block;font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#6fa3ff}
+.total-left span{font-size:10px;color:#8898c0;margin-top:1px;display:block}
 .total-right{text-align:right}
-.total-right div{font-size:10px;color:var(--muted)}
-.total-right strong{font-size:14px;color:var(--grn2);font-weight:700}
+.total-right div{font-size:10px;color:#8898c0}
+.total-right strong{font-size:14px;color:#9ab8ff;font-weight:700}
 .info-card{background:var(--surf);border:1px solid var(--bord);border-radius:14px;padding:15px;margin-bottom:11px}
 .info-card h3{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;color:var(--txt);margin-bottom:9px}
 .info-card p,.info-card li{font-size:13px;line-height:1.8;color:var(--txt2)}
@@ -155,24 +155,27 @@ html,body{height:100%;overflow:hidden;font-family:'Outfit',sans-serif;background
 .mc{background:var(--surf2);border:1px solid var(--bord2);border-radius:11px;padding:10px 12px;flex:1;min-width:70px;text-align:center}
 .mc-val{font-size:17px;font-weight:800;display:block}
 .mc-lbl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-top:2px}
+.gi-badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:6px}
+.gi-low{background:rgba(26,140,80,.15);color:var(--grn)}
+.gi-med{background:rgba(212,168,71,.15);color:var(--gold)}
 </style>
 </head>
 <body>
 <div class="app">
 <div class="hdr">
   <div class="hdr-left">
-    <div class="hdr-icon">🥑</div>
+    <div class="hdr-icon">🩺</div>
     <div>
-      <div class="hdr-title">Keto Budżetowe</div>
-      <div class="hdr-sub">4 tygodnie · 4 posiłki · ~25 zł/dzień</div>
+      <div class="hdr-title">Dieta przy Insulinooporności</div>
+      <div class="hdr-sub">4 tygodnie · 4 posiłki · ~18 zł/dzień</div>
     </div>
   </div>
-  <div class="hdr-chip">&lt;20g węgli</div>
+  <div class="hdr-chip">IO &lt;4 posiłki</div>
 </div>
 <div class="tabs">
   <button class="tab active" onclick="goTab('plan',this)"><span class="ti">📅</span>Jadłospis</button>
   <button class="tab" onclick="goTab('shop',this)"><span class="ti">🛒</span>Zakupy</button>
-  <button class="tab" onclick="goTab('info',this)"><span class="ti">📊</span>Keto info</button>
+  <button class="tab" onclick="goTab('info',this)"><span class="ti">📊</span>IO info</button>
 </div>
 <div class="scroll-area">
 <div class="page active" id="page-plan">
@@ -182,59 +185,85 @@ html,body{height:100%;overflow:hidden;font-family:'Outfit',sans-serif;background
 <div class="page" id="page-shop">
   <div class="shop-wnav" id="shop-week-nav"></div>
   <div class="shop-title" id="shop-label">Tydzień 1</div>
-  <div class="shop-sub">Zakupy tygodniowe · 1 osoba · keto budżetowe</div>
+  <div class="shop-sub">Zakupy tygodniowe · 1 osoba · dieta przy insulinooporności</div>
   <div class="prog-card" id="shop-prog"></div>
   <div id="shop-list"></div>
 </div>
 <div class="page" id="page-info">
   <div class="info-card">
-    <h3>🥑 Zasady diety keto</h3>
+    <h3>🩺 Zasady diety przy Insulinooporności (IO)</h3>
     <div class="mc-row">
-      <div class="mc"><span class="mc-val" style="color:var(--fat)">75%</span><div class="mc-lbl">Tłuszcze</div></div>
-      <div class="mc"><span class="mc-val" style="color:var(--prot)">20%</span><div class="mc-lbl">Białko</div></div>
-      <div class="mc"><span class="mc-val" style="color:var(--carb)">&lt;20g</span><div class="mc-lbl">Węgle</div></div>
-      <div class="mc"><span class="mc-val" style="color:var(--grn)">~1600</span><div class="mc-lbl">kcal</div></div>
+      <div class="mc"><span class="mc-val" style="color:var(--carb)">35–40%</span><div class="mc-lbl">Węgle</div></div>
+      <div class="mc"><span class="mc-val" style="color:var(--prot)">25–30%</span><div class="mc-lbl">Białko</div></div>
+      <div class="mc"><span class="mc-val" style="color:var(--fat)">30–35%</span><div class="mc-lbl">Tłuszcz</div></div>
+      <div class="mc"><span class="mc-val" style="color:var(--blu)">~1500</span><div class="mc-lbl">kcal</div></div>
     </div>
-    <p style="margin-top:10px">Ketoza zaczyna się po 2–4 dniach ścisłego trzymania się &lt;20g węglowodanów netto. Każdy dzień w tym jadłospisie mieści się w tym limicie.</p>
+    <p style="margin-top:10px">Przy IO kluczowe jest dawanie trzustce odpoczynku. <b>4 posiłki z przerwami 4–5 godzin</b> pozwalają poziomowi insuliny opaść między posiłkami. Każdy posiłek musi zawierać białko i tłuszcz, aby hamować wyrzuty insuliny.</p>
   </div>
   <div class="info-card">
-    <h3>💰 Najtańsze produkty keto</h3>
+    <h3>💰 Najtańsze produkty dla cukrzyka</h3>
     <ul>
-      <li><b>Jajka</b> — ~1 zł/szt., podstawa keto budżetu</li>
-      <li><b>Udka kurczaka</b> — ~8–10 zł/kg, tłuste i tanie</li>
-      <li><b>Mięso mielone wieprzowe</b> — ~8–10 zł/400g</li>
-      <li><b>Boczek wędzony</b> — ~10–12 zł/400g</li>
-      <li><b>Kapusta biała i kiszona</b> — ~2–3 zł/kg</li>
-      <li><b>Brokuły i kalafior mrożone</b> — ~3–5 zł/400g</li>
-      <li><b>Śmietana 30%</b> — ~5–7 zł/200ml</li>
-      <li><b>Makrela wędzona</b> — najtańsza tłusta ryba, ~6–8 zł/szt.</li>
+      <li><b>Kasza gryczana</b> — ~3–4 zł/500g, IG=54, podstawa diety IO <span class="gi-badge gi-low">IG 54</span></li>
+      <li><b>Płatki owsiane górskie</b> — ~2–3 zł/500g, sycące i tanie <span class="gi-badge gi-low">IG 40</span></li>
+      <li><b>Soczewica czerwona</b> — ~4–5 zł/400g, białko i błonnik <span class="gi-badge gi-low">IG 25</span></li>
+      <li><b>Fasola biała (konserwowa)</b> — ~3–4 zł/400g <span class="gi-badge gi-low">IG 30</span></li>
+      <li><b>Marchew, pietruszka, seler</b> — ~1–3 zł/szt.</li>
+      <li><b>Kapusta kiszona</b> — ~2–3 zł/słoik, probiotyk i błonnik</li>
+      <li><b>Jajka</b> — ~1 zł/szt., bez węglowodanów</li>
+      <li><b>Serek wiejski (chudy)</b> — ~3–4 zł/200g, białko</li>
+      <li><b>Chleb żytni razowy</b> — ~4–5 zł/bochenek <span class="gi-badge gi-low">IG 45</span></li>
     </ul>
   </div>
   <div class="info-card">
-    <h3>💊 Suplementacja na keto</h3>
+    <h3>⚠️ Produkty zakazane</h3>
     <ul>
-      <li><b>Magnez</b> — zapobiega skurczom mięśni</li>
-      <li><b>Sód</b> — pij bulion, jedz ogórki kiszone</li>
-      <li><b>Woda</b> — minimum 2–2,5L dziennie!</li>
-      <li><b>Witamina D3</b> — przez cały rok</li>
+      <li><b>Kasza jaglana</b> — IG 70, przy IO zastąp gryczaną lub pęczakiem <span class="gi-badge gi-med">IG 70</span></li>
+      <li><b>Białe pieczywo, bułki, bagietki</b> — IG 70–95</li>
+      <li><b>Cukier, miód, syropy</b> — gwałtowny skok glukozy</li>
+      <li><b>Biały ryż, makaron pszenny</b> — zastąp gryczanym</li>
+      <li><b>Soki owocowe, słodkie napoje</b> — pij wodę!</li>
+      <li><b>Ziemniaki (puree, frytki)</b> — IG 85–95</li>
+      <li><b>Słodycze, czekolada mleczna, ciastka</b></li>
     </ul>
   </div>
   <div class="info-card">
-    <h3>⚡ Jak sprawdzić ketozę?</h3>
+    <h3>🥗 Zasada talerza przy IO</h3>
     <ul>
-      <li>Metaliczny zapach z ust — dobry znak!</li>
-      <li>Zmniejszony apetyt po 1–2 tygodniach</li>
-      <li>Więcej energii po przejściu "keto grypy"</li>
-      <li>Paski ketonowe z apteki — ~15–30 zł</li>
+      <li>½ talerza — warzywa nieskrobiowe (sałata, ogórek, papryka, brokuł)</li>
+      <li>¼ talerza — białko (mięso, ryba, jajka, rośliny strączkowe)</li>
+      <li>¼ talerza — węglowodany złożone (kasza, ryż brązowy, chleb razowy)</li>
     </ul>
   </div>
   <div class="info-card">
-    <h3>🔥 Odchudzanie na keto</h3>
+    <h3>💡 3 Złote Zasady przy IO</h3>
     <ul>
-      <li>Deficyt kaloryczny: ~1500–1700 kcal/dzień dla kobiet, ~1800–2000 dla mężczyzn</li>
-      <li>Pierwsze 1–2 kg to woda — normalne!</li>
-      <li>Nie waż się codziennie — raz w tygodniu rano</li>
-      <li>Nie bój się tłuszczu — to Twoje paliwo!</li>
+      <li><b>Kolejność jedzenia:</b> Najpierw warzywa (błonnik), potem białko i tłuszcz, na końcu węglowodany — hamuje wyrzut insuliny o 30–40%!</li>
+      <li><b>Zasada Talerza IO:</b> ½ talerza warzywa niskoskrobiowe, ¼ białko, ¼ węglowodany złożone. Bez przekąsek między posiłkami.</li>
+      <li><b>Nigdy sam węglowodan:</b> Jabłko zawsze z orzechami lub twarożkiem. Chleb zawsze z jajkiem lub serkiem — tłuszcz i białko spowalniają wchłanianie cukru.</li>
+    </ul>
+  </div>
+  <div class="info-card">
+    <h3>⚠️ Dlaczego 4 posiłki, nie 5?</h3>
+    <p>Przy insulinooporności każdy posiłek wywołuje wyrzut insuliny. Przy 5 posiłkach insulina jest podwyższona <b>przez cały dzień</b> — to pogłębia IO. 4 posiłki z przerwą 4–5 godzin dają trzustce czas odpoczynku i poprawiają wrażliwość na insulinę. Podwieczorek z jadłospisu zostaje <b>wchłonięty do obiadu</b> (więcej białka, więcej tłuszczu).</p>
+  </div>
+  <div class="info-card">
+    <h3>💊 Ważne suplementy przy IO</h3>
+    <ul>
+      <li><b>Magnez</b> — niedobór częsty przy IO, poprawia wrażliwość insulinową</li>
+      <li><b>Witamina D3 + K2</b> — przez cały rok</li>
+      <li><b>Berberyna lub Cynamon cejloński</b> — naturalnie wspomagają insulinowrażliwość</li>
+      <li><b>Inozytol (mio-inozytol)</b> — wspomaga działanie insuliny w komórkach</li>
+      <li><b>Woda</b> — minimum 2L dziennie! Bez soków i słodkich napojów.</li>
+    </ul>
+  </div>
+  <div class="info-card">
+    <h3>🕐 Rytm posiłków przy IO</h3>
+    <ul>
+      <li>Posiłek co <b>4–5 godzin</b> — tylko 4 posiłki dziennie</li>
+      <li><b>Daj trzustce odpocząć</b> — insulina musi opaść między posiłkami!</li>
+      <li>Nie podjadaj — nawet "zdrowych" przekąsek</li>
+      <li>Ostatni posiłek <b>3–4 godziny</b> przed snem</li>
+      <li>Zawsze łącz węglowodany z białkiem i tłuszczem</li>
     </ul>
   </div>
 </div>
@@ -250,169 +279,223 @@ html,body{height:100%;overflow:hidden;font-family:'Outfit',sans-serif;background
       <div class="modal-cost" id="m-cost"></div>
     </div>
     <div class="modal-body" id="m-body"></div>
-    <button class="close-btn" onclick="closeModal()">Zamknij przepis</button>
+    <button class="close-btn" onclick="closeModal()">Zamknij</button>
   </div>
 </div>
 <script>
-const MT=['☀️ Śniadanie','🍽️ Obiad','🍎 Przekąska','🌙 Kolacja'];
-const MIC=['m1','m2','m3','m4'];
 const DAYS=['Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota','Niedziela'];
-const m=(name,kcal,f,p,c,zl,ing,steps,tip)=>({name,kcal,f,p,c,zl,ing,steps,tip});
-const i=(q,n)=>({q,n});
+const MT=['☀️ Śniadanie','🥗 II Śniadanie','🍽️ Obiad','🌙 Kolacja'];
+const MIC=['m1','m2','m3','m5'];
 
-const W=[
+function m(name,kcal,p,c,f,zl,ing,steps,tip){return{name,kcal,p,c,f,zl,ing,steps,tip}}
+function i(q,n){return{q,n}}
+
+// Remove podwieczorek (index 3) from each day for IO diet — 4 meals only
+const W_RAW=[
+// ===== TYDZIEŃ 1 =====
 [
-[m('Jajecznica z boczkiem i awokado',480,42,22,4,'4,20 zł',[i('3 szt.','jajka'),i('60g','boczek wędzony'),i('pół szt.','awokado'),i('masło, sól, pieprz','')],['Boczek podsmaż na suchej patelni do chrupkości.','Jajka wbij, smaż mieszając 3 min.','Awokado pokrój w plasterki, podaj obok.'],'Boczek daje tłuszcz bez dodatkowego oleju!'),
- m('Udka kurczaka pieczone z brokułami',510,36,38,4,'7,50 zł',[i('2 szt.','udka kurczaka'),i('200g','brokuły (mrożone)'),i('2 łyżki','oliwa'),i('czosnek, sól, papryka','')],['Udka natrzyj solą, papryką, czosnkiem.','Ułóż na blasze, polej oliwą.','Piecz 200°C przez 40 min, brokuły dodaj na ostatnie 15 min.'],'Udka z kurczaka to najtańsze keto mięso!'),
- m('Ogórki kiszone z serem żółtym',90,6,5,3,'1,20 zł',[i('2 szt.','ogórek kiszony'),i('40g','ser żółty')],['Pokrój i zjedz.'],'Ogórki kiszone = sód + probiotyki + zero węgli!'),
- m('Zupa żeberkowa keto',380,28,22,5,'6,00 zł',[i('300g','żeberka wieprzowe'),i('1 szt.','marchewka mała'),i('200g','kapusta kiszona',''),i('kminek, liść laurowy, sól','')],['Żeberka zalej zimną wodą, zagotuj, odlej pianę.','Dodaj marchewkę i kapustę.','Gotuj 1h na małym ogniu.'],'Marchewka tylko dla smaku — mała ilość OK w keto!')],
-[m('Jajka sadzone z fetą i pomidorkami',380,30,20,4,'3,80 zł',[i('3 szt.','jajka'),i('40g','ser feta'),i('5 szt.','pomidorki cherry'),i('masło, oregano, sół','')],['Masło rozgrzej na patelni.','Wbij jajka, smaż 3 min.','Posyp fetą i oregano, dodaj pomidorki.'],'Feta + jajka = śródziemnomorskie keto w 5 minut!'),
- m('Bigos keto z mięsem i kiełbasą',460,34,24,7,'7,50 zł',[i('400g','kapusta kiszona'),i('150g','wieprzowina'),i('100g','kiełbasa'),i('pół puszki','pomidory krojone'),i('smalec, majeranek','')],['Mięso i kiełbasę obsmaż na smalcu.','Dodaj kapustę, pomidory i przyprawy.','Duś pod przykryciem 45 min.'],'Im dłużej się dusi, tym lepszy!'),
- m('Lniane krakersy keto',110,8,4,2,'0,80 zł',[i('20g','siemię lniane'),i('10g','sezam'),i('szczypta soli',''),i('3 łyżki','woda')],['Wymieszaj składniki na pastę.','Rozsmaruj cienko na papierze do pieczenia.','Piecz 160°C przez 20 min.'],'Siemię lniane = omega-3 za grosze!'),
- m('Rosół keto z jajkiem',340,20,24,4,'5,50 zł',[i('2 szt.','udka kurczaka'),i('marchewka, pietruszka, seler',''),i('2 szt.','jajka na twardo'),i('natka, sól, ziele angielskie','')],['Kurczaka z warzywami zalej zimną wodą.','Gotuj 1,5h na małym ogniu.','Podaj bulion z warzywami i jajkiem.'],'Rosół keto = elektrolitowy detoks!')],
-[m('Koktajl keto z awokado i szpinakiem',380,30,10,5,'3,50 zł',[i('pół szt.','awokado'),i('garść','szpinak baby'),i('150ml','śmietana 30%'),i('1 łyżka','masło orzechowe'),i('szczypta soli','')],['Wszystko wrzuć do blendera.','Blenduj do gładkości.','Pij od razu.'],'Keto smoothie — sycące przez 5 godzin!'),
- m('Kotlet schabowy keto',480,34,34,4,'7,00 zł',[i('180g','schab bez kości'),i('1 szt.','jajko'),i('2 łyżki','mąka migdałowa'),i('smalec lub masło',''),i('sól, pieprz','')],['Schab rozbij, natrzyj solą.','Obtocz w jajku, potem w mące migdałowej.','Smaż na smalcu 4 min z każdej strony.'],'Mąka migdałowa zamiast bułki tartej = keto kotlet!'),
- m('Ser brie z orzechami włoskimi',170,14,8,1,'2,80 zł',[i('40g','ser brie lub camembert'),i('15g','orzechy włoskie')],['Pokrój i ułóż na talerzyku.'],'Ser pleśniowy = keto delicja pełna tłuszczu!'),
- m('Zupa krem z brokułów ze śmietaną',300,22,12,7,'4,00 zł',[i('300g','brokuły'),i('500ml','bulion'),i('100ml','śmietana 30%'),i('masło, czosnek, sól','')],['Brokuły ugotuj w bulionie.','Zmiksuj blenderem.','Dodaj masło i śmietanę.'],'Mrożone brokuły są tańsze i tak samo dobre!')],
-[m('Serek wiejski z oliwą i szczypiorkiem',280,20,16,4,'2,80 zł',[i('150g','serek wiejski tłusty'),i('2 łyżki','oliwa'),i('szczypiorek, sół','')],['Serek do miseczki, polej oliwą.','Posyp szczypiorkiem.'],'Szybkie keto śniadanie w 2 minuty!'),
- m('Mielone wieprzowe z pieczarkami',490,34,30,5,'6,50 zł',[i('200g','mięso mielone wieprzowe'),i('150g','pieczarki'),i('200g','brokuły'),i('masło, czosnek, sól','')],['Mięso obsmaż na maśle z czosnkiem.','Pieczarki pokrój, dodaj, smaż 4 min.','Brokuły ugotuj al dente. Połącz.'],'Mielone wieprzowe to najtańsze keto mięso!'),
- m('Jajko na twardo z majonezem',140,11,8,1,'1,00 zł',[i('2 szt.','jajka'),i('1 łyżka','majonez pełnotłusty')],['Jajka ugotuj na twardo 10 min.','Podaj z majonezem.'],'Najprostsza i najtańsza keto przekąska!'),
- m('Schab duszony z kapustą kiszoną',490,32,34,5,'7,00 zł',[i('180g','schab'),i('300g','kapusta kiszona'),i('cebula, smalec, kminek, czosnek','')],['Schab obsmaż na smalcu.','Cebulę dodaj, zeszklij.','Kapustę i przyprawy dodaj. Duś 45 min.'],'Polskie danie — bez ziemniaków jest w 100% keto!')],
-[m('Frittata z warzywami',440,34,26,5,'4,00 zł',[i('4 szt.','jajka'),i('pół szt.','papryka'),i('pół szt.','cukinia'),i('40g','ser feta'),i('oliwa, sól, oregano','')],['Warzywa pokrój, podsmaż 5 min na oliwie.','Jajka roztrzep, wlej na warzywa.','Posyp fetą. Piecz 200°C przez 10 min.'],'Frittata w jednej patelni — zero zmywania!'),
- m('Makrela wędzona z sałatką z awokado',440,34,26,4,'6,00 zł',[i('1 szt.','makrela wędzona'),i('1 szt.','awokado'),i('pół szt.','ogórek'),i('oliwa, cytryna, sól','')],['Makrelę obierz, rozdrobnij.','Awokado i ogórek pokrój w kostkę.','Wymieszaj z oliwą i cytryną.'],'Makrela wędzona = gotowe danie bez gotowania!'),
- m('Pestki dyni prażone',110,9,5,2,'1,00 zł',[i('20g','pestki dyni'),i('szczypta soli','')],['Posól, praż 3 min na suchej patelni.'],'Pestki dyni = magnez i cynk za grosze!'),
- m('Żurek keto bez ziemniaków',310,22,14,5,'4,50 zł',[i('400ml','zakwas żurkowy'),i('300ml','bulion'),i('2 szt.','jajka na twardo'),i('80g','kiełbasa'),i('śmietana, czosnek, majeranek','')],['Bulion zagotuj z czosnkiem.','Wlej zakwas, zagotuj.','Dodaj śmietanę. Podaj z jajkiem i kiełbasą.'],'Żurek bez ziemniaków = keto comfort food!')],
-[m('Pełne keto śniadanie angielskie',540,44,28,3,'7,00 zł',[i('3 szt.','jajka'),i('60g','boczek wędzony'),i('50g','kiełbaski'),i('50g','pieczarki'),i('masło','')],['Boczek i kiełbaski obsmaż.','Pieczarki podsmaż na maśle.','Jajka usmaż sadzone. Podaj razem.'],'Sobotnie śniadanie bez pośpiechu!'),
- m('Pieczony kurczak z warzywami na blasze',500,36,36,5,'7,00 zł',[i('2 szt.','udka kurczaka'),i('1 szt.','cukinia'),i('1 szt.','papryka'),i('oliwa, czosnek, zioła','')],['Warzywa pokrój, ułóż na blasze.','Kurczaka ułóż obok. Skrop oliwą, posyp ziołami.','Piecz 200°C przez 45 min.'],'Jeden garnek — zero zmywania!'),
- m('Deska keto — ser wędlina oliwki',200,16,10,2,'4,00 zł',[i('40g','ser żółty lub brie'),i('40g','szynka lub salami'),i('10 szt.','oliwki')],['Ułóż elegancko na desce.'],'Keto przekąska bez przygotowania!'),
- m('Tarta keto z pieczarkami i serem',380,30,18,4,'5,00 zł',[i('4 szt.','jajka'),i('150ml','śmietana 30%'),i('150g','pieczarki'),i('80g','ser żółty'),i('masło, sól, tymianek','')],['Pieczarki podsmaż.','Jajka ze śmietaną roztrzep. Dodaj pieczarki i ser.','Piecz 180°C przez 20 min.'],'Keto quiche bez spodu!')],
-[m('Jajka scrambled z łososiem wędzonym',420,32,26,2,'5,50 zł',[i('3 szt.','jajka'),i('60g','łosoś wędzony'),i('masło, koperek, sól','')],['Jajka roztrzep.','Smaż na maśle powoli mieszając.','Ułóż z łososiem i koperkiem.'],'Łosoś wędzony = omega-3 bez gotowania!'),
- m('Niedzielny keto rosół z kaczki',460,34,30,5,'9,00 zł',[i('2 szt.','udka z kaczki'),i('marchewka, pietruszka, seler',''),i('2 szt.','jajka na twardo'),i('natka, sól, ziele','')],['Udka zalej zimną wodą z warzywami.','Gotuj 1,5h na małym ogniu.','Podaj bulion z warzywami i jajkiem — bez makaronu!'],'Kaczka daje tłusty aromatyczny bulion!'),
- m('Borówki ze śmietaną 30%',120,9,1,7,'2,50 zł',[i('50g','borówki'),i('3 łyżki','śmietana 30%')],['Borówki zalej śmietaną.'],'Borówki mają najniższy IG z owoców!'),
- m('Omlet z serem brie i orzechami',480,40,22,3,'4,80 zł',[i('3 szt.','jajka'),i('40g','ser brie'),i('15g','orzechy włoskie'),i('masło, sół','')],['Jajka roztrzep, dopraw.','Smaż omlet na maśle 2 min.','Połóż brie i orzechy na środku. Złóż na pół.'],'Brie topnieje w omlecie — obłędny smak!')],
+// Pn
+[m('Owsianka na wodzie z jabłkiem i cynamonem',320,10,52,7,'2,80 zł',[i('50g','płatki owsiane górskie'),i('1 szt.','jabłko'),i('1 łyżka','orzechy włoskie'),i('szczypta','cynamon'),i('250ml','woda')],['Płatki zalej wrzącą wodą, gotuj 3 min na małym ogniu.','Jabłko zetrzyj lub pokrój w kostkę.','Wymieszaj z cynamonem, posyp orzechami.'],'Jabłko jedz ze skórką — ma więcej błonnika!'),
+ m('Serek wiejski z rzodkiewką i szczypiorkiem',180,18,6,8,'3,20 zł',[i('150g','serek wiejski chudy'),i('4 szt.','rzodkiewka'),i('garść','szczypiorek'),i('szczypta','sól i pieprz')],['Rzodkiewkę pokrój w plasterki.','Szczypiorek posiekaj.','Wymieszaj z serkiem, dopraw.'],'Serek wiejski — białko bez dużych węglowodanów!'),
+ m('Kasza gryczana z gulaszem z soczewicy',450,22,58,10,'5,50 zł',[i('80g','kasza gryczana'),i('150g','soczewica czerwona sucha lub puszka'),i('1 szt.','marchew'),i('1 szt.','pietruszka'),i('puszka','pomidory krojone'),i('1 szt.','cebula'),i('oliwa, czosnek, kumin, sól','')],['Kaszę ugotuj wg przepisu (~20 min).','Cebulę i czosnek zeszklij na oliwie.','Marchew i pietruszkę pokrój, dodaj. Duś 10 min.','Dodaj soczewicę i pomidory. Gotuj 20 min.','Podaj gulasz z kaszą.'],'Kasza gryczana ma IG 54 — idealna dla cukrzyka!'),
+ m('Garść pestek dyni',90,5,3,7,'0,80 zł',[i('30g','pestki dyni')],['Jedz powoli, bez soli.'],'Pestki dyni — magnez i cynk, ważne dla cukrzyków!'),
+ m('Kanapki z chleba żytniego z pastą jajeczną',280,14,32,9,'3,50 zł',[i('2 kromki','chleb żytni razowy'),i('2 szt.','jajka'),i('1 łyżka','jogurt naturalny'),i('1 szt.','ogórek kiszony'),i('szczypiorek, sól, pieprz','')],['Jajka ugotuj na twardo (10 min).','Obierz, rozgnieć widelcem.','Wymieszaj z jogurtem, szczypiorkiem i przyprawami.','Posmaruj chleb, podaj z ogórkiem kiszonym.'],'Ogórek kiszony wspomaga florę jelitową!')],
+// Wt
+[m('Jajecznica z warzywami na chlebie razowym',310,16,34,12,'3,80 zł',[i('2 szt.','jajka'),i('pół szt.','papryka czerwona'),i('garść','szpinak baby'),i('1 łyżeczka','oliwa'),i('2 kromki','chleb żytni razowy')],['Paprykę pokrój. Podsmaż na oliwie.','Dodaj szpinak, chwilę smaż.','Wbij jajka, zamieszaj. Podaj na chlebie.'],'Szpinak — żelazo i magnez w jednym!'),
+ m('Jabłko i łyżka masła orzechowego',160,4,22,8,'1,50 zł',[i('1 szt.','jabłko'),i('1 łyżka','masło orzechowe 100%')],['Jabłko pokrój w ćwiartki. Maczaj w maśle.'],'Białko z masła spowalnia wchłanianie cukru z jabłka!'),
+ m('Zupa krem z brokułów z chlebem razowym',380,18,44,12,'5,00 zł',[i('300g','brokuły'),i('600ml','bulion warzywny'),i('100ml','jogurt naturalny'),i('1 szt.','ziemniak mały'),i('1 ząbek','czosnek'),i('2 kromki','chleb żytni razowy')],['Brokuły i ziemniaka ugotuj w bulionie (~15 min).','Zblenduj z czosnkiem na krem.','Wymieszaj z jogurtem, dopraw.','Podaj z chlebem razowym.'],'Ziemniak ugotuj al dente — niższy IG!'),
+ m('Jogurt naturalny z garścią orzechów',150,8,12,8,'2,20 zł',[i('150g','jogurt naturalny 2%'),i('20g','orzechy włoskie')],['Orzechy grubo posiekaj. Wymieszaj z jogurtem.'],'Jogurt naturalny — bez cukru, z probiotykami!'),
+ m('Sałatka z tuńczykiem i fasolą',310,24,28,8,'4,50 zł',[i('puszka','tuńczyk w sosie własnym'),i('pół puszki','fasola biała'),i('2 szt.','pomidor'),i('pół szt.','ogórek'),i('1 łyżka','oliwa'),i('ocet, sól, pieprz','')],['Tuńczyka odsącz. Fasolę opłucz.','Warzywa pokrój. Wymieszaj wszystko.','Skrop oliwą i octem.'],'Fasola biała — IG 30, super dla cukrzyka!')],
+// Śr
+[m('Owsianka z gruszką i orzechami laskowymi',330,11,54,9,'2,90 zł',[i('50g','płatki owsiane górskie'),i('1 szt.','gruszka'),i('20g','orzechy laskowe'),i('szczypta','cynamon'),i('250ml','mleko 1,5% lub woda')],['Płatki gotuj w mleku/wodzie 4 min.','Gruszkę pokrój. Dodaj z cynamonem i orzechami.'],'Gruszka ma niższy IG niż banan — dobry wybór!'),
+ m('Serek wiejski z ogórkiem i koperkiem',170,17,5,8,'2,80 zł',[i('150g','serek wiejski chudy'),i('pół szt.','ogórek'),i('koperek, sól','')],['Ogórek pokrój. Wymieszaj z serkiem i koperkiem.'],'Ogórek — prawie zero kalorii, nawadnia!'),
+ m('Ryż brązowy z piersią kurczaka i surówką',490,36,52,10,'7,00 zł',[i('80g','ryż brązowy'),i('150g','pierś z kurczaka'),i('200g','kapusta kiszona'),i('1 szt.','marchew'),i('1 łyżka','oliwa')],['Ryż ugotuj (~35 min).','Kurczaka usmaż lub ugotuj, pokrój.','Kapustę poszatkuj, marchew zetrzyj — surówka.','Podaj razem.'],'Kapusta kiszona — probiotyki i wit. C za grosze!'),
+ m('Garść pestek słonecznika',100,4,4,8,'0,70 zł',[i('30g','pestki słonecznika niesolone')],['Jedz powoli.'],'Wit. E ze słonecznika — ochrona naczyń krwionośnych!'),
+ m('Zupa pomidorowa z makaronem razowym',320,14,46,8,'4,00 zł',[i('3 szt.','pomidory'),i('500ml','bulion'),i('60g','makaron razowy'),i('1 ząbek','czosnek'),i('bazylia, oliwa, sól','')],['Pomidory sparz, obierz, zblenduj.','Czosnek zeszklij, dodaj pomidory i bulion.','Gotuj 15 min. Makaron ugotuj oddzielnie.','Połącz, posyp bazylią.'],'Makaron razowy al dente ma niższy IG niż rozgotowany!')],
+// Cz
+[m('Chleb razowy z twarożkiem i rzodkiewką',290,16,34,9,'3,30 zł',[i('2 kromki','chleb żytni razowy'),i('100g','twarożek chudy lub serek wiejski'),i('5 szt.','rzodkiewka'),i('szczypiorek, sól','')],['Twarożek wymieszaj ze szczypiorkiem.','Posmaruj chleb. Ułóż rzodkiewkę.'],'Śniadanie gotowe w 5 minut!'),
+ m('Jabłko z cynamonem',80,0,20,0,'0,80 zł',[i('1 szt.','jabłko')],['Jabłko umyj, jedz ze skórką. Posyp cynamonem.'],'Cynamon obniża poziom glukozy we krwi!'),
+ m('Kasza gryczana z warzywami korzeniowymi i jajkiem',430,20,55,13,'5,50 zł',[i('80g','kasza gryczana'),i('1 szt.','marchew'),i('1 szt.','pietruszka'),i('kawałek','selera'),i('2 szt.','jajka'),i('oliwa, natka, sól','')],['Kaszę ugotuj.','Warzywa ugotuj al dente lub upiecz z oliwą.','Jajka ugotuj na twardo lub zrób sadzone.','Podaj razem, posyp natką.'],'Warzywa korzeniowe pieczone mają niższy IG niż gotowane!'),
+ m('Jogurt z siemieniem lnianym',140,9,14,5,'1,80 zł',[i('150g','jogurt naturalny'),i('1 łyżka','siemię lniane mielone')],['Siemię lniane zmiel lub kup mielone. Wymieszaj z jogurtem.'],'Siemię lniane — omega-3 i błonnik dla cukrzyka!'),
+ m('Zupa jarzynowa z fasolą',350,18,44,8,'4,20 zł',[i('pół puszki','fasola biała'),i('1 szt.','marchew'),i('1 szt.','pietruszka'),i('kawałek','selera'),i('pół szt.','cukinii'),i('600ml','bulion'),i('natka, sól, pieprz','')],['Warzywa pokrój.','Wrzuć do bulionu. Gotuj 20 min.','Dodaj fasolę, gotuj 5 min. Posyp natką.'],'Zupa jarzynowa — klasyk polskiej diety cukrzycowej!')],
+// Pt
+[m('Owsianka z borówkami i jogurtem',310,13,50,7,'3,50 zł',[i('50g','płatki owsiane górskie'),i('garść','borówki (świeże lub mrożone)'),i('3 łyżki','jogurt naturalny'),i('250ml','woda')],['Owsiankę ugotuj. Osłodź kilkoma borówkami.','Dodaj jogurt i resztę borówek.'],'Borówki — IG 25, antocyjany chronią naczynia!'),
+ m('Kanapka z pastą z makreli',200,14,22,7,'3,00 zł',[i('1 kromka','chleb żytni razowy'),i('pół szt.','makrela wędzona z puszki'),i('1 łyżka','jogurt naturalny'),i('szczypiorek, pieprz','')],['Makreli obierz ze skóry, rozgnieć.','Wymieszaj z jogurtem i szczypiorkiem. Posmaruj chleb.'],'Makrela — omega-3, tania i pożywna!'),
+ m('Bigos z kapusty kiszonej i mięsa',420,28,28,18,'6,50 zł',[i('300g','kapusta kiszona'),i('200g','mięso wieprzowe lub kurczak'),i('50g','kiełbasa chuda'),i('1 szt.','cebula'),i('pół puszki','pomidory krojone'),i('kminek, liść laurowy, sól','')],['Mięso pokrój, obsmaż.','Cebulę dodaj. Kapustę dodaj po odsączeniu.','Wlej pomidory. Duś 45 min. Dopraw kminkiem.'],'Bigos bez cukru i tłustych kiełbas — zdrowy dla cukrzyka!'),
+ m('Garść orzechów włoskich',130,3,3,13,'1,20 zł',[i('30g','orzechy włoskie (5–6 połówek)')],['Jedz powoli.'],'Orzechy włoskie — najlepsze dla serca cukrzyka!'),
+ m('Jajka na miękko z warzywami i chlebem',290,16,30,11,'3,50 zł',[i('2 szt.','jajka'),i('2 szt.','ogórek kiszony'),i('1 szt.','pomidor'),i('2 kromki','chleb żytni razowy')],['Jajka gotuj 6 min (żółtko miękkie).','Podaj z chlebem razowym, warzywami.'],'Gotuj jajka na miękko — mniej przetworzone, lepsza przyswajalność!')],
+// So
+[m('Omlet z warzywami na chlebie razowym',360,20,36,13,'4,20 zł',[i('3 szt.','jajka'),i('pół szt.','papryka'),i('garść','szpinak baby'),i('1 łyżeczka','oliwa'),i('2 kromki','chleb żytni razowy')],['Warzywa pokrój. Podsmaż na oliwie.','Jajka roztrzep, wlej. Smaż omlet 3 min.','Złóż, podaj z chlebem.'],'Omlet zamiast jajecznicy — bardziej sycący!'),
+ m('Serek z orzechami i gruszką',200,12,20,8,'3,00 zł',[i('100g','serek wiejski lub twarożek'),i('1 szt.','gruszka'),i('15g','orzechy włoskie')],['Gruszkę pokrój. Orzechy posiekaj. Wymieszaj z serkiem.'],'Białko + tłuszcz spowalnia wchłanianie cukru!'),
+ m('Zupa soczewicowa z warzywami',440,24,56,10,'5,50 zł',[i('150g','soczewica czerwona'),i('1 szt.','marchew'),i('1 szt.','cebula'),i('1 szt.','pomidor'),i('700ml','bulion'),i('kumin, kurkuma, czosnek, oliwa','')],['Cebulę i czosnek zeszklij.','Dodaj marchew i pomidor. Chwilę smaż.','Wlej bulion, dodaj soczewicę. Gotuj 20 min.','Dopraw kuminiem i kurkumą.'],'Soczewica — IG 25, bardzo tania i syta!'),
+ m('Jabłko pieczone z cynamonem',100,1,24,0,'0,80 zł',[i('1 szt.','jabłko'),i('szczypta','cynamon')],['Jabłko wydrąż. Nałóż cynamon. Piecz 180°C przez 20 min.'],'Pieczone jabłko ma niższy IG niż surowe!'),
+ m('Kasza z warzywami i jajkiem sadzonym',350,18,46,10,'4,50 zł',[i('70g','kasza gryczana'),i('1 szt.','cukinia'),i('1 szt.','papryka'),i('2 szt.','jajka'),i('oliwa, sól, zioła','')],['Kaszę ugotuj.','Warzywa podsmaż na oliwie. Dopraw.','Jajka usmaż sadzone. Podaj razem.'],'Warzywa na patelni — szybka i zdrowa kolacja!')],
+// Nd
+[m('Owsianka z malinami i siemieniem',320,11,52,8,'3,20 zł',[i('50g','płatki owsiane górskie'),i('garść','maliny (świeże lub mrożone)'),i('1 łyżka','siemię lniane mielone'),i('250ml','mleko 1,5%')],['Owsiankę ugotuj w mleku.','Wymieszaj z siemieniem. Dodaj maliny.'],'Maliny — IG 25, pełne polifenoli!'),
+ m('Twarożek z warzywami na chlebie',210,14,24,6,'3,00 zł',[i('100g','twarożek chudy'),i('2 szt.','rzodkiewka'),i('pół szt.','ogórek'),i('2 kromki','chleb razowy')],['Warzywa pokrój. Twarożek posmaruj na chlebie.','Ułóż warzywa na wierzchu.'],'Śniadanie niedzielne bez pośpiechu!'),
+ m('Pieczony kurczak z kaszą i brokułem',520,40,54,14,'8,00 zł',[i('180g','udko kurczaka bez skóry'),i('80g','kasza gryczana'),i('200g','brokuły'),i('oliwa, czosnek, zioła prowansalskie','')],['Kurczaka natrzyj czosnkiem i ziołami.','Piecz 190°C przez 40 min.','Kaszę ugotuj. Brokuły ugotuj al dente.','Podaj razem.'],'Kurczak bez skóry — mniej tłuszczu nasyconego!'),
+ m('Jogurt z orzechami i borówkami',170,10,18,6,'2,50 zł',[i('150g','jogurt naturalny 2%'),i('15g','orzechy włoskie'),i('garść','borówki')],['Wszystko wymieszaj.'],'Niedzielny podwieczorek w 2 minuty!'),
+ m('Zupa pomidorowa z kaszą i jajkiem',360,18,44,10,'4,50 zł',[i('3 szt.','pomidory lub puszka'),i('500ml','bulion'),i('60g','kasza gryczana'),i('2 szt.','jajka'),i('czosnek, bazylia, oliwa','')],['Pomidory zblenduj z bulionem i czosnkiem. Gotuj 15 min.','Kaszę ugotuj. Jajka ugotuj na twardo.','Podaj zupę z kaszą i jajkiem.'],'Jajko w zupie — dodatkowe białko bez kosztów!')],
 ],
+// ===== TYDZIEŃ 2 =====
 [
-[m('Budyń chia z mlekiem kokosowym',320,26,6,6,'3,80 zł',[i('4 łyżki','nasiona chia'),i('200ml','mleko kokosowe'),i('szczypta soli',''),i('1 łyżka','wiórki kokosowe')],['Wymieszaj chia z mlekiem i solą.','Wstaw na noc lub min. 20 min.','Posyp wiórkami.'],'Chia pęcznieje i syci — idealne śniadanie!'),
- m('Udka kurczaka w śmietanie z pieczarkami',520,40,34,4,'7,00 zł',[i('2 szt.','udka kurczaka'),i('200g','pieczarki'),i('150ml','śmietana 30%'),i('cebula, masło, czosnek, tymianek','')],['Udka obsmaż na maśle ze wszystkich stron.','Cebulę i pieczarki dodaj.','Wlej śmietanę, duś 30 min.'],'Udka kurczaka — skóra jest keto, jedz ją!'),
- m('Plastry ogórka z mascarpone',130,12,2,3,'1,80 zł',[i('pół szt.','ogórek'),i('2 łyżki','mascarpone')],['Ogórek pokrój. Maczaj w mascarpone.'],'Szybki i lekki keto snack!'),
- m('Zupa grzybowa ze śmietaną',280,20,8,6,'4,00 zł',[i('200g','pieczarki'),i('10g','grzyby suszone'),i('600ml','bulion'),i('100ml','śmietana 30%'),i('cebula, masło, majeranek','')],['Grzyby suszone namocz 20 min, zachowaj wodę.','Cebulę i pieczarki podsmaż.','Dodaj grzyby z wodą i bulion, gotuj 20 min. Wlej śmietanę.'],'Woda po grzybach = aromat — zawsze dodaj!')],
-[m('Jajka faszerowane z majonezem',340,28,16,2,'2,80 zł',[i('4 szt.','jajka'),i('2 łyżki','majonez'),i('pół łyżeczki','papryka wędzona'),i('sól, szczypiorek','')],['Jajka ugotuj na twardo, przekrój na pół.','Żółtka wymieszaj z majonezem i papryką.','Nadziewaj białka masą. Posyp szczypiorkiem.'],'Jajka faszerowane = keto klasyk!'),
- m('Keto chili z mielonym wołowym',480,32,34,8,'8,00 zł',[i('200g','wołowina mielona'),i('pół szt.','papryka'),i('pół puszki','pomidory krojone'),i('chili, kumin, czosnek, oliwa',''),i('śmietana do podania','')],['Paprykę i cebulę podsmaż.','Mięso dodaj, smaż 5 min.','Wlej pomidory z przyprawami, duś 20 min. Podaj ze śmietaną.'],'Bez fasoli! Keto chili = samo mięso!'),
- m('Salami z serem żółtym',140,12,8,1,'2,20 zł',[i('3 plastry','salami'),i('30g','ser żółty')],['Ułóż na talerzu.'],'Sprawdź skład salami — bez cukru!'),
- m('Zupa cebulowa keto',220,16,8,8,'3,00 zł',[i('3 szt.','cebula'),i('600ml','bulion wołowy'),i('2 łyżki','masło'),i('40g','ser żółty'),i('tymianek, sół','')],['Cebulę smaż na maśle 20–30 min aż złota.','Wlej bulion, gotuj 15 min.','Posyp serem.'],'Bez grzanki chlebowej — tylko ser!')],
-[m('Twarożek z łososiem i kaparami',380,28,22,3,'5,00 zł',[i('100g','twarożek śmietankowy'),i('60g','łosoś wędzony'),i('1 łyżka','kapary'),i('koperek, cytryna','')],['Twarożek na talerzyk.','Łososia i kapary ułóż na wierzchu.','Posyp koperkiem.'],'Cream cheese bez cukru — sprawdź skład!'),
- m('Pieczony łosoś z masłem czosnkowym',460,34,36,3,'9,00 zł',[i('180g','filet z łososia'),i('150g','szparagi lub brokuły'),i('3 łyżki','masło'),i('2 ząbki','czosnek'),i('cytryna, koperek','')],['Łososia ułóż w naczyniu.','Masło z czosnkiem roztop, polej rybę.','Warzywa ułóż obok. Piecz 200°C przez 15 min.'],'Łosoś = najlepsze omega-3 w keto!'),
- m('Pestki słonecznika prażone',100,9,3,2,'0,80 zł',[i('20g','pestki słonecznika'),i('szczypta soli','')],['Praż 3 min na suchej patelni.'],'Witamina E i tani keto snack!'),
- m('Kotlety z mielonego z cukinią',380,24,32,4,'6,00 zł',[i('180g','mielone wieprzowe'),i('1 szt.','jajko'),i('1 szt.','cukinia'),i('oliwa, sól, czosnek','')],['Mielone wymieszaj z jajkiem i czosnkiem.','Uformuj kotlety.','Smaż 4 min z każdej strony.','Cukinię podsmaż osobno.'],'Mielone + jajko = binder keto, zero bułki!')],
-[m('Jajka w koszulce na szpinaku',400,32,18,4,'3,80 zł',[i('2 szt.','jajka'),i('150g','szpinak baby'),i('2 łyżki','śmietana 30%'),i('masło, ocet, sól','')],['Szpinak podsmaż na maśle, dodaj śmietanę.','Wodę z octem zagotuj na lekkim wrzeniu.','Jajko wbij do kubka, wpuść do wody. Gotuj 3 min.'],'Ocet pomaga białku się skoagulować!'),
- m('Gulasz wieprzowy z cukinią',480,34,30,7,'7,00 zł',[i('200g','wieprzowina łopatka'),i('1 szt.','cukinia'),i('1 szt.','cebula'),i('pół puszki','pomidory'),i('oliwa, papryka, czosnek','')],['Mięso pokrój, obsmaż.','Cebulę dodaj.','Pomidory wlej, duś 40 min.','Cukinię dodaj na ostatnie 10 min.'],'Cukinia zamiast ziemniaków = keto gulasz!'),
- m('Ser żółty z ogórkiem i oliwą',150,12,8,1,'1,80 zł',[i('40g','ser żółty'),i('pół szt.','ogórek'),i('1 łyżeczka','oliwa')],['Pokrój. Skrop oliwą.'],'Oliwa zwiększa keto tłuszcz!'),
- m('Chłodnik keto z rzodkiewki',180,12,8,5,'2,50 zł',[i('1 pęczek','rzodkiewki'),i('200ml','kefir'),i('koperek, szczypiorek, sół, pieprz','')],['Rzodkiewki zetrzyj lub pokrój.','Wymieszaj z kefirem i ziołami.','Podaj zimny.'],'Zero gotowania!')],
-[m('Shake keto z masłem orzechowym',380,30,14,5,'3,50 zł',[i('200ml','mleko migdałowe niesłodzone'),i('2 łyżki','masło orzechowe 100%'),i('1 łyżka','nasiona chia'),i('szczypta cynamonu','')],['Zblenduj wszystko na gładko.','Pij od razu.'],'Mleko migdałowe niesłodzone = 1–2g węgli!'),
- m('Smażone udka z surówką z kapusty',500,38,32,5,'6,50 zł',[i('2 szt.','udka kurczaka'),i('200g','kapusta biała'),i('2 łyżki','majonez'),i('oliwa, czosnek, sól','')],['Udka natrzyj czosnkiem. Smaż 6 min z każdej strony.','Kapustę poszatkuj, wymieszaj z majonezem.'],'Surówka z majonezem = keto! Z cukrem = nie!'),
- m('Awokado z łososiem wędzonym',340,28,18,3,'5,00 zł',[i('1 szt.','awokado'),i('60g','łosoś wędzony'),i('oliwa, cytryna, koperek','')],['Awokado przekrój.','Łososia ułóż w zagłębieniu.','Skrop oliwą i cytryną.'],'Jedz z połówki awokado — zero zmywania!'),
- m('Zupa pomidorowa keto',270,20,6,8,'3,50 zł',[i('1 puszka','pomidory krojone'),i('400ml','bulion'),i('100ml','śmietana 30%'),i('cebula, czosnek, masło, bazylia','')],['Cebulę i czosnek zeszklij.','Wlej pomidory i bulion, gotuj 15 min.','Zmiksuj, dodaj śmietanę.'],'Bez makaronu i ryżu!')],
-[m('Granola keto z orzechami',400,34,10,6,'4,00 zł',[i('60g','orzechy mieszane'),i('2 łyżki','wiórki kokosowe'),i('masło, cynamon',''),i('100ml','mleko kokosowe')],['Orzechy posiekaj.','Wymieszaj z wiórkami, masłem i cynamonem.','Piecz 150°C przez 15 min. Podaj z mlekiem kokosowym.'],'Domowa granola keto bez cukru!'),
- m('Mielone wołowe z pieczarkami',490,34,34,6,'8,00 zł',[i('200g','mięso mielone wołowe'),i('150g','pieczarki'),i('200g','brokuły'),i('masło, czosnek, sól','')],['Mięso obsmaż z czosnkiem.','Pieczarki dodaj, smaż 4 min.','Brokuły ugotuj al dente. Połącz.'],'Mielone wołowe + pieczarki = tani luksus keto!'),
- m('Czekolada gorzka 85%',100,8,2,4,'1,50 zł',[i('20g','czekolada gorzka 85%+')],['Jedz powoli!'],'85%+ OK w keto — 20g to tylko 4g węgli.'),
- m('Tarta keto ze szpinakiem i fetą',420,34,22,4,'5,50 zł',[i('4 szt.','jajka'),i('150ml','śmietana 30%'),i('150g','szpinak'),i('80g','feta'),i('masło, sól, gałka','')],['Szpinak podsmaż na maśle.','Jajka ze śmietaną wymieszaj. Dodaj szpinak i fetę.','Piecz 180°C przez 25 min.'],'Keto quiche bez spodu!')],
-[m('Pełne keto śniadanie niedzielne',540,44,28,3,'7,00 zł',[i('3 szt.','jajka'),i('60g','boczek'),i('50g','kiełbaski'),i('50g','pieczarki'),i('masło','')],['Boczek i kiełbaski obsmaż.','Pieczarki podsmaż. Jajka sadzone. Podaj razem.'],'Niedzielne śniadanie — zasłużyłeś/aś!'),
- m('Pieczony kurczak z warzywami',500,36,36,5,'7,00 zł',[i('2 szt.','udka kurczaka'),i('1 szt.','cukinia'),i('1 szt.','papryka'),i('oliwa, czosnek, zioła','')],['Warzywa ułóż na blasze. Kurczaka ułóż obok.','Skrop oliwą, posyp ziołami. Piecz 200°C przez 45 min.'],'Jeden garnek — zero zmywania!'),
- m('Deska keto — ser wędlina oliwki',200,16,10,2,'4,00 zł',[i('40g','ser żółty lub brie'),i('40g','szynka lub salami'),i('10 szt.','oliwki')],['Ułóż elegancko.'],'Keto przekąska bez przygotowania!'),
- m('Omlet z brie i orzechami',480,40,22,3,'4,80 zł',[i('3 szt.','jajka'),i('40g','ser brie'),i('15g','orzechy włoskie'),i('masło, sól','')],['Jajka roztrzep. Smaż omlet na maśle.','Połóż brie i orzechy. Złóż na pół.'],'Brie topnieje w omlecie!')],
+// Pn
+[m('Owsianka z jabłkiem i orzechami',310,10,50,9,'2,80 zł',[i('50g','płatki owsiane'),i('1 szt.','jabłko'),i('20g','orzechy mieszane'),i('szczypta','cynamon'),i('250ml','mleko 1,5%')],['Owsiankę ugotuj w mleku.','Jabłko zetrzyj. Wymieszaj z orzechami i cynamonem.'],'Każdego dnia inny owoc — różnorodność witamin!'),
+ m('Jajko na twardo z warzywami',150,10,8,8,'1,80 zł',[i('2 szt.','jajka'),i('1 szt.','pomidor'),i('pół szt.','ogórek')],['Jajka ugotuj (10 min). Warzywa pokrój. Podaj razem.'],'Drugie śniadanie bez chleba — mniej węglowodanów!'),
+ m('Zupa grochowa z chlebem razowym',430,22,52,12,'5,00 zł',[i('150g','groch łuskany żółty'),i('1 szt.','marchew'),i('1 szt.','cebula'),i('50g','boczek chudego'),i('600ml','woda lub bulion'),i('2 kromki','chleb razowy'),i('kminek, sól, pieprz','')],['Groch namocz na noc. Gotuj 45 min.','Dodaj warzywa i boczek. Gotuj 20 min.','Dopraw kminkiem. Podaj z chlebem razowym.'],'Groch — IG 22, jeden z najlepszych dla cukrzyka!'),
+ m('Garść pestek dyni z jabłkiem',130,5,18,7,'1,20 zł',[i('25g','pestki dyni'),i('1 szt.','jabłko')],['Jedz razem — tłuszcz z pestek spowalnia IG jabłka.'],'Łącz owoce z białkiem lub tłuszczem!'),
+ m('Kanapki z serkiem wiejskim i ogórkiem',270,16,30,8,'3,20 zł',[i('2 kromki','chleb żytni razowy'),i('100g','serek wiejski'),i('2 szt.','ogórek kiszony'),i('szczypiorek, koperek','')],['Serek wymieszaj z koperkiem. Posmaruj chleb. Ułóż ogórek.'],'Szybka kolacja, która nie podnosi cukru!')],
+// Wt
+[m('Kasza gryczana na mleku z gruszką',310,10,50,7,'3,00 zł',[i('50g','kasza gryczana'),i('200ml','mleko 1,5%'),i('1 szt.','gruszka'),i('szczypta','cynamon')],['Kaszę ugotuj w mleku 15 min.','Gruszkę pokrój. Podaj z kaszą i cynamonem.'],'Kasza gryczana — IG 54 vs. jaglana IG 70, lepsza przy IO!'),
+ m('Jogurt z orzechami i cynamonem',160,9,14,7,'2,00 zł',[i('150g','jogurt naturalny'),i('20g','orzechy włoskie'),i('szczypta','cynamon')],['Orzechy posiekaj. Wymieszaj z jogurtem i cynamonem.'],'Cynamon każdego dnia — naturalne wsparcie glikemii!'),
+ m('Ryba pieczona z kaszą i surówką',470,36,50,12,'7,50 zł',[i('180g','filet rybny (dorsz, mintaj)'),i('80g','kasza gryczana'),i('200g','surówka z kapusty kiszonej'),i('1 szt.','marchew'),i('oliwa, cytryna, zioła','')],['Rybę skrop oliwą, posyp ziołami. Piecz 200°C 20 min.','Kaszę ugotuj. Surówkę przygotuj z kapusty i marchewki.'],'Dorsz — chude białko, bardzo tanie!'),
+ m('Jabłko z łyżką masła orzechowego',150,4,20,7,'1,50 zł',[i('1 szt.','jabłko'),i('1 łyżka','masło orzechowe 100%')],['Jabłko pokrój. Maczaj w maśle orzechowym.'],'Białko spowalnia wchłanianie cukrów!'),
+ m('Sałatka z jajkiem i warzywami',300,18,26,12,'4,00 zł',[i('3 szt.','jajka'),i('garść','sałata'),i('1 szt.','pomidor'),i('pół szt.','ogórek'),i('1 łyżka','oliwa'),i('2 kromki','chleb razowy')],['Jajka ugotuj, obierz, pokrój.','Warzywa pokrój. Wymieszaj. Skrop oliwą.','Podaj z chlebem razowym.'],'Kolorowa sałatka — antyoksydanty dla cukrzyka!')],
+// Śr
+[m('Owsianka z truskawkami (mrożonymi)',300,10,48,8,'2,50 zł',[i('50g','płatki owsiane'),i('garść','truskawki mrożone'),i('1 łyżka','siemię lniane'),i('250ml','woda')],['Owsiankę ugotuj. Truskawki rozmróż lub podgrzej.','Dodaj siemię lniane. Wymieszaj.'],'Mrożone truskawki — tanie przez cały rok, IG 25!'),
+ m('Serek wiejski z rzodkiewką',170,17,5,8,'2,80 zł',[i('150g','serek wiejski'),i('5 szt.','rzodkiewka'),i('koperek, sól','')],['Rzodkiewkę pokrój. Wymieszaj z serkiem i koperkiem.'],'Proste, szybkie, zdrowe!'),
+ m('Leczo z fasolą i warzywami',400,20,50,11,'5,50 zł',[i('pół puszki','fasola biała'),i('2 szt.','papryka'),i('2 szt.','pomidor'),i('1 szt.','cebula'),i('1 szt.','cukinia'),i('oliwa, czosnek, papryka mielona',''),i('60g','chleb razowy')],['Cebulę i czosnek zeszklij.','Warzywa pokrój, dodaj. Duś 20 min.','Dodaj fasolę. Gotuj 10 min. Podaj z chlebem.'],'Leczo warzywne — IG niski, pełno witamin!'),
+ m('Garść orzechów i jabłko',180,4,24,10,'1,80 zł',[i('20g','orzechy włoskie'),i('1 szt.','jabłko')],['Jedz razem.'],'Idealna przekąska bez skoku cukru!'),
+ m('Zupa jarzynowa z makaronem razowym',310,14,42,8,'4,00 zł',[i('1 szt.','marchew'),i('1 szt.','pietruszka'),i('pół szt.','selera'),i('pół szt.','cukinii'),i('60g','makaron razowy'),i('600ml','bulion'),i('natka, sól','')],['Warzywa pokrój, gotuj w bulionie 15 min.','Makaron ugotuj al dente, dodaj na koniec.','Posyp natką.'],'Makaron al dente ma IG 50, rozgotowany IG 70!')],
+// Cz
+[m('Chleb razowy z awokado i jajkiem',350,16,32,16,'4,50 zł',[i('2 kromki','chleb żytni razowy'),i('pół szt.','awokado'),i('2 szt.','jajka'),i('cytryna, sól, pieprz','')],['Awokado rozgnieć z cytryną.','Jajka ugotuj lub usmaż.','Posmaruj chleb awokado. Ułóż jajko.'],'Awokado — zdrowy tłuszcz, zero cukru!'),
+ m('Jabłko z twarożkiem',170,10,22,4,'2,00 zł',[i('1 szt.','jabłko'),i('80g','twarożek chudy')],['Jabłko pokrój. Jedz z twarożkiem.'],'Białko z twarożku spowalnia wchłanianie fruktozy!'),
+ m('Kasza gryczana z kurczakiem i brokułem',480,38,52,10,'7,50 zł',[i('150g','pierś z kurczaka'),i('80g','kasza gryczana'),i('200g','brokuły'),i('czosnek, oliwa, sól, zioła','')],['Kaszę ugotuj. Brokuły ugotuj al dente.','Kurczaka pokrój, obsmaż z czosnkiem i ziołami.','Podaj razem.'],'Brokuł — sulforafan, ochrona dla cukrzyka!'),
+ m('Jogurt naturalny z siemieniem',140,9,13,5,'1,80 zł',[i('150g','jogurt naturalny'),i('1 łyżka','siemię lniane mielone')],['Wymieszaj. Zjedz od razu.'],'Siemię lniane — błonnik obniżający glikemię!'),
+ m('Barszcz czerwony z jajkiem i chlebem',290,14,36,8,'3,80 zł',[i('300g','buraki'),i('500ml','bulion'),i('2 szt.','jajka'),i('1 ząbek','czosnek'),i('ocet, sól, majeranek',''),i('2 kromki','chleb razowy')],['Buraki ugotuj, zetrzyj lub zblenduj.','Wymieszaj z bulionem, czosnkiem i octem. Podgrzej.','Jajka ugotuj na twardo. Podaj barszcz z jajkiem i chlebem.'],'Barszcz bez śmietany i cukru — lekki i zdrowy!')],
+// Pt
+[m('Owsianka z bananem (mała porcja) i orzechami',340,11,54,9,'2,80 zł',[i('50g','płatki owsiane'),i('pół szt.','banan (mały, niedojrzały)'),i('20g','orzechy włoskie'),i('250ml','woda')],['Owsiankę ugotuj.','Banana pokrój. Dodaj z orzechami.'],'Niedojrzały banan ma IG 42, dojrzały 65 — wybieraj zielonkawy!'),
+ m('Kanapka z pastą jajeczną',200,12,22,6,'2,80 zł',[i('2 szt.','jajka'),i('1 łyżka','jogurt naturalny'),i('1 kromka','chleb żytni razowy'),i('szczypiorek, sól','')],['Jajka ugotuj, rozgnieć. Wymieszaj z jogurtem.','Posmaruj chleb.'],'Pasta jajeczna z jogurtem zamiast majonezu — zdrowiej!'),
+ m('Krupnik z kaszą i warzywami',420,18,54,10,'4,80 zł',[i('80g','kasza gryczana'),i('1 szt.','marchew'),i('1 szt.','pietruszka'),i('kawałek','selera'),i('700ml','bulion'),i('100g','mięso kurczaka lub indyka'),i('natka, sól','')],['Bulion zagotuj z mięsem (~20 min).','Dodaj warzywa. Gotuj 15 min.','Dodaj kaszę. Gotuj 15 min. Posyp natką.'],'Krupnik to zdrowa polska zupa — idealna dla cukrzyka!'),
+ m('Garść pestek dyni',90,5,3,7,'0,80 zł',[i('30g','pestki dyni niesolone')],['Jedz powoli.'],'Pestki dyni — magnez i cynk, ważne minerały!'),
+ m('Omlet z warzywami',320,20,18,18,'4,00 zł',[i('3 szt.','jajka'),i('garść','szpinak'),i('1 szt.','pomidor'),i('1 łyżeczka','oliwa'),i('sól, pieprz, oregano','')],['Warzywa podsmaż na oliwie.','Jajka roztrzep, wlej. Smaż 3–4 min.','Złóż, podaj.'],'Kolacja bez węglowodanów — stabilna glikemia w nocy!')],
+// So
+[m('Płatki owsiane z jogurtem i owocami',320,13,50,7,'3,20 zł',[i('40g','płatki owsiane'),i('100g','jogurt naturalny'),i('garść','borówki lub maliny'),i('1 łyżka','siemię lniane')],['Płatki namoczyć w jogurcie na 10 min.','Dodaj owoce i siemię. Wymieszaj.'],'Overnight oats — można przygotować wieczór wcześniej!'),
+ m('Serek z warzywami i orzechami',200,13,12,10,'2,80 zł',[i('100g','serek wiejski'),i('pół szt.','ogórek'),i('1 szt.','pomidor'),i('20g','orzechy')],['Warzywa pokrój. Podaj z serkiem i orzechami.'],'Sobotnie drugie śniadanie — bez pośpiechu!'),
+ m('Żurek z jajkiem i chlebem razowym',400,20,42,14,'5,50 zł',[i('500ml','zakwas żurkowy'),i('400ml','bulion'),i('100g','biała kiełbasa (chuda)'),i('3 szt.','jajka na twardo'),i('czosnek, majeranek, śmietana 12%',''),i('2 kromki','chleb razowy')],['Bulion zagotuj z czosnkiem i majerankiem.','Wlej zakwas. Dodaj śmietanę. Podaj z jajkiem i kiełbasą.','Podaj z chlebem razowym.'],'Żurek z chlebem razowym zamiast ziemniaków!'),
+ m('Jabłko pieczone z cynamonem',100,1,24,0,'0,80 zł',[i('1 szt.','jabłko'),i('szczypta','cynamon')],['Jabłko wydrąż. Piecz 180°C przez 20 min.'],'Pyszny zdrowy deser!'),
+ m('Kasza z warzywami i serem',340,18,44,10,'4,50 zł',[i('70g','kasza gryczana'),i('1 szt.','papryka'),i('1 szt.','cukinia'),i('50g','ser feta'),i('oliwa, oregano','')],['Kaszę ugotuj. Warzywa podsmaż.','Feta pokruszona na wierzchu. Skrop oliwą.'],'Feta zamiast tłustego sera — mniej kalorii!')],
+// Nd
+[m('Jajecznica z warzywami i chlebem',330,17,32,14,'4,00 zł',[i('3 szt.','jajka'),i('1 szt.','pomidor'),i('garść','szpinak'),i('1 łyżeczka','oliwa'),i('2 kromki','chleb razowy')],['Szpinak i pomidor podsmaż.','Wbij jajka, zamieszaj. Podaj z chlebem.'],'Niedziela — czas na spokojne śniadanie!'),
+ m('Twarożek z orzechami i gruszką',210,13,22,8,'3,00 zł',[i('100g','twarożek chudy'),i('1 szt.','gruszka'),i('20g','orzechy włoskie')],['Gruszkę pokrój. Orzechy posiekaj. Podaj z twarożkiem.'],'Idealna przekąska po kościele!'),
+ m('Rosół z makaronem razowym i warzywami',480,34,50,12,'8,00 zł',[i('200g','kurczak udka lub skrzydełka'),i('1 szt.','marchew'),i('1 szt.','pietruszka'),i('kawałek','selera'),i('60g','makaron razowy'),i('natka, sól, ziele ang.','')],['Kurczaka zalej wodą, gotuj 1,5h.','Dodaj warzywa po 40 min.','Makaron ugotuj oddzielnie. Podaj w rosole.'],'Niedzielny rosół — tradycja polska, zdrowa wersja!'),
+ m('Jogurt z borówkami i orzechami',170,10,18,6,'2,50 zł',[i('150g','jogurt naturalny'),i('garść','borówki'),i('15g','orzechy')],['Wymieszaj. Podaj.'],'Niedzielny podwieczorek!'),
+ m('Zupa pomidorowa z kaszą',350,16,48,8,'4,00 zł',[i('puszka','pomidory krojone'),i('500ml','bulion'),i('70g','kasza gryczana'),i('czosnek, bazylia, oliwa','')],['Pomidory z bulionem i czosnkiem gotuj 15 min. Zmiksuj.','Kaszę ugotuj. Podaj zupę z kaszą.'],'Klasyczna niedziela — lżejsza wersja!')],
 ],
+// ===== TYDZIEŃ 3 =====
 [
-[m('Naleśniki keto z mąki migdałowej',420,34,16,5,'4,50 zł',[i('60g','mąka migdałowa'),i('2 szt.','jajka'),i('60g','cream cheese'),i('proszek do pieczenia, sól',''),i('masło','')],['Składniki zmiksuj na gładkie ciasto.','Smaż małe naleśniki na maśle 2 min z każdej strony.','Podaj z cream cheese.'],'Mąka migdałowa = keto podstawa!'),
- m('Schab z pieczarkami w śmietanie',490,36,34,4,'7,00 zł',[i('180g','schab'),i('200g','pieczarki'),i('100ml','śmietana 30%'),i('masło, czosnek, tymianek','')],['Mięso pokrój, obsmaż na maśle.','Pieczarki dodaj. Wlej śmietanę, duś 5 min.'],'Śmietana 30% zawsze — nigdy light!'),
- m('Prosciutto z rukolą',120,8,10,1,'2,50 zł',[i('4 plastry','prosciutto'),i('garść','rukola')],['Owiń rukolę w prosciutto.'],'Elegancki keto snack w 1 minutę!'),
- m('Kapuśniak keto z żeberkami',350,24,18,7,'6,50 zł',[i('200g','żeberka wędzone'),i('300g','kapusta kiszona'),i('600ml','woda lub bulion'),i('cebula, kminek, majeranek','')],['Żeberka zalej wodą, zagotuj.','Dodaj kapustę i cebulę.','Duś 30 min z kminkiem i majerankiem.'],'Żeberka + kapusta = polskie keto comfort food!')],
-[m('Jajka sadzone z fetą i pomidorkami',420,34,20,4,'3,80 zł',[i('3 szt.','jajka'),i('40g','feta'),i('5 szt.','pomidorki cherry'),i('masło, oregano','')],['Pomidorki podsmaż chwilę.','Wbij jajka. Posyp fetą i oregano.'],'Feta + jajka = keto śródziemnomorskie!'),
- m('Udka kurczaka z papryką',460,34,34,4,'6,50 zł',[i('2 szt.','udka kurczaka'),i('1 szt.','papryka czerwona'),i('oliwa, czosnek, papryka mielona','')],['Udka natrzyj papryką i czosnkiem.','Paprykę pokrój, ułóż wokół.','Piecz 200°C przez 40 min.'],'Mała ilość papryki — tylko dla smaku!'),
- m('Ser żółty z ogórkiem',130,10,7,1,'1,60 zł',[i('40g','ser żółty'),i('pół szt.','ogórek'),i('1 łyżeczka','oliwa')],['Pokrój. Skrop oliwą.'],'Prosta keto przekąska!'),
- m('Zupa krem z pieczarek',270,20,8,6,'4,00 zł',[i('200g','pieczarki'),i('15g','grzyby suszone'),i('500ml','bulion'),i('100ml','śmietana 30%'),i('masło, majeranek','')],['Grzyby namocz 20 min.','Pieczarki podsmaż na maśle.','Dodaj grzyby z wodą i bulion, gotuj 20 min. Zmiksuj, wlej śmietanę.'],'Woda po grzybach = aromat!')],
-[m('Owsianka migdałowa keto',340,28,8,7,'3,50 zł',[i('30g','mąka migdałowa'),i('150ml','mleko kokosowe'),i('masło, cynamon, wiórki','')],['Mąkę zalej mlekiem, podgrzej 3 min.','Dodaj masło i cynamon. Posyp wiórkami.'],'Migdałowa owsianka = tylko 7g węgli!'),
- m('Wątróbka z cebulą i masłem',380,22,34,7,'5,00 zł',[i('180g','wątróbka drobiowa'),i('2 szt.','cebula'),i('2 łyżki','masło'),i('tymianek, sól, pieprz','')],['Cebulę smaż na maśle 15 min.','Wątróbkę pokrój, obsmaż 2 min z każdej strony.','Połącz z cebulą.'],'Wątróbka = żelazo, B12 i białko za grosze!'),
- m('Ogórek z tahini',110,9,3,4,'1,50 zł',[i('pół szt.','ogórek'),i('2 łyżki','tahini lub pasta sezamowa')],['Ogórek w słupki. Maczaj w tahini.'],'Tahini = keto tłuszcz sezamowy!'),
- m('Roladki wieprzowe z ogórkiem',490,34,34,3,'7,00 zł',[i('200g','wieprzowina cienkie plastry'),i('2 szt.','ogórek kiszony'),i('cebula, musztarda, masło, bulion','')],['Mięso posmaruj musztardą.','Ułóż ogórek i cebulę, zwiń.','Obsmaż ze wszystkich stron. Duś w bulionie 45 min.'],'Roladki bez bułki tartej = keto klasyk!')],
-[m('Shake keto z masłem orzechowym',380,30,14,5,'3,50 zł',[i('200ml','mleko migdałowe niesłodzone'),i('2 łyżki','masło orzechowe 100%'),i('1 łyżka','nasiona chia'),i('szczypta cynamonu','')],['Zblenduj wszystko. Pij od razu.'],'Mleko migdałowe niesłodzone!'),
- m('Keto chili z mielonym wieprzowym',470,30,34,7,'7,00 zł',[i('200g','mielone wieprzowe'),i('pół szt.','papryka'),i('pół puszki','pomidory'),i('chili, kumin, czosnek, smalec',''),i('śmietana do podania','')],['Cebulę i paprykę podsmaż.','Mięso dodaj, smaż 5 min. Wlej pomidory, duś 20 min.','Podaj ze śmietaną.'],'Bez fasoli — samo mięso!'),
- m('Kulki mocy keto',150,13,5,3,'2,00 zł',[i('2 łyżki','masło orzechowe'),i('1 łyżka','wiórki kokosowe'),i('szczypta soli','')],['Wymieszaj. Uformuj 2 kulki.','Włóż na 10 min do lodówki.'],'Stają w lodówce cały tydzień!'),
- m('Zupa mleczna keto z chia',240,18,8,6,'3,00 zł',[i('3 łyżki','nasiona chia'),i('400ml','mleko kokosowe'),i('szczypta soli i wanilii','')],['Mleko kokosowe podgrzej.','Wsyp chia, mieszaj 2 min. Dopraw wanilią.'],'Keto alternatywa dla zupy mlecznej!')],
-[m('Jajecznica z chorizo',460,38,24,4,'5,50 zł',[i('3 szt.','jajka'),i('60g','chorizo'),i('pół szt.','papryka'),i('papryka wędzona, masło','')],['Chorizo podsmaż.','Paprykę dodaj, smaż 3 min.','Wbij jajka, zamieszaj.'],'Chorizo daje intensywny smak!'),
- m('Kurczak w sosie masła orzechowego',480,32,36,6,'6,50 zł',[i('180g','pierś z kurczaka'),i('2 łyżki','masło orzechowe 100%'),i('1 łyżka','sos sojowy'),i('oliwa, imbir, czosnek','')],['Kurczaka pokrój.','Sos: masło orzechowe + sojowy + imbir + czosnek.','Kurczaka usmaż. Polej sosem, podsmaż 2 min.'],'Masło orzechowe 100% = keto!'),
- m('Awokado z łososiem',340,28,18,3,'5,00 zł',[i('1 szt.','awokado'),i('60g','łosoś wędzony'),i('oliwa, cytryna, koperek','')],['Awokado przekrój. Łososia ułóż. Skrop oliwą.'],'Zero zmywania!'),
- m('Krupnik keto z kalafiora',250,18,8,7,'3,50 zł',[i('200g','kalafior'),i('1 szt.','marchewka mała'),i('700ml','bulion'),i('masło, natka, sól','')],['Kalafior pokrój drobno.','Marchewkę pokrój.','Wrzuć do bulionu, gotuj 15 min. Dodaj masło i natkę.'],'Kalafior zamiast kaszy = krupnik keto!')],
-[m('Pełne keto śniadanie sobotnie',540,44,28,3,'7,00 zł',[i('3 szt.','jajka'),i('60g','boczek'),i('50g','ser haloumi'),i('50g','pieczarki'),i('masło','')],['Boczek obsmaż.','Haloumi grilluj 2 min z każdej strony.','Pieczarki podsmaż. Jajka sadzone.'],'Haloumi nie topi się — można go grillować!'),
- m('Kaczka pieczona z kapustą czerwoną',580,46,36,6,'12,00 zł',[i('2 szt.','udka z kaczki'),i('200g','kapusta czerwona'),i('1 szt.','cebula'),i('rozmaryn, tymianek, sól','')],['Udka natrzyj solą i ziołami.','Piecz 180°C przez 1h.','Kapustę poszatkuj, zaduś z cebulą.'],'Kaczka jest tłusta = idealna keto!'),
- m('Orzechy brazylijskie',140,14,3,1,'1,50 zł',[i('3 szt.','orzechy brazylijskie')],['Zjedz 3 — nie więcej!'],'3 orzechy brazylijskie = dzienna dawka selenu!'),
- m('Żurek keto z kiełbasą',330,22,16,5,'4,50 zł',[i('400ml','zakwas żurkowy'),i('300ml','bulion'),i('80g','kiełbasa'),i('2 szt.','jajka na twardo'),i('śmietana, czosnek, majeranek','')],['Bulion z czosnkiem zagotuj.','Wlej zakwas, zagotuj. Dodaj śmietanę.','Podaj z jajkiem i kiełbasą.'],'Żurek bez ziemniaków = keto!')],
-[m('Avocado na boczku',400,34,18,4,'4,50 zł',[i('1 szt.','awokado'),i('4 plastry','boczek'),i('2 szt.','jajka'),i('chili, cytryna, sól','')],['Boczek usmaż chrupko.','Awokado rozgnieć z cytryną.','Jajka usmaż sadzone. Ułóż na boczku.'],'Boczek zamiast chleba = keto avocado toast!'),
- m('Niedzielny rosół keto',360,20,28,5,'5,50 zł',[i('2 szt.','udka kurczaka'),i('marchewka, pietruszka, seler',''),i('2 szt.','jajka na twardo'),i('natka, sól, ziele','')],['Kurczaka z warzywami gotuj 1,5h.','Podaj bulion z warzywami i jajkiem.'],'Niedzielny keto rosół!'),
- m('Deser mousse z awokado i kakao',230,18,4,6,'3,50 zł',[i('1 szt.','awokado'),i('2 łyżki','kakao 100%'),i('1 łyżka','erytrytol lub stewia'),i('50ml','mleko kokosowe')],['Wszystko zblenduj. Wstaw na 30 min do lodówki.'],'Mousse z awokado = keto deser!'),
- m('Finałowa tarta keto ze szpinakiem',400,32,20,4,'5,50 zł',[i('4 szt.','jajka'),i('150ml','śmietana 30%'),i('150g','szpinak'),i('60g','ser pleśniowy lub feta'),i('masło, sól','')],['Szpinak podsmaż. Jajka ze śmietaną wymieszaj, dodaj szpinak i ser.','Piecz 180°C przez 25 min.'],'Keto tarta bez spodu!')],
+[m('Owsianka z malinami i orzechami',310,10,50,9,'3,00 zł',[i('50g','płatki owsiane'),i('garść','maliny mrożone'),i('20g','orzechy laskowe'),i('250ml','mleko 1,5%')],['Owsiankę ugotuj w mleku.','Maliny rozmróż. Dodaj z orzechami.'],'Maliny — IG 25, pełne witaminy C!'),
+ m('Serek wiejski z pomidorem i bazylią',170,16,6,8,'2,80 zł',[i('150g','serek wiejski'),i('1 szt.','pomidor'),i('bazylia, oliwa, sól','')],['Pomidor pokrój. Skrop oliwą. Posyp bazylią. Podaj z serkiem.'],'Włoska wersja drugiego śniadania!'),
+ m('Kasza gryczana z gulaszem warzywnym',440,18,56,12,'5,50 zł',[i('80g','kasza gryczana'),i('1 szt.','papryka'),i('1 szt.','cukinia'),i('1 szt.','cebula'),i('puszka','pomidory krojone'),i('pół puszki','fasola biała'),i('czosnek, papryka mielona','')],['Cebulę i czosnek zeszklij.','Warzywa dodaj, duś 10 min. Wlej pomidory i fasolę.','Gotuj 20 min. Podaj z kaszą.'],'Gulasz wegański — tani i sycący!'),
+ m('Jabłko z masłem orzechowym',160,4,22,8,'1,50 zł',[i('1 szt.','jabłko'),i('1 łyżka','masło orzechowe 100%')],['Jabłko pokrój. Maczaj w maśle.'],'Klasyczna przekąska dla cukrzyka!'),
+ m('Kanapki z pastą z tuńczyka',280,22,28,8,'4,50 zł',[i('pół puszki','tuńczyk w sosie własnym'),i('2 kromki','chleb żytni razowy'),i('1 łyżka','jogurt naturalny'),i('szczypiorek, sól, pieprz','')],['Tuńczyka odsącz, rozdrobnij.','Wymieszaj z jogurtem i szczypiorkiem. Posmaruj chleb.'],'Tuńczyk z jogurtem zamiast majonezu — lżej!')],
+[m('Kasza gryczana z owocami i twarożkiem',340,16,48,8,'3,50 zł',[i('50g','kasza gryczana'),i('150ml','mleko 1,5%'),i('1 szt.','gruszka lub jabłko'),i('50g','twarożek chudy'),i('szczypta','cynamon')],['Kaszę ugotuj w mleku 15 min.','Owoce pokrój.','Twarożek dodaj do kaszy — spowalnia wchłanianie cukrów.'],'Kasza gryczana + twarożek = dużo niższy wyrzut insuliny niż jaglana!'),
+ m('Jajko z warzywami',150,10,8,8,'1,80 zł',[i('2 szt.','jajka'),i('ogórek, pomidor','')],['Jajka ugotuj. Warzywa pokrój. Podaj razem.'],'Szybkie drugie śniadanie!'),
+ m('Bigos z kurczakiem i kaszą',430,28,42,14,'6,50 zł',[i('300g','kapusta kiszona'),i('150g','pierś z kurczaka'),i('1 szt.','cebula'),i('pół puszki','pomidory'),i('60g','kasza gryczana'),i('kminek, sól','')],['Kurczaka obsmaż, dodaj cebulę.','Kapustę i pomidory dodaj. Duś 40 min.','Kaszę ugotuj. Podaj razem.'],'Bigos z kaszą zamiast ziemniaków!'),
+ m('Jogurt z siemieniem',140,9,13,5,'1,80 zł',[i('150g','jogurt naturalny'),i('1 łyżka','siemię lniane')],['Wymieszaj.'],'Codzienne siemię lniane — nawyk cukrzyka!'),
+ m('Omlet z serem i szpinakiem',330,22,16,20,'4,20 zł',[i('3 szt.','jajka'),i('garść','szpinak baby'),i('30g','ser żółty tarty'),i('oliwa, sól','')],['Szpinak podsmaż. Jajka roztrzep, wlej.','Posyp serem. Złóż, podaj.'],'Kolacja bez węglowodanów — najlepsza glikemia!')],
+[m('Owsianka z gruszką i siemieniem',320,11,52,8,'2,80 zł',[i('50g','płatki owsiane'),i('1 szt.','gruszka'),i('1 łyżka','siemię lniane'),i('250ml','woda')],['Owsiankę ugotuj.','Gruszkę pokrój. Siemię dodaj.'],'Błonnik z siemienia spowalnia wchłanianie cukru!'),
+ m('Serek wiejski z ogórkiem',170,17,5,8,'2,50 zł',[i('150g','serek wiejski'),i('pół szt.','ogórek'),i('koperek, sól','')],['Ogórek pokrój. Wymieszaj z serkiem.'],'Prosto i pożywnie!'),
+ m('Leczo warzywne z jajkiem i chlebem',400,20,44,14,'5,50 zł',[i('2 szt.','papryka'),i('2 szt.','pomidor lub puszka'),i('1 szt.','cebula'),i('1 szt.','cukinia'),i('2 szt.','jajka'),i('oliwa, czosnek, papryka mielona',''),i('2 kromki','chleb razowy')],['Cebulę i czosnek zeszklij.','Warzywa pokrój, dodaj. Duś 20 min.','Jajka wbij w leczo, przykryj. Gotuj 5 min.','Podaj z chlebem razowym.'],'Jajko w leczo — sztuczka włoskich kucharzy!'),
+ m('Garść orzechów mieszanych',130,4,5,12,'1,20 zł',[i('30g','orzechy mieszane niesolone')],['Jedz powoli.'],'Różne orzechy — różne składniki odżywcze!'),
+ m('Zupa grochowa z chlebem',380,20,48,10,'4,80 zł',[i('150g','groch żółty łuskany'),i('1 szt.','marchew'),i('50g','kiełbasa chuda'),i('600ml','woda'),i('kminek, sól, majeranek',''),i('2 kromki','chleb razowy')],['Groch gotuj 40 min. Dodaj warzywa i kiełbasę.','Gotuj 20 min. Dopraw. Podaj z chlebem.'],'Groch — IG 22, królewski strączek!')],
+[m('Chleb razowy z twarożkiem i warzywami',290,14,34,9,'3,00 zł',[i('2 kromki','chleb żytni razowy'),i('100g','twarożek'),i('1 szt.','pomidor'),i('garść','roszponka lub sałata')],['Twarożek posmaruj na chlebie. Ułóż warzywa.'],'Szybkie śniadanie na co dzień!'),
+ m('Jabłko z orzechami',130,3,22,7,'1,20 zł',[i('1 szt.','jabłko'),i('20g','orzechy')],['Jedz razem.'],'Połączenie owoc + orzechy = stabilna glikemia!'),
+ m('Ryba duszona z warzywami i kaszą',460,34,50,12,'7,00 zł',[i('180g','filet z dorsza lub mintaja'),i('80g','kasza gryczana'),i('1 szt.','marchew'),i('1 szt.','pietruszka'),i('600ml','bulion'),i('natka, cytryna, sól','')],['Warzywa i rybę gotuj w bulionie 15 min.','Kaszę ugotuj. Podaj razem z natką i cytryną.'],'Ryba gotowana — delikatna dla żołądka i cukrzycy!'),
+ m('Jogurt naturalny z borówkami',140,8,16,4,'2,20 zł',[i('150g','jogurt naturalny'),i('garść','borówki')],['Wymieszaj.'],'Borówki — antocyjany wspomagają insulinowrażliwość!'),
+ m('Kanapki z pastą jajeczną i ogórkiem',280,14,32,9,'3,50 zł',[i('2 szt.','jajka'),i('2 kromki','chleb żytni razowy'),i('1 łyżka','jogurt naturalny'),i('1 szt.','ogórek kiszony'),i('szczypiorek, sól','')],['Jajka ugotuj, rozgnieć z jogurtem.','Posmaruj chleb. Podaj z ogórkiem kiszonym.'],'Ogórek kiszony — probiotyk wspierający mikrobiotę!')],
+[m('Owsianka z jabłkiem i cynamonem',310,10,50,8,'2,50 zł',[i('50g','płatki owsiane'),i('1 szt.','jabłko'),i('szczypta','cynamon'),i('250ml','mleko 1,5%')],['Owsiankę ugotuj. Jabłko zetrzyj. Podaj z cynamonem.'],'Owsianka każdego dnia — rutyna glikemiczna!'),
+ m('Serek wiejski ze szczypiorkiem',160,16,5,8,'2,50 zł',[i('150g','serek wiejski'),i('garść','szczypiorek'),i('sól, pieprz','')],['Szczypiorek posiekaj. Wymieszaj z serkiem.'],'Klasyk!'),
+ m('Kasza z soczewicą i warzywami',430,22,56,10,'5,50 zł',[i('70g','kasza gryczana'),i('100g','soczewica z puszki lub gotowana'),i('1 szt.','marchew'),i('1 szt.','cebula'),i('oliwa, kumin, sól','')],['Kaszę ugotuj. Cebulę zeszklij.','Marchew dodaj, duś 10 min. Soczewicę dodaj. Wymieszaj.','Podaj z kaszą.'],'Soczewica + kasza = kompletne białko roślinne!'),
+ m('Garść pestek słonecznika',100,4,4,8,'0,70 zł',[i('30g','pestki słonecznika')],['Jedz powoli.'],'Wit. E — ochrona przed powikłaniami!'),
+ m('Sałatka z makreli i warzyw',310,22,24,12,'4,50 zł',[i('pół szt.','makrela wędzona z puszki'),i('garść','sałata'),i('1 szt.','ogórek'),i('1 szt.','pomidor'),i('1 łyżka','oliwa'),i('2 kromki','chleb razowy')],['Makreli obierz ze skóry. Warzywa pokrój.','Wymieszaj. Skrop oliwą. Podaj z chlebem.'],'Omega-3 z makreli — serce cukrzyka dziękuje!')],
+[m('Jajecznica z pomidorem i chlebem',310,16,30,14,'3,80 zł',[i('2 szt.','jajka'),i('1 szt.','pomidor'),i('1 łyżeczka','oliwa'),i('2 kromki','chleb razowy')],['Pomidor pokrój, podsmaż na oliwie.','Jajka wbij, zamieszaj. Podaj z chlebem.'],'Sobotnia jajecznica — prosta i zdrowa!'),
+ m('Twarożek z orzechami i gruszką',200,13,20,8,'3,00 zł',[i('100g','twarożek chudy'),i('1 szt.','gruszka'),i('20g','orzechy mieszane')],['Gruszkę pokrój. Orzechy posiekaj. Podaj z twarożkiem.'],'Dobra przekąska!'),
+ m('Zupa soczewicowa z warzywami',440,24,56,10,'5,50 zł',[i('150g','soczewica czerwona'),i('1 szt.','marchew'),i('1 szt.','cebula'),i('1 szt.','pomidor'),i('700ml','bulion'),i('kumin, kurkuma, czosnek','')],['Cebulę zeszklij. Marchew i pomidor dodaj.','Soczewicę i bulion wlej. Gotuj 20 min.','Dopraw kuminiem i kurkumą.'],'Kurkuma — silne właściwości przeciwzapalne!'),
+ m('Jabłko pieczone',100,1,24,0,'0,80 zł',[i('1 szt.','jabłko'),i('cynamon','')],['Jabłko wydrąż. Piecz 180°C 20 min.'],'Zdrowy deser bez cukru!'),
+ m('Kasza z warzywami i jajkiem',350,18,46,10,'4,50 zł',[i('70g','kasza gryczana'),i('1 szt.','cukinia'),i('1 szt.','marchew'),i('2 szt.','jajka'),i('oliwa, sól','')],['Kaszę ugotuj. Warzywa podsmaż. Jajka sadzone.','Podaj razem.'],'Sobotnia kolacja bez zbędnych węglowodanów!')],
+[m('Owsianka niedzielna z owocami i orzechami',340,12,54,10,'3,50 zł',[i('50g','płatki owsiane'),i('garść','owoce sezonowe'),i('25g','orzechy mieszane'),i('1 łyżka','siemię lniane'),i('250ml','mleko 1,5%')],['Owsiankę ugotuj w mleku.','Owoce pokrój. Dodaj z orzechami i siemieniem.'],'Niedzielna owsianka — bogatszy wariant!'),
+ m('Serek z warzywami i chlebem razowym',200,14,22,6,'3,00 zł',[i('100g','serek wiejski'),i('1 szt.','pomidor'),i('pół szt.','ogórek'),i('2 kromki','chleb razowy')],['Warzywa pokrój. Podaj z serkiem i chlebem.'],'Niedzielne drugie śniadanie!'),
+ m('Pieczony kurczak z kaszą i surówką',520,40,54,14,'8,00 zł',[i('180g','udko kurczaka bez skóry'),i('80g','kasza gryczana'),i('200g','kapusta kiszona'),i('1 szt.','marchew'),i('oliwa, zioła, czosnek','')],['Kurczaka piecz 190°C przez 40 min.','Kaszę ugotuj. Surówkę z kapusty i marchewki.','Podaj razem.'],'Niedzielny obiad — tradycyjny i zdrowy!'),
+ m('Jogurt z borówkami',150,9,16,4,'2,20 zł',[i('150g','jogurt naturalny'),i('garść','borówki')],['Wymieszaj.'],'Niedzielny podwieczorek!'),
+ m('Kanapki z pastą z makreli',280,20,28,10,'4,00 zł',[i('pół szt.','makrela wędzona'),i('2 kromki','chleb razowy'),i('1 łyżka','jogurt'),i('szczypiorek, ogórek kiszony','')],['Makreli obierz, rozgnieć. Wymieszaj z jogurtem.','Posmaruj chleb. Podaj z ogórkiem.'],'Ostatni tydzień — odliczamy!')],
 ],
+// ===== TYDZIEŃ 4 =====
 [
-[m('Jajka sadzone z haloumi i pomidorkami',460,36,24,4,'5,50 zł',[i('2 szt.','jajka'),i('60g','ser haloumi'),i('5 szt.','pomidorki cherry'),i('masło, oregano','')],['Haloumi grilluj 2 min z każdej strony.','Jajka usmaż na maśle.','Pomidorki podsmaż chwilę.'],'Haloumi nie topi się — można go smażyć!'),
- m('Bigos keto finalny',480,36,24,7,'8,00 zł',[i('400g','kapusta kiszona'),i('200g','mięso mix'),i('100g','kiełbasa'),i('pół puszki','pomidory'),i('smalec, przyprawy','')],['Mięso i kiełbasę obsmaż na smalcu.','Dodaj kapustę i pomidory. Duś minimum 1h.'],'Bigos = zużyj resztki tygodnia!'),
- m('Czekolada gorzka 85%',100,8,2,4,'1,50 zł',[i('20g','czekolada gorzka 85%+')],['Jedz powoli!'],'85%+ OK w keto!'),
- m('Zupa cebulowa keto z serem',250,18,10,8,'3,50 zł',[i('3 szt.','cebula'),i('700ml','bulion wołowy'),i('masło, tymianek',''),i('50g','ser żółty')],['Cebulę smaż na maśle 30 min aż złota.','Wlej bulion, gotuj 15 min. Posyp serem.'],'Karmelizacja cebuli = klucz do smaku!')],
-[m('Owsianka keto z orzechami',340,28,10,8,'3,00 zł',[i('30g','płatki owsiane — mała porcja!'),i('150ml','mleko kokosowe'),i('30g','orzechy mieszane'),i('cynamon','')],['Płatki zalej mlekiem kokosowym.','Podaj z orzechami i cynamonem.'],'W keto tylko mała porcja płatków!'),
- m('Mielone wieprzowe z jajkiem sadzonym',490,38,30,3,'6,50 zł',[i('200g','mielone wieprzowe'),i('2 szt.','jajka'),i('garść','sałata lub rukola'),i('majonez, czosnek, sól','')],['Mielone obsmaż z czosnkiem.','Jajka usmaż sadzone.','Ułóż na sałacie z majonezem.'],'Mielone + jajko = szybki keto obiad!'),
- m('Deska keto ser wędlina oliwki',280,22,16,2,'5,00 zł',[i('40g','ser żółty lub brie'),i('40g','szynka lub salami'),i('15 szt.','oliwki'),i('ogórek, rzodkiewki','')],['Ułóż elegancko.'],'Keto deska = szybka przekąska!'),
- m('Żurek finalny z białą kiełbasą',360,24,18,5,'5,50 zł',[i('400ml','zakwas żurkowy'),i('400ml','bulion'),i('2 szt.','biała kiełbasa'),i('3 szt.','jajka na twardo'),i('śmietana, chrzan, majeranek','')],['Bulion zagotuj z majerankiem.','Wlej zakwas. Dodaj śmietanę i chrzan.','Podaj z kiełbasą i jajkiem.'],'4 tygodnie za Tobą!')],
-[m('Twarożek z łososiem',380,28,22,3,'5,00 zł',[i('100g','twarożek śmietankowy'),i('60g','łosoś wędzony'),i('1 łyżka','kapary'),i('koperek, cytryna','')],['Twarożek na talerzyk. Łososia i kapary ułóż. Posyp koperkiem.'],'Cream cheese bez cukru!'),
- m('Schab duszony z pieczarkami',490,36,34,4,'7,00 zł',[i('180g','schab'),i('200g','pieczarki'),i('100ml','śmietana 30%'),i('masło, czosnek, tymianek','')],['Mięso pokrój, obsmaż.','Pieczarki dodaj. Wlej śmietanę, duś 5 min.'],'Śmietana 30% zawsze!'),
- m('Kulki mocy keto',150,13,5,3,'2,00 zł',[i('2 łyżki','masło orzechowe'),i('1 łyżka','wiórki kokosowe'),i('szczypta soli','')],['Wymieszaj. Uformuj 2 kulki. Lodówka 10 min.'],'Stają w lodówce tydzień!'),
- m('Zupa krem z brokułów',300,22,12,7,'4,00 zł',[i('300g','brokuły'),i('500ml','bulion'),i('100ml','śmietana'),i('30g','parmezan'),i('masło, czosnek','')],['Brokuły ugotuj w bulionie.','Zmiksuj z masłem. Dodaj śmietanę. Posyp parmezanem.'],'Parmezan = keto smak i tłuszcz!')],
-[m('Jajka na miękko z masłem',300,24,16,2,'2,50 zł',[i('3 szt.','jajka'),i('1 łyżka','masło'),i('sól','')],['Jajka gotuj 5–6 min. Podaj z masłem.'],'Żółtko powinno być płynne!'),
- m('Pieczony łosoś z masłem czosnkowym',460,34,36,3,'9,00 zł',[i('180g','filet z łososia'),i('150g','szparagi'),i('3 łyżki','masło'),i('2 ząbki','czosnek'),i('cytryna, koperek','')],['Łososia ułóż. Masło z czosnkiem polej.','Szparagi obok. Piecz 200°C przez 15 min.'],'Łosoś = omega-3 i keto tłuszcze!'),
- m('Orzechy brazylijskie',140,14,3,1,'1,50 zł',[i('3 szt.','orzechy brazylijskie')],['Zjedz tylko 3!'],'Dzienna dawka selenu!'),
- m('Chłodnik keto z rzodkiewki',180,12,8,5,'2,50 zł',[i('1 pęczek','rzodkiewki'),i('200ml','kefir'),i('koperek, szczypiorek, sół, pieprz','')],['Rzodkiewki zetrzyj. Wymieszaj z kefirem i ziołami. Podaj zimny.'],'Zero gotowania!')],
-[m('Pełne keto śniadanie sobotnie',540,44,28,3,'7,00 zł',[i('3 szt.','jajka'),i('60g','boczek wędzony'),i('50g','kiełbaski'),i('50g','pieczarki'),i('masło','')],['Boczek i kiełbaski obsmaż. Pieczarki podsmaż. Jajka sadzone.'],'Sobotnie śniadanie bez pośpiechu!'),
- m('Kaczka konfitowana',600,48,36,1,'14,00 zł',[i('2 szt.','udka z kaczki'),i('sól gruboziarnista','do peklowania'),i('tymianek, czosnek, liść laurowy',''),i('tłuszcz kaczki lub smalec','')],['Udka natrzyj solą i ziołami, odstaw na noc.','Opłucz, osusz. Zanurz w stopionym tłuszczu.','Gotuj w piekarniku 150°C przez 2–3h.','Oprumień skórkę na patelni.'],'Kaczka confit = keto klasa!'),
- m('Deser czekoladowe kulki keto',200,17,5,5,'2,50 zł',[i('2 łyżki','kakao 100%'),i('2 łyżki','masło orzechowe'),i('1 łyżka','erytrytol'),i('wiórki kokosowe','')],['Wymieszaj kakao, masło i słodzik.','Uformuj kulki. Obtocz w wiórkach.','Wstaw do lodówki.'],'Keto słodycze bez cukru!'),
- m('Wielki finałowy keto rosół',360,20,28,6,'6,00 zł',[i('1 szt.','kurczak cały lub udka'),i('marchewka, pietruszka, seler, cebula',''),i('natka, koper, sół, przyprawy','')],['Kurczaka zalej 2L zimnej wody.','Gotuj 1,5–2h na małym ogniu.','Podaj bulion z warzywami — bez makaronu!'],'4 tygodnie za Tobą, brawo!')],
-[m('Jajecznica z boczkiem i awokado',480,42,22,4,'4,20 zł',[i('3 szt.','jajka'),i('60g','boczek'),i('pół szt.','awokado'),i('masło, sól','')],['Boczek podsmaż. Jajka wbij, smaż mieszając.','Awokado pokrój, podaj obok.'],'Klasyk keto na ostatnią niedzielę!'),
- m('Niedzielna kaczka z kapustą',580,46,36,6,'12,00 zł',[i('2 szt.','udka z kaczki'),i('200g','kapusta czerwona'),i('1 szt.','cebula'),i('rozmaryn, tymianek, sół','')],['Udka natrzyj ziołami.','Piecz 180°C przez 1h.','Kapustę poszatkuj, zaduś z cebulą.'],'Ostatnia niedziela keto — celebruj!'),
- m('Bulletproof coffee',160,16,0,0,'1,50 zł',[i('200ml','kawa lub espresso'),i('1 łyżka','masło lub ghee'),i('1 łyżka','olej kokosowy','')],['Kawę zaparzyć.','Wrzuć masło i olej.','Blenduj 20 sek.'],'Bulletproof coffee = keto paliwo!'),
- m('Finałowa tarta keto ze szpinakiem',400,32,20,4,'5,50 zł',[i('4 szt.','jajka'),i('150ml','śmietana 30%'),i('150g','szpinak'),i('60g','ser pleśniowy lub feta'),i('masło, sół','')],['Szpinak podsmaż. Jajka ze śmietaną. Dodaj szpinak i ser.','Piecz 180°C przez 25 min.'],'4 tygodnie odchudzania za Tobą!')],
+[m('Owsianka z jabłkiem, cynamonem i orzechami',320,10,52,9,'2,80 zł',[i('50g','płatki owsiane górskie'),i('1 szt.','jabłko'),i('1 łyżka','orzechy włoskie'),i('szczypta','cynamon'),i('250ml','woda lub mleko 1,5%')],['Owsiankę ugotuj. Jabłko zetrzyj.','Wymieszaj z cynamonem i orzechami.'],'Ostatni miesiąc — masz już nawyk! Owsianka to Twój rytuał!'),
+ m('Serek wiejski ze szczypiorkiem i rzodkiewką',180,18,6,8,'3,20 zł',[i('150g','serek wiejski'),i('4 szt.','rzodkiewka'),i('garść','szczypiorek'),i('sól, pieprz','')],['Warzywa pokrój. Wymieszaj z serkiem.'],'Klasyczne drugie śniadanie — sprawdzone!'),
+ m('Kasza gryczana z gulaszem z soczewicy',450,22,58,10,'5,50 zł',[i('80g','kasza gryczana'),i('150g','soczewica'),i('1 szt.','marchew'),i('1 szt.','pietruszka'),i('puszka','pomidory'),i('czosnek, kumin, oliwa','')],['Kaszę ugotuj. Soczewicę duś z warzywami i pomidorami 20 min.','Podaj razem.'],'Twój ulubiony obiad — sprawdzony przez 4 tygodnie!'),
+ m('Garść pestek dyni',90,5,3,7,'0,80 zł',[i('30g','pestki dyni')],['Jedz powoli.'],'Mały rytuał podwieczorku!'),
+ m('Kanapki z pastą jajeczną i ogórkiem kiszonym',280,14,32,9,'3,50 zł',[i('2 szt.','jajka'),i('2 kromki','chleb żytni razowy'),i('1 łyżka','jogurt naturalny'),i('2 szt.','ogórek kiszony'),i('szczypiorek, sól','')],['Jajka ugotuj, rozgnieć z jogurtem.','Posmaruj chleb. Podaj z ogórkiem kiszonym.'],'4 tygodnie za Tobą — brawo! Masz nawyk zdrowego jedzenia!')],
+[m('Jajecznica z warzywami i chlebem',310,16,32,14,'3,80 zł',[i('3 szt.','jajka'),i('garść','szpinak'),i('1 szt.','pomidor'),i('1 łyżeczka','oliwa'),i('2 kromki','chleb razowy')],['Warzywa podsmaż. Jajka wbij, zamieszaj.','Podaj z chlebem.'],'Śniadanie mistrzów glikemii!'),
+ m('Jabłko z masłem orzechowym',160,4,22,8,'1,50 zł',[i('1 szt.','jabłko'),i('1 łyżka','masło orzechowe 100%')],['Jabłko pokrój. Maczaj w maśle.'],'Sprawdzona przekąska!'),
+ m('Barszcz z jajkiem i kaszą',360,20,44,10,'5,00 zł',[i('300g','buraki'),i('500ml','bulion'),i('2 szt.','jajka'),i('70g','kasza gryczana'),i('ocet, czosnek, majeranek','')],['Buraki ugotuj i zetrzyj lub zblenduj.','Wymieszaj z bulionem, octem, czosnkiem. Podgrzej.','Kaszę ugotuj. Jajka ugotuj na twardo. Podaj razem.'],'Barszcz czerwony — żelazo i folian!'),
+ m('Jogurt z orzechami',150,9,12,7,'2,00 zł',[i('150g','jogurt naturalny'),i('20g','orzechy mieszane')],['Wymieszaj. Podaj.'],'Prosta przekąska!'),
+ m('Sałatka z tuńczykiem, fasolą i warzywami',310,24,28,8,'4,50 zł',[i('puszka','tuńczyk'),i('pół puszki','fasola biała'),i('1 szt.','pomidor'),i('pół szt.','ogórek'),i('1 łyżka','oliwa'),i('ocet, sól, pieprz','')],['Tuńczyka odsącz. Fasolę opłucz. Warzywa pokrój.','Wymieszaj. Skrop oliwą i octem.'],'Sałatka kolacyjna — lekka i sycąca!')],
+[m('Owsianka z borówkami i orzechami',310,10,50,8,'3,00 zł',[i('50g','płatki owsiane'),i('garść','borówki mrożone'),i('20g','orzechy laskowe'),i('250ml','mleko 1,5%')],['Owsiankę ugotuj. Borówki rozmróż. Dodaj z orzechami.'],'Borówki w każdej możliwej formie — tak!'),
+ m('Serek wiejski z pomidorem',160,16,5,8,'2,50 zł',[i('150g','serek wiejski'),i('1 szt.','pomidor'),i('bazylia, sól','')],['Pomidor pokrój. Podaj z serkiem i bazylią.'],'Prosto i skutecznie!'),
+ m('Ryż brązowy z kurczakiem i warzywami',490,36,52,11,'7,00 zł',[i('80g','ryż brązowy'),i('150g','pierś z kurczaka'),i('1 szt.','papryka'),i('1 szt.','cukinia'),i('oliwa, czosnek, zioła','')],['Ryż ugotuj 35 min.','Kurczaka i warzywa obsmaż z czosnkiem.','Podaj razem.'],'Ryż brązowy al dente — IG 55 zamiast 70!'),
+ m('Garść pestek słonecznika',100,4,4,8,'0,70 zł',[i('30g','pestki słonecznika')],['Jedz powoli.'],'Ostatni tydzień — nawyk stworzony!'),
+ m('Zupa pomidorowa z makaronem razowym',320,14,46,8,'4,00 zł',[i('puszka','pomidory krojone'),i('500ml','bulion'),i('60g','makaron razowy'),i('czosnek, bazylia, oliwa','')],['Pomidory z bulionem gotuj 15 min. Zmiksuj.','Makaron ugotuj al dente. Połącz.'],'Makaron al dente — nauczone w 4 tygodnie!'),],
+[m('Owsianka z gruszką i siemieniem',310,11,50,8,'2,80 zł',[i('50g','płatki owsiane'),i('1 szt.','gruszka'),i('1 łyżka','siemię lniane'),i('250ml','mleko 1,5%')],['Owsiankę ugotuj. Gruszkę pokrój. Siemię dodaj.'],'4. tydzień — czujesz różnicę w samopoczuciu!'),
+ m('Jajko z warzywami',150,10,8,8,'1,80 zł',[i('2 szt.','jajka'),i('ogórek, pomidor','')],['Jajka ugotuj. Warzywa pokrój. Podaj razem.'],'Szybko i zdrowo!'),
+ m('Kasza z soczewicą i warzywami korzeniowymi',440,22,56,10,'5,50 zł',[i('80g','kasza gryczana'),i('150g','soczewica gotowana'),i('1 szt.','marchew'),i('1 szt.','pietruszka'),i('cebula, oliwa, natka','')],['Kaszę ugotuj. Cebulę zeszklij.','Marchew i pietruszkę pokrój, duś 10 min. Soczewicę dodaj.','Podaj z kaszą i natką.'],'Znany smak — komfort i zdrowie!'),
+ m('Jogurt z siemieniem i owocami',150,9,16,5,'2,00 zł',[i('150g','jogurt naturalny'),i('1 łyżka','siemię lniane'),i('garść','owoce')],['Wymieszaj. Podaj.'],'Owocowy finał podwieczorku!'),
+ m('Żurek z jajkiem i chlebem razowym',390,20,42,14,'5,50 zł',[i('500ml','zakwas żurkowy'),i('400ml','bulion'),i('3 szt.','jajka na twardo'),i('100g','kiełbasa chuda'),i('czosnek, majeranek, śmietana 12%',''),i('2 kromki','chleb razowy')],['Bulion z czosnkiem i majerankiem zagotuj.','Wlej zakwas. Dodaj śmietanę.','Podaj z jajkiem, kiełbasą i chlebem.'],'Żurek wielkanocny po polsku — zdrowy wariant!')],
+[m('Owsianka z jabłkiem i cynamonem',320,10,52,8,'2,80 zł',[i('50g','płatki owsiane'),i('1 szt.','jabłko'),i('szczypta','cynamon'),i('250ml','mleko 1,5%')],['Owsiankę ugotuj. Jabłko zetrzyj. Posyp cynamonem.'],'Twoja owsianka — znana, lubiana, zdrowa!'),
+ m('Kanapka z pastą jajeczną',200,12,22,6,'2,80 zł',[i('2 szt.','jajka'),i('1 łyżka','jogurt'),i('1 kromka','chleb razowy'),i('szczypiorek','')],['Jajka ugotuj, rozgnieć z jogurtem. Posmaruj chleb.'],'Pastą jajeczna — opanowana perfekcyjnie!'),
+ m('Krupnik z kaszą i warzywami',420,18,54,10,'4,80 zł',[i('80g','kasza gryczana'),i('1 szt.','marchew'),i('1 szt.','pietruszka'),i('kawałek','selera'),i('700ml','bulion'),i('100g','mięso kurczaka'),i('natka, sól','')],['Mięso i warzywa gotuj 20 min. Kaszę dodaj.','Gotuj 15 min. Posyp natką.'],'Krupnik — polska zupa, która leczy!'),
+ m('Garść pestek dyni',90,5,3,7,'0,80 zł',[i('30g','pestki dyni')],['Jedz powoli.'],'Rytm podwieczorku opanowany!'),
+ m('Omlet z warzywami',320,20,18,18,'4,00 zł',[i('3 szt.','jajka'),i('garść','szpinak'),i('1 szt.','pomidor'),i('1 łyżeczka','oliwa')],['Warzywa podsmaż. Jajka wlej. Smaż 3 min.','Złóż, podaj.'],'Kolacja bez skoku cukru — nauczyłeś/aś się jeść!'),],
+[m('Omlet z warzywami i chlebem razowym',360,20,34,14,'4,20 zł',[i('3 szt.','jajka'),i('pół szt.','papryka'),i('garść','szpinak'),i('1 łyżeczka','oliwa'),i('2 kromki','chleb razowy')],['Warzywa podsmaż. Omlet zrób.','Podaj z chlebem razowym.'],'Sobotnie śniadanie — zasłużyłeś/aś!'),
+ m('Serek z gruszką i orzechami',200,13,22,8,'3,00 zł',[i('100g','serek wiejski'),i('1 szt.','gruszka'),i('20g','orzechy')],['Gruszkę pokrój. Podaj z serkiem i orzechami.'],'Weekendowa przyjemność!'),
+ m('Pieczony kurczak z kaszą i surówką z kapusty',520,40,54,14,'8,00 zł',[i('180g','udko kurczaka bez skóry'),i('80g','kasza gryczana'),i('200g','kapusta kiszona'),i('1 szt.','marchew'),i('oliwa, zioła, czosnek','')],['Kurczaka piecz 190°C przez 40 min.','Kaszę ugotuj. Surówkę z kapusty i marchewki.'],'Niedzielny obiad w piątkowe wydanie!'),
+ m('Jabłko pieczone',100,1,24,0,'0,80 zł',[i('1 szt.','jabłko'),i('cynamon','')],['Piecz 180°C 20 min.'],'Ulubiony deser!'),
+ m('Kasza z warzywami i serem feta',340,18,44,10,'4,50 zł',[i('70g','kasza gryczana'),i('1 szt.','papryka'),i('1 szt.','cukinia'),i('50g','ser feta'),i('oliwa, oregano','')],['Kaszę ugotuj. Warzywa podsmaż. Feta pokruszona.','Wymieszaj. Skrop oliwą.'],'Ostatnia sobota — jesteś ekspertem glikemii!'),],
+[m('Owsianka z owocami sezonowymi — finalny tydzień',340,12,54,10,'3,50 zł',[i('50g','płatki owsiane'),i('garść','owoce sezonowe lub mrożone'),i('25g','orzechy mieszane'),i('1 łyżka','siemię lniane'),i('250ml','mleko 1,5%')],['Owsiankę ugotuj. Owoce pokrój. Wszystko wymieszaj.'],'4 tygodnie diety cukrzycowej za Tobą — ogromny sukces!'),
+ m('Serek wiejski ze szczypiorkiem i rzodkiewką',180,18,6,8,'3,20 zł',[i('150g','serek wiejski'),i('4 szt.','rzodkiewka'),i('garść','szczypiorek'),i('sól, pieprz','')],['Warzywa pokrój. Wymieszaj z serkiem.'],'Znany smak, znany rytm!'),
+ m('Finałowy obiad — kasza z gulaszem soczewicy',450,22,58,10,'5,50 zł',[i('80g','kasza gryczana'),i('150g','soczewica'),i('1 szt.','marchew'),i('1 szt.','pietruszka'),i('puszka','pomidory krojone'),i('czosnek, kumin, oliwa','')],['Kaszę ugotuj. Gulasz z soczewicy duś 20 min.','Podaj razem.'],'Twój najlepszy obiad — wypracowany przez 4 tygodnie!'),
+ m('Jogurt z orzechami — finałowy podwieczorek',170,10,16,7,'2,50 zł',[i('150g','jogurt naturalny'),i('25g','orzechy mieszane'),i('garść','borówki')],['Wymieszaj. Celebruj!'],'Podwieczorek mistrza glikemii!'),
+ m('Kanapki z pastą jajeczną i ogórkiem kiszonym',280,14,32,9,'3,50 zł',[i('2 szt.','jajka'),i('2 kromki','chleb żytni razowy'),i('1 łyżka','jogurt naturalny'),i('2 szt.','ogórek kiszony'),i('szczypiorek, sól','')],['Jajka ugotuj, rozgnieć z jogurtem.','Posmaruj chleb. Podaj z ogórkiem.'],'Finał! 4 tygodnie zdrowej diety cukrzycowej — gratulacje! 🎉')],
 ],
 ];
+// Derive W from W_RAW by removing podwieczorek (index 3) from each day — IO needs only 4 meals
+const W = W_RAW.map(week => week.map(day => day.filter((_,idx) => idx !== 3)));
 
 const SHOP=[
 {cats:[
-  {name:'🥩 Mięso',cls:'ch-m',items:[{n:'Boczek wędzony',q:'400g',p:'10,99 zł'},{n:'Udka kurczaka',q:'600g',p:'5,99 zł'},{n:'Mięso mielone wieprzowe',q:'400g',p:'8,99 zł'},{n:'Żeberka wieprzowe',q:'300g',p:'8,99 zł'},{n:'Kiełbasa wieprzowa (bez cukru)',q:'150g',p:'5,99 zł'},{n:'Makrela wędzona',q:'2 szt.',p:'7,99 zł'}]},
-  {name:'🥛 Nabiał i jaja',cls:'ch-d',items:[{n:'Jajka (klasa L)',q:'15 szt.',p:'11,99 zł'},{n:'Masło 82%',q:'400g',p:'10,98 zł'},{n:'Śmietana 30%',q:'500ml',p:'6,99 zł'},{n:'Ser żółty',q:'200g',p:'7,99 zł'},{n:'Ser feta',q:'150g',p:'5,99 zł'},{n:'Mascarpone',q:'250g',p:'8,99 zł'},{n:'Majonez pełnotłusty',q:'200g',p:'4,99 zł'},{n:'Serek wiejski tłusty',q:'200g',p:'3,99 zł'}]},
-  {name:'🥦 Warzywa keto',cls:'ch-v',items:[{n:'Brokuły (mrożone)',q:'400g',p:'3,99 zł'},{n:'Szpinak baby',q:'150g',p:'4,99 zł'},{n:'Kapusta biała',q:'500g',p:'2,49 zł'},{n:'Kapusta kiszona',q:'500g',p:'3,99 zł'},{n:'Pieczarki',q:'300g',p:'4,99 zł'},{n:'Cukinia',q:'2 szt.',p:'4,98 zł'},{n:'Ogórek',q:'3 szt.',p:'4,50 zł'},{n:'Ogórki kiszone',q:'słoik',p:'3,99 zł'}]},
-  {name:'🫙 Tłuszcze i przetwory',cls:'ch-f',items:[{n:'Oliwa extra virgin',q:'500ml',p:'14,99 zł'},{n:'Bulion (kostki)',q:'2 opak.',p:'5,98 zł'},{n:'Mąka migdałowa',q:'500g',p:'19,99 zł'},{n:'Smalec',q:'200g',p:'3,49 zł'}]},
-  {name:'🥜 Orzechy i inne',cls:'ch-o',items:[{n:'Orzechy włoskie',q:'150g',p:'8,99 zł'},{n:'Nasiona chia',q:'150g',p:'6,99 zł'},{n:'Parmezan',q:'80g',p:'6,99 zł'},{n:'Oliwki',q:'słoik',p:'5,99 zł'}]},
+  {name:'🥩 Białko',cls:'ch-z',items:[{n:'Udka kurczaka (bez skóry)',q:'400g',p:'5,99 zł'},{n:'Pierś z kurczaka',q:'300g',p:'7,99 zł'},{n:'Jajka (klasa M)',q:'18 szt.',p:'13,99 zł'},{n:'Tuńczyk w sosie własnym',q:'2 puszki',p:'7,98 zł'},{n:'Makrela wędzona',q:'1 szt.',p:'4,99 zł'}]},
+  {name:'🥛 Nabiał',cls:'ch-d',items:[{n:'Serek wiejski chudy',q:'3 × 200g',p:'11,97 zł'},{n:'Jogurt naturalny 2%',q:'2 × 400g',p:'7,98 zł'},{n:'Twarożek chudy',q:'200g',p:'3,99 zł'},{n:'Masło orzechowe 100%',q:'250g',p:'9,99 zł'}]},
+  {name:'🥦 Warzywa i owoce',cls:'ch-v',items:[{n:'Marchew',q:'1 kg',p:'2,49 zł'},{n:'Pietruszka (korzeń)',q:'500g',p:'2,99 zł'},{n:'Kapusta kiszona',q:'słoik 900g',p:'4,99 zł'},{n:'Ogórki kiszone',q:'słoik',p:'3,99 zł'},{n:'Pomidory',q:'6 szt.',p:'5,99 zł'},{n:'Papryka czerwona',q:'2 szt.',p:'3,98 zł'},{n:'Ogórek zielony',q:'4 szt.',p:'3,99 zł'},{n:'Szpinak baby',q:'150g',p:'3,99 zł'},{n:'Rzodkiewka',q:'2 pęczki',p:'2,98 zł'},{n:'Jabłka',q:'1,5 kg',p:'5,99 zł'},{n:'Borówki mrożone',q:'300g',p:'5,99 zł'}]},
+  {name:'🌾 Kasze i strączkowe',cls:'ch-k',items:[{n:'Kasza gryczana',q:'500g',p:'3,99 zł'},{n:'Płatki owsiane górskie',q:'500g',p:'2,99 zł'},{n:'Soczewica czerwona',q:'400g',p:'4,99 zł'},{n:'Fasola biała (puszka)',q:'2 szt.',p:'5,98 zł'},{n:'Chleb żytni razowy',q:'1 bochenek',p:'4,99 zł'},{n:'Makaron razowy',q:'400g',p:'3,99 zł'}]},
+  {name:'🧂 Pozostałe',cls:'ch-o',items:[{n:'Oliwa z oliwek',q:'500ml',p:'14,99 zł'},{n:'Bulion warzywny (kostki)',q:'1 opak.',p:'3,99 zł'},{n:'Cynamon cejloński',q:'50g',p:'4,99 zł'},{n:'Siemię lniane mielone',q:'250g',p:'4,99 zł'},{n:'Orzechy włoskie',q:'200g',p:'9,99 zł'},{n:'Pestki dyni',q:'150g',p:'4,99 zł'}]},
 ]},
 {cats:[
-  {name:'🥩 Mięso',cls:'ch-m',items:[{n:'Boczek wędzony',q:'300g',p:'8,99 zł'},{n:'Udka kurczaka',q:'600g',p:'5,99 zł'},{n:'Mięso mielone wołowe',q:'400g',p:'14,99 zł'},{n:'Schab bez kości',q:'400g',p:'10,99 zł'},{n:'Makrela wędzona',q:'2 szt.',p:'9,99 zł'},{n:'Łosoś wędzony',q:'100g',p:'9,99 zł'},{n:'Kiełbasa wieprzowa',q:'150g',p:'5,99 zł'}]},
-  {name:'🥛 Nabiał i jaja',cls:'ch-d',items:[{n:'Jajka (klasa L)',q:'15 szt.',p:'11,99 zł'},{n:'Masło 82%',q:'400g',p:'10,98 zł'},{n:'Śmietana 30%',q:'500ml',p:'6,99 zł'},{n:'Ser żółty',q:'150g',p:'5,99 zł'},{n:'Cream cheese / twarożek',q:'200g',p:'7,99 zł'},{n:'Majonez',q:'200g',p:'4,99 zł'},{n:'Ser brie',q:'125g',p:'6,99 zł'}]},
-  {name:'🥦 Warzywa keto',cls:'ch-v',items:[{n:'Pieczarki',q:'400g',p:'5,99 zł'},{n:'Kapusta biała',q:'500g',p:'2,49 zł'},{n:'Kapusta kiszona',q:'500g',p:'3,99 zł'},{n:'Kalafior',q:'1 szt.',p:'4,99 zł'},{n:'Cukinia',q:'2 szt.',p:'4,98 zł'},{n:'Szpinak',q:'150g',p:'4,99 zł'},{n:'Ogórek',q:'2 szt.',p:'2,99 zł'}]},
-  {name:'🫙 Tłuszcze i przetwory',cls:'ch-f',items:[{n:'Oliwa extra virgin',q:'500ml',p:'14,99 zł'},{n:'Mleko kokosowe',q:'1 puszka',p:'4,99 zł'},{n:'Zakwas żurkowy',q:'500ml',p:'3,99 zł'},{n:'Bulion (kostki)',q:'1 opak.',p:'3,99 zł'}]},
-  {name:'🥜 Orzechy i inne',cls:'ch-o',items:[{n:'Nasiona chia',q:'100g',p:'4,99 zł'},{n:'Wiórki kokosowe',q:'100g',p:'3,99 zł'},{n:'Oliwki',q:'słoik',p:'5,99 zł'},{n:'Orzechy włoskie',q:'100g',p:'5,99 zł'}]},
+  {name:'🥩 Białko',cls:'ch-z',items:[{n:'Pierś z kurczaka',q:'300g',p:'7,99 zł'},{n:'Dorsz / mintaj filet',q:'300g',p:'8,99 zł'},{n:'Jajka (klasa M)',q:'15 szt.',p:'11,99 zł'},{n:'Tuńczyk w sosie własnym',q:'2 puszki',p:'7,98 zł'}]},
+  {name:'🥛 Nabiał',cls:'ch-d',items:[{n:'Serek wiejski chudy',q:'3 × 200g',p:'11,97 zł'},{n:'Jogurt naturalny 2%',q:'2 × 400g',p:'7,98 zł'},{n:'Twarożek chudy',q:'200g',p:'3,99 zł'}]},
+  {name:'🥦 Warzywa i owoce',cls:'ch-v',items:[{n:'Brokuły mrożone',q:'400g',p:'3,99 zł'},{n:'Kapusta kiszona',q:'słoik 900g',p:'4,99 zł'},{n:'Ogórki kiszone',q:'słoik',p:'3,99 zł'},{n:'Marchew',q:'1 kg',p:'2,49 zł'},{n:'Cukinia',q:'2 szt.',p:'3,98 zł'},{n:'Pomidory krojone (puszka)',q:'2 szt.',p:'4,98 zł'},{n:'Jabłka',q:'1,5 kg',p:'5,99 zł'},{n:'Gruszki',q:'4 szt.',p:'5,99 zł'},{n:'Maliny mrożone',q:'300g',p:'5,99 zł'},{n:'Szpinak',q:'150g',p:'3,99 zł'}]},
+  {name:'🌾 Kasze i strączkowe',cls:'ch-k',items:[{n:'Kasza gryczana',q:'500g',p:'3,99 zł'},{n:'Kasza pęczak lub gryczana',q:'400g',p:'3,99 zł'},{n:'Ryż brązowy',q:'500g',p:'4,99 zł'},{n:'Soczewica z puszki',q:'2 szt.',p:'5,98 zł'},{n:'Fasola biała (puszka)',q:'2 szt.',p:'5,98 zł'},{n:'Chleb żytni razowy',q:'1 bochenek',p:'4,99 zł'},{n:'Groch żółty łuskany',q:'400g',p:'3,99 zł'}]},
+  {name:'🧂 Pozostałe',cls:'ch-o',items:[{n:'Oliwa z oliwek',q:'500ml',p:'14,99 zł'},{n:'Bulion warzywny (kostki)',q:'1 opak.',p:'3,99 zł'},{n:'Siemię lniane mielone',q:'250g',p:'4,99 zł'},{n:'Orzechy włoskie',q:'200g',p:'9,99 zł'},{n:'Pestki słonecznika',q:'150g',p:'3,99 zł'},{n:'Buraki (słoik)',q:'1 szt.',p:'3,99 zł'}]},
 ]},
 {cats:[
-  {name:'🥩 Mięso i ryby',cls:'ch-m',items:[{n:'Udka kurczaka',q:'600g',p:'5,99 zł'},{n:'Mięso mielone wieprzowe',q:'400g',p:'8,99 zł'},{n:'Filet z łososia',q:'200g',p:'16,00 zł'},{n:'Żeberka wędzone',q:'300g',p:'10,99 zł'},{n:'Schab lub polędwiczka',q:'350g',p:'10,99 zł'},{n:'Prosciutto',q:'80g',p:'7,99 zł'},{n:'Ser haloumi',q:'225g',p:'11,99 zł'},{n:'Chorizo',q:'100g',p:'7,99 zł'}]},
-  {name:'🥛 Nabiał i jaja',cls:'ch-d',items:[{n:'Jajka (klasa L)',q:'18 szt.',p:'14,99 zł'},{n:'Masło 82%',q:'400g',p:'10,98 zł'},{n:'Śmietana 30%',q:'500ml',p:'6,99 zł'},{n:'Ser żółty',q:'200g',p:'7,99 zł'},{n:'Ser brie',q:'125g',p:'6,99 zł'},{n:'Majonez',q:'200g',p:'4,99 zł'},{n:'Kefir',q:'400ml',p:'3,99 zł'}]},
-  {name:'🥦 Warzywa keto',cls:'ch-v',items:[{n:'Szpinak baby',q:'200g',p:'5,99 zł'},{n:'Papryka czerwona',q:'2 szt.',p:'3,98 zł'},{n:'Kapusta kiszona',q:'500g',p:'3,99 zł'},{n:'Pieczarki',q:'300g',p:'4,99 zł'},{n:'Cukinia',q:'2 szt.',p:'4,98 zł'},{n:'Szparagi',q:'200g',p:'5,99 zł'},{n:'Ogórek',q:'2 szt.',p:'2,99 zł'},{n:'Rzodkiewki',q:'1 pęczek',p:'1,99 zł'},{n:'Awokado',q:'2 szt.',p:'5,98 zł'}]},
-  {name:'🫙 Tłuszcze i przetwory',cls:'ch-f',items:[{n:'Oliwa extra virgin',q:'500ml',p:'14,99 zł'},{n:'Mleko kokosowe',q:'1 puszka',p:'4,99 zł'},{n:'Zakwas żurkowy',q:'500ml',p:'3,99 zł'},{n:'Mąka migdałowa',q:'250g',p:'11,99 zł'},{n:'Bulion (kostki)',q:'1 opak.',p:'3,99 zł'}]},
-  {name:'🥜 Orzechy i inne',cls:'ch-o',items:[{n:'Orzechy brazylijskie',q:'100g',p:'7,99 zł'},{n:'Pestki dyni',q:'100g',p:'4,99 zł'},{n:'Pestki słonecznika',q:'100g',p:'2,99 zł'},{n:'Czekolada gorzka 85%+',q:'100g',p:'5,99 zł'},{n:'Masło orzechowe 100%',q:'250g',p:'9,99 zł'}]},
+  {name:'🥩 Białko',cls:'ch-z',items:[{n:'Pierś z kurczaka',q:'300g',p:'7,99 zł'},{n:'Dorsz / mintaj filet',q:'300g',p:'8,99 zł'},{n:'Jajka (klasa M)',q:'18 szt.',p:'13,99 zł'},{n:'Makrela wędzona',q:'2 szt.',p:'9,98 zł'},{n:'Tuńczyk w sosie własnym',q:'2 puszki',p:'7,98 zł'}]},
+  {name:'🥛 Nabiał',cls:'ch-d',items:[{n:'Serek wiejski chudy',q:'3 × 200g',p:'11,97 zł'},{n:'Jogurt naturalny 2%',q:'2 × 400g',p:'7,98 zł'},{n:'Twarożek chudy',q:'200g',p:'3,99 zł'},{n:'Ser feta',q:'150g',p:'5,99 zł'}]},
+  {name:'🥦 Warzywa i owoce',cls:'ch-v',items:[{n:'Kapusta kiszona',q:'słoik 900g',p:'4,99 zł'},{n:'Ogórki kiszone',q:'słoik',p:'3,99 zł'},{n:'Marchew',q:'1 kg',p:'2,49 zł'},{n:'Pietruszka',q:'500g',p:'2,99 zł'},{n:'Papryka',q:'3 szt.',p:'5,97 zł'},{n:'Cukinia',q:'2 szt.',p:'3,98 zł'},{n:'Pomidory krojone (puszka)',q:'2 szt.',p:'4,98 zł'},{n:'Jabłka',q:'1,5 kg',p:'5,99 zł'},{n:'Borówki mrożone',q:'300g',p:'5,99 zł'},{n:'Szpinak baby',q:'200g',p:'5,99 zł'},{n:'Rzodkiewka',q:'2 pęczki',p:'2,98 zł'}]},
+  {name:'🌾 Kasze i strączkowe',cls:'ch-k',items:[{n:'Kasza gryczana',q:'500g',p:'3,99 zł'},{n:'Kasza pęczak lub gryczana',q:'400g',p:'3,99 zł'},{n:'Płatki owsiane górskie',q:'500g',p:'2,99 zł'},{n:'Soczewica czerwona',q:'400g',p:'4,99 zł'},{n:'Fasola biała (puszka)',q:'2 szt.',p:'5,98 zł'},{n:'Chleb żytni razowy',q:'1 bochenek',p:'4,99 zł'},{n:'Makaron razowy',q:'400g',p:'3,99 zł'}]},
+  {name:'🧂 Pozostałe',cls:'ch-o',items:[{n:'Oliwa z oliwek',q:'500ml',p:'14,99 zł'},{n:'Bulion warzywny (kostki)',q:'1 opak.',p:'3,99 zł'},{n:'Cynamon cejloński',q:'50g',p:'4,99 zł'},{n:'Siemię lniane mielone',q:'250g',p:'4,99 zł'},{n:'Orzechy mieszane',q:'200g',p:'9,99 zł'},{n:'Masło orzechowe 100%',q:'250g',p:'9,99 zł'}]},
 ]},
 {cats:[
-  {name:'🥩 Mięso',cls:'ch-m',items:[{n:'Udka z kaczki',q:'4 szt.',p:'18,00 zł'},{n:'Mięso mielone wieprzowe',q:'400g',p:'8,99 zł'},{n:'Wieprzowina łopatka',q:'400g',p:'9,99 zł'},{n:'Łosoś (filet)',q:'200g',p:'16,00 zł'},{n:'Biała kiełbasa',q:'2 szt.',p:'4,99 zł'},{n:'Kiełbasa do bigosu',q:'150g',p:'5,99 zł'},{n:'Wątróbka drobiowa',q:'200g',p:'3,99 zł'},{n:'Szynka lub salami',q:'100g',p:'4,99 zł'}]},
-  {name:'🥛 Nabiał i jaja',cls:'ch-d',items:[{n:'Jajka (klasa L)',q:'18 szt.',p:'14,99 zł'},{n:'Masło 82%',q:'400g',p:'10,98 zł'},{n:'Śmietana 30%',q:'500ml',p:'6,99 zł'},{n:'Ser żółty',q:'200g',p:'7,99 zł'},{n:'Ser haloumi',q:'225g',p:'11,99 zł'},{n:'Majonez',q:'200g',p:'4,99 zł'},{n:'Kefir',q:'400ml',p:'3,99 zł'}]},
-  {name:'🥦 Warzywa keto',cls:'ch-v',items:[{n:'Szpinak baby',q:'150g',p:'4,99 zł'},{n:'Pieczarki',q:'300g',p:'4,99 zł'},{n:'Kapusta kiszona',q:'600g',p:'4,49 zł'},{n:'Cebula',q:'1 kg',p:'2,49 zł'},{n:'Ogórek',q:'2 szt.',p:'2,99 zł'},{n:'Awokado',q:'3 szt.',p:'8,97 zł'},{n:'Pomidorki cherry',q:'150g',p:'3,99 zł'},{n:'Kalafior',q:'1 szt.',p:'4,99 zł'}]},
-  {name:'🫙 Tłuszcze i przetwory',cls:'ch-f',items:[{n:'Oliwa extra virgin',q:'500ml',p:'14,99 zł'},{n:'Olej kokosowy',q:'200g',p:'8,99 zł'},{n:'Zakwas żurkowy',q:'500ml',p:'3,99 zł'},{n:'Bulion (kostki)',q:'1 opak.',p:'3,99 zł'},{n:'Smalec',q:'200g',p:'3,49 zł'},{n:'Mleko kokosowe',q:'2 puszki',p:'9,98 zł'}]},
-  {name:'🥜 Orzechy i słodkości keto',cls:'ch-o',items:[{n:'Masło orzechowe 100%',q:'350g',p:'13,99 zł'},{n:'Erytrytol lub stewia',q:'200g',p:'6,99 zł'},{n:'Kakao 100%',q:'100g',p:'4,99 zł'},{n:'Czekolada 85%+',q:'100g',p:'5,99 zł'},{n:'Orzechy mieszane',q:'150g',p:'7,99 zł'}]},
+  {name:'🥩 Białko',cls:'ch-z',items:[{n:'Udka kurczaka (bez skóry)',q:'400g',p:'5,99 zł'},{n:'Pierś z kurczaka',q:'300g',p:'7,99 zł'},{n:'Jajka (klasa M)',q:'18 szt.',p:'13,99 zł'},{n:'Tuńczyk w sosie własnym',q:'2 puszki',p:'7,98 zł'},{n:'Makrela wędzona',q:'1 szt.',p:'4,99 zł'},{n:'Kiełbasa chuda',q:'150g',p:'4,99 zł'},{n:'Biała kiełbasa (chuda)',q:'2 szt.',p:'4,99 zł'}]},
+  {name:'🥛 Nabiał',cls:'ch-d',items:[{n:'Serek wiejski chudy',q:'3 × 200g',p:'11,97 zł'},{n:'Jogurt naturalny 2%',q:'2 × 400g',p:'7,98 zł'},{n:'Twarożek chudy',q:'200g',p:'3,99 zł'},{n:'Śmietana 12%',q:'200ml',p:'3,99 zł'}]},
+  {name:'🥦 Warzywa i owoce',cls:'ch-v',items:[{n:'Kapusta kiszona',q:'słoik 900g',p:'4,99 zł'},{n:'Ogórki kiszone',q:'słoik',p:'3,99 zł'},{n:'Marchew',q:'1 kg',p:'2,49 zł'},{n:'Pietruszka',q:'500g',p:'2,99 zł'},{n:'Seler korzeniowy',q:'1 szt.',p:'3,99 zł'},{n:'Buraki',q:'500g',p:'2,99 zł'},{n:'Pomidory krojone (puszka)',q:'2 szt.',p:'4,98 zł'},{n:'Jabłka',q:'1,5 kg',p:'5,99 zł'},{n:'Owoce sezonowe / mrożone',q:'300g',p:'4,99 zł'},{n:'Szpinak baby',q:'150g',p:'3,99 zł'},{n:'Rzodkiewka',q:'2 pęczki',p:'2,98 zł'}]},
+  {name:'🌾 Kasze i strączkowe',cls:'ch-k',items:[{n:'Kasza gryczana',q:'1 kg',p:'6,99 zł'},{n:'Kasza pęczak lub gryczana',q:'400g',p:'3,99 zł'},{n:'Ryż brązowy',q:'500g',p:'4,99 zł'},{n:'Płatki owsiane górskie',q:'500g',p:'2,99 zł'},{n:'Soczewica czerwona',q:'400g',p:'4,99 zł'},{n:'Fasola biała (puszka)',q:'2 szt.',p:'5,98 zł'},{n:'Chleb żytni razowy',q:'1 bochenek',p:'4,99 zł'},{n:'Zakwas żurkowy',q:'500ml',p:'3,99 zł'}]},
+  {name:'🧂 Pozostałe',cls:'ch-o',items:[{n:'Oliwa z oliwek',q:'500ml',p:'14,99 zł'},{n:'Bulion warzywny (kostki)',q:'1 opak.',p:'3,99 zł'},{n:'Cynamon cejloński',q:'50g',p:'4,99 zł'},{n:'Siemię lniane mielone',q:'250g',p:'4,99 zł'},{n:'Orzechy włoskie',q:'200g',p:'9,99 zł'},{n:'Pestki dyni',q:'150g',p:'4,99 zł'},{n:'Masło orzechowe 100%',q:'250g',p:'9,99 zł'}]},
 ]},
 ];
 
 let curW=0,shopW=0,chk={};
-try{chk=JSON.parse(localStorage.getItem('keto-chk')||'{}')}catch(e){}
-const saveC=()=>{try{localStorage.setItem('keto-chk',JSON.stringify(chk))}catch(e){}};
+try{chk=JSON.parse(localStorage.getItem('cukrz-chk')||'{}')}catch(e){}
+const saveC=()=>{try{localStorage.setItem('cukrz-chk',JSON.stringify(chk))}catch(e){}};
 
 function renderJ(){
   document.getElementById('week-sel').innerHTML=[0,1,2,3].map(wi=>
@@ -426,7 +509,7 @@ function renderJ(){
     const tT=meals.reduce((a,x)=>a+x.f,0);
     const rows=meals.map((meal,mi)=>`
       <div class="meal-row" onclick="openM(${curW},${di},${mi})">
-        <div class="meal-ic ${MIC[mi]}">${['☀️','🍽️','🍎','🌙'][mi]}</div>
+        <div class="meal-ic ${MIC[mi]}">${['☀️','🥗','🍽️','🌙'][mi]}</div>
         <div class="meal-info">
           <div class="meal-type">${MT[mi]}</div>
           <div class="meal-name">${meal.name}</div>
@@ -480,7 +563,7 @@ function openM(w,d,mi){
     <div class="ing-list">${ings}</div>
     <div class="sec-title">Jak zrobić</div>
     <div class="steps-list">${steps}</div>
-    ${meal.tip?`<div class="tip-box"><strong>💡 Wskazówka budżetowa:</strong> ${meal.tip}</div>`:''}`;
+    ${meal.tip?`<div class="tip-box"><strong>💡 Wskazówka dla cukrzyka:</strong> ${meal.tip}</div>`:''}`;
   document.getElementById('modal-overlay').classList.add('show');
   document.querySelector('.scroll-area').style.overflow='hidden';
 }
